@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -79,7 +78,7 @@ class _LoginState extends State<Login> {
           painter: DrawCircle(
             offset: Offset(widthOfScreen * 0.60, heightOfScreen * -0.05),
             radius: widthOfScreen * 0.35,
-            color: Color.fromARGB(255, 27, 138, 125),
+            color: const Color.fromARGB(255, 27, 138, 125),
             hasShadow: true,
             shadowColor: AppColors.deepsea1,
           ),
@@ -119,7 +118,7 @@ class _LoginState extends State<Login> {
     var widthOfScreen = MediaQuery.of(context).size.width;
     ThemeData theme = Theme.of(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
+      margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
       child: Column(
         children: <Widget>[
           const Align(
@@ -144,7 +143,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           CustomTextFormField(
@@ -172,7 +171,7 @@ class _LoginState extends State<Login> {
             ),
             hintText: 'Email',
           ),
-          SizedBox(
+          const SizedBox(
             height: 12.0,
           ),
           CustomTextFormField(
@@ -206,7 +205,7 @@ class _LoginState extends State<Login> {
             ),
             hintText: 'Password',
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Row(
@@ -231,17 +230,16 @@ class _LoginState extends State<Login> {
                   // onTap:() => ,
                   child: Text(
                     'Forgot Password?',
-                    style: TextStyle(
-                      color: AppColors.deepsea),
+                    style: TextStyle(color: AppColors.deepsea),
                   ),
                 ),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 70.0,
           ),
-          Container(
+          SizedBox(
             width: widthOfScreen * 0.6,
             child: CustomButton(
               title: 'Login',
@@ -252,37 +250,30 @@ class _LoginState extends State<Login> {
                 fontWeight: FontWeight.w600,
               ),
               onPressed: () {},
-            ), 
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-             Align(
-            alignment: Alignment.center,
-            child: SelectableText.rich(
-              TextSpan(
-                text: 'Not Registered Yet?',
-                style: const TextStyle(
-                  color: AppColors.greyShade8,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizes.TEXT_SIZE_18,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: ' Sign Up',
-                    style: TextStyle(color: AppColors.deepsea),
-                    recognizer: TapGestureRecognizer()..onTap = () => 
-                    Navigator.of(context).pushNamed('/SignUp')        
-                  )
-                ]
-              )
-            )
-            )
+          Align(
+              alignment: Alignment.center,
+              child: SelectableText.rich(TextSpan(
+                  text: 'Not Registered Yet?',
+                  style: const TextStyle(
+                    color: AppColors.greyShade8,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Sizes.TEXT_SIZE_18,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' Sign Up',
+                        style: const TextStyle(color: AppColors.deepsea),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap =
+                              () => Navigator.of(context).pushNamed('/SignUp'))
+                  ])))
         ],
       ),
     );
   }
-
- 
-  }
-
+}
