@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
               ListView(
                 children: <Widget>[
                   SizedBox(
-                    height: (heightOfScreen * -0.05) + (widthOfScreen * 0.5),
+                    height: (heightOfScreen * -0.12) + (widthOfScreen * 0.5),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -56,9 +56,9 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(
                     height: (heightOfScreen * 0.09),
                   ),
-                  Container(
+                  SizedBox(
                     height: 600,
-                    child: _buildLoginForm(),
+                    child: _buildRegiserForm(),
                   )
                 ],
               )
@@ -114,194 +114,190 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildLoginForm() {
+  Widget _buildRegiserForm() {
     var widthOfScreen = MediaQuery.of(context).size.width;
     ThemeData theme = Theme.of(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
-      child: Column(
-        children: <Widget>[
-          const Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Sign Up",
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: Sizes.TEXT_SIZE_30,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          CustomTextFormField(
-            textInputType: TextInputType.text,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.mail,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
-            ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Email',
-          ),
-          SizedBox(
-            height: 12.0,
-          ),
-          CustomTextFormField(
-            textInputType: TextInputType.name,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.user,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
-            ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Username',
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          CustomTextFormField(
-            textInputType: TextInputType.text,
-            obscured: true,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.lock,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
-            ),
-            hasSuffixIcon: true,
-            suffixIcon: const Icon(
-              FeatherIcons.eyeOff,
-              color: AppColors.deepsea,
-            ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Password',
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          CustomTextFormField(
-            textInputType: TextInputType.text,
-            obscured: true,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.lock,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
-            ),
-            hasSuffixIcon: true,
-            suffixIcon: const Icon(
-              FeatherIcons.eyeOff,
-              color: AppColors.deepsea,
-            ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Confirm Password',
-          ),
-          
-          SizedBox(
-            height: 50.0,
-          ),
-          Container(
-            width: widthOfScreen * 0.6,
-            child: CustomButton(
-              title: 'Register',
-              color: AppColors.deepsea,
-              textStyle: theme.textTheme.bodyMedium?.copyWith(
-                color: AppColors.white,
-                fontSize: Sizes.TEXT_SIZE_16,
-                fontWeight: FontWeight.w600,
-              ),
-              onPressed: () {},
-            ), 
-          ),
-          SizedBox(
-            height: 50,
-          ),
-             Align(
-            alignment: Alignment.center,
-            child: SelectableText.rich(
-              TextSpan(
-                text: 'Already Have An Account?',
-                style: TextStyle(
-                  color: AppColors.greyShade8,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizes.TEXT_SIZE_18,
+      child: ListView(
+        children: [
+          Column(
+            children: <Widget>[
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: Sizes.TEXT_SIZE_30,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: ' Sign In',
-                    style: TextStyle(color: AppColors.deepsea),
-                    recognizer: TapGestureRecognizer()..onTap = () => 
-                    Navigator.of(context).pushNamed('/Login')        
-                  )
-                ]
-              )
-            )
-            )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextFormField(
+                textInputType: TextInputType.text,
+                hasTitle: false,
+                hasPrefixIcon: true,
+                prefixIcon: const Icon(
+                  FeatherIcons.mail,
+                  color: AppColors.greyShade7,
+                  size: Sizes.ICON_SIZE_20,
+                ),
+                hintTextStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.blackShade2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+                textStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.blackShade10,
+                ),
+                hintText: 'Email',
+              ),
+              SizedBox(
+                height: 12.0,
+              ),
+              CustomTextFormField(
+                textInputType: TextInputType.name,
+                hasTitle: false,
+                hasPrefixIcon: true,
+                prefixIcon: const Icon(
+                  FeatherIcons.user,
+                  color: AppColors.greyShade7,
+                  size: Sizes.ICON_SIZE_20,
+                ),
+                hintTextStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.blackShade2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+                textStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.blackShade10,
+                ),
+                hintText: 'Username',
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              CustomTextFormField(
+                textInputType: TextInputType.text,
+                obscured: true,
+                hasTitle: false,
+                hasPrefixIcon: true,
+                prefixIcon: const Icon(
+                  FeatherIcons.lock,
+                  color: AppColors.greyShade7,
+                  size: Sizes.ICON_SIZE_20,
+                ),
+                hasSuffixIcon: true,
+                suffixIcon: const Icon(
+                  FeatherIcons.eyeOff,
+                  color: AppColors.deepsea,
+                ),
+                hintTextStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.blackShade2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+                textStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.blackShade10,
+                ),
+                hintText: 'Password',
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              CustomTextFormField(
+                textInputType: TextInputType.text,
+                obscured: true,
+                hasTitle: false,
+                hasPrefixIcon: true,
+                prefixIcon: const Icon(
+                  FeatherIcons.lock,
+                  color: AppColors.greyShade7,
+                  size: Sizes.ICON_SIZE_20,
+                ),
+                hasSuffixIcon: true,
+                suffixIcon: const Icon(
+                  FeatherIcons.eyeOff,
+                  color: AppColors.deepsea,
+                ),
+                hintTextStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.blackShade2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+                textStyle: Styles.customTextStyle(
+                  fontSize: Sizes.TEXT_SIZE_20,
+                  color: AppColors.blackShade10,
+                ),
+                hintText: 'Confirm Password',
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              Container(
+                width: widthOfScreen * 0.6,
+                child: CustomButton(
+                  title: 'Register',
+                  color: AppColors.deepsea,
+                  textStyle: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.white,
+                    fontSize: Sizes.TEXT_SIZE_16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: SelectableText.rich(TextSpan(
+                      text: 'Already Have An Account?',
+                      style: TextStyle(
+                        color: AppColors.greyShade8,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Sizes.TEXT_SIZE_18,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: ' Sign In',
+                            style: TextStyle(color: AppColors.deepsea),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () =>
+                                  Navigator.of(context).pushNamed('/Login'))
+                      ])))
+            ],
+          ),
         ],
       ),
     );
   }
-
- 
-  }
-
+}
