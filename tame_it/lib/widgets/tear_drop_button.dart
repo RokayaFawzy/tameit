@@ -9,7 +9,7 @@ import 'custom_painters.dart';
 enum TearDropAlignment { topLeft, topRight, bottomLeft, bottomRight }
 
 class TearDropButton extends StatelessWidget {
-  TearDropButton({
+  const TearDropButton({super.key, 
     required this.buttonText,
     this.radius,
     this.tearDropAlignment = TearDropAlignment.topRight,
@@ -40,12 +40,12 @@ class TearDropButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       splashColor: Colors.transparent,
-      child: Container(
+      child: SizedBox(
         height: (radius ?? defaultRadius) * 2,
         width: (radius ?? defaultRadius) * 2,
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: (radius ?? defaultRadius) * 2,
               width: (radius ?? defaultRadius) * 2,
               child: CustomPaint(
@@ -63,7 +63,7 @@ class TearDropButton extends StatelessWidget {
                     tearDropAlignment: tearDropAlignment),
               ),
             ),
-            Container(
+            SizedBox(
               height: (radius ?? defaultRadius) * 2,
               width: (radius ?? defaultRadius) * 2,
               child: Center(

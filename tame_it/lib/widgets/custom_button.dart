@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../values/values.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton({
+  const CustomButton({super.key, 
     this.title,
     this.onPressed,
     this.height = Sizes.HEIGHT_40,
@@ -44,7 +44,7 @@ class CustomButton extends StatelessWidget {
         children: <Widget>[
           hasIcon ? icon! : Container(),
           hasIcon
-              ? SizedBox(
+              ? const SizedBox(
                   width: 8.0,
                 )
               : Container(),
