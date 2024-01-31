@@ -31,7 +31,7 @@ class CustomTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? textFormFieldMargin;
 
-  CustomTextFormField({
+  const CustomTextFormField({super.key, 
     this.prefixIcon,
     this.suffixIcon,
     this.textStyle,
