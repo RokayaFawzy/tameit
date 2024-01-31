@@ -96,8 +96,8 @@ class AppColors {
   static const Color deepsea1 = Color.fromARGB(255, 19, 103, 93);
 
   static const Color Bermuda = Color(0xFF94D2BD);
-  static const Color Sidecar = Color(0xFF94D2BD);
-  static const Color OrangePeel = Color(0xFF94D2BD);
+  static const Color Sidecar = Color(0xFFE9D8A6);
+  static const Color OrangePeel = Color(0xFFEE9B00);
   static const Color Tenne = Color(0xFFCA6702);
   static const Color Rust = Color(0xFFBB3E03);
   static const Color FireBrick = Color(0xFFAE2012);
