@@ -258,22 +258,26 @@ class _LoginState extends State<Login> {
                 height: 50,
               ),
               Align(
-                  alignment: Alignment.center,
-                  child: SelectableText.rich(TextSpan(
-                      text: 'Not Registered Yet?',
-                      style: const TextStyle(
-                        color: AppColors.greyShade8,
-                        fontWeight: FontWeight.bold,
-                        fontSize: Sizes.TEXT_SIZE_18,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ' Sign Up',
-                            style: const TextStyle(color: AppColors.deepsea),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  Navigator.of(context).pushNamed('/SignUp'))
-                      ])))
+                alignment: Alignment.center,
+                child: SelectableText.rich(
+                  TextSpan(
+                    text: 'Not Registered Yet?',
+                    style: const TextStyle(
+                      color: AppColors.greyShade8,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizes.TEXT_SIZE_18,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: ' Sign Up',
+                          style: const TextStyle(color: AppColors.deepsea),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () =>
+                                Navigator.of(context).pushNamed('/SignUp'))
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ],
