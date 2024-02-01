@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 import '../../values/values.dart';
 
@@ -87,12 +88,12 @@ class _PhoneVerifyState extends State<PhoneVerify> {
                   color: Colors.white, // Change the text color as needed
                 ),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const CodePhone(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CodePhone(),
+                    ),
+                  );
                 },
               ),
             ],
