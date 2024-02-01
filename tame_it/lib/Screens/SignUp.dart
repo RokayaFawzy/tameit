@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
           painter: DrawCircle(
             offset: Offset(widthOfScreen * 0.50, heightOfScreen * -0.05),
             radius: widthOfScreen * 0.35,
-            color: Color.fromARGB(255, 27, 138, 125),
+            color: const Color.fromARGB(255, 27, 138, 125),
             hasShadow: true,
             shadowColor: AppColors.deepsea1,
           ),
@@ -162,7 +162,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 hintText: 'Email',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12.0,
               ),
               CustomTextFormField(
@@ -190,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 hintText: 'Username',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               CustomTextFormField(
@@ -224,7 +224,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 hintText: 'Password',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               CustomTextFormField(
@@ -258,10 +258,10 @@ class _SignUpState extends State<SignUp> {
                 ),
                 hintText: 'Confirm Password',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50.0,
               ),
-              Container(
+              SizedBox(
                 width: widthOfScreen * 0.6,
                 child: CustomButton(
                   title: 'Register',
@@ -274,14 +274,14 @@ class _SignUpState extends State<SignUp> {
                   onPressed: () {},
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Align(
                   alignment: Alignment.center,
                   child: SelectableText.rich(TextSpan(
                       text: 'Already Have An Account?',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.greyShade8,
                         fontWeight: FontWeight.bold,
                         fontSize: Sizes.TEXT_SIZE_18,
@@ -289,7 +289,7 @@ class _SignUpState extends State<SignUp> {
                       children: <TextSpan>[
                         TextSpan(
                             text: ' Sign In',
-                            style: TextStyle(color: AppColors.deepsea),
+                            style: const TextStyle(color: AppColors.deepsea),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () =>
                                   Navigator.of(context).pushNamed('/Login'))
