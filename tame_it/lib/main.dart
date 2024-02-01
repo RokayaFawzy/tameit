@@ -14,8 +14,9 @@ class TameIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
-      //  PhoneVerify(),
+      home: 
+      // Login(),
+       PhoneVerify(),
 
       routes: {
         '/Login': (context) => Login(),
