@@ -5,6 +5,7 @@ import 'package:tame_it/Screens/forgot_Password/Resetpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/Verify_Phone_Number.dart';
 import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
+import 'package:tame_it/Screens/navbar_Root_Screen/navbar_root.dart';
 
 void main() {
   runApp(const TameIt());
@@ -17,16 +18,16 @@ class TameIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: 
-      Login(),
-
+      home:
+          // NavBarRoot(),
+          Login(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
         '/Verify_Phone_Number': (context) => PhoneVerify(),
         '/ForgotPassword': (context) => ForgotPassword(),
-        '/ResetPassword':(context) => ResetPassword(),
-        '/CodePhone':(context) => CodePhone(),
+        '/ResetPassword': (context) => ResetPassword(),
+        '/CodePhone': (context) => CodePhone(),
       },
     );
   }
