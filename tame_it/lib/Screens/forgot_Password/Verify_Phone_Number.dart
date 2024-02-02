@@ -16,6 +16,7 @@ class _PhoneVerifyState extends State<PhoneVerify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
           title: const Text(
             '        Verify your phone number',
@@ -81,10 +82,10 @@ class _PhoneVerifyState extends State<PhoneVerify> {
               ),
               const SizedBox(height: 20),
               CustomButton(
-                title: "Confirm",
+                title: "Next",
                 color: AppColors.deepsea,
                 textStyle: const TextStyle(
-                  fontSize: 18, // Adjust the font size as needed
+                  fontSize: 16, // Adjust the font size as needed
                   color: Colors.white, // Change the text color as needed
                 ),
                 onPressed: () {

@@ -228,9 +228,11 @@ class _LoginState extends State<Login> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: widthOfScreen * 0.3),
-                    child: const InkWell(
-                      // onTap:() => ,
-                      child: Text(
+                    child: InkWell(
+                       onTap: () {
+                        Navigator.of(context).pushNamed('/ForgotPassword');
+                      },
+                      child: const Text(
                         'Forgot Password?',
                         style: TextStyle(color: AppColors.deepsea),
                       ),

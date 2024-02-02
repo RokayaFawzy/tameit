@@ -81,6 +81,23 @@ class Borders {
     );
   }
 
+  static customOutlineInputBorder({
+    double borderRadius = Sizes.RADIUS_14,
+    Color color = AppColors.grey,
+    double width = Sizes.WIDTH_1,
+    BorderStyle style = BorderStyle.solid,
+  }) {
+
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+      borderSide: BorderSide(
+        color: color,
+        width: width,
+        style: style,
+      ),
+    );
+  }
+
   static customUnderlineInputBorder({
     Color color = AppColors.grey,
     double width = Sizes.WIDTH_1,

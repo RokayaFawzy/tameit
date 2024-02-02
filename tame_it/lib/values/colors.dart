@@ -25,6 +25,7 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color whiteShade1 = Color(0xFFF6F6F6);
   static const Color whiteShade2 = Color(0xFFF8F9FD);
+  static const Color whiteShade3 = Color(0xFFf7f7f7);
 
   //deepBlue
   static const Color lightBlueShade1 = Color(0xFFCED5E0);
@@ -102,8 +103,6 @@ class AppColors {
   static const Color Rust = Color(0xFFBB3E03);
   static const Color FireBrick = Color(0xFFAE2012);
   static const Color BrightRed = Color(0xFF9B2226);
-
-
 
 
 }
