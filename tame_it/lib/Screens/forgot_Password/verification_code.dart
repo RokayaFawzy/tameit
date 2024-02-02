@@ -55,16 +55,19 @@ class _CodePhoneState extends State<CodePhone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: const Text(
-            '        Verify your phone number',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 16,
-              fontFamily: 'Nunito Sans',
-              fontWeight: FontWeight.w400,
-              height: 0.07,
+          title: const Center(
+            child: Text(
+              'Verification code',
+              // textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 16,
+                fontFamily: 'Nunito Sans',
+                fontWeight: FontWeight.w400,
+                height: 0.07,
+              ),
             ),
           ),
           shadowColor: Colors.white,
@@ -84,17 +87,32 @@ class _CodePhoneState extends State<CodePhone> {
             shrinkWrap: true,
             children: [
               const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.only(left: 10,right: 10),
                 child: Center(
                   child: Text(
                     textAlign: TextAlign.center,
-                    " please enter the verification code",
+                    " Please enter the verification code",
                     style: TextStyle(
                       color: AppColors.deepsea,
-                      fontSize: 18,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       // fontWeight: FontWeight.bold,
                       // letterSpacing: 1,
                       wordSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left:10.0,right: 10),
+                child: Center(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    " we have sent a verification code to your Email ",
+                    style: TextStyle(
+                      color: AppColors.Bermuda,
+                      fontSize: Sizes.TEXT_SIZE_16,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
@@ -126,7 +144,7 @@ class _CodePhoneState extends State<CodePhone> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Did\'t receive the OTP ?',
+                    'Didn\'t receive the OTP ?',
                     style: TextStyle(
                       color: AppColors.deepsea,
                       fontSize: 16,
@@ -157,24 +175,14 @@ class _CodePhoneState extends State<CodePhone> {
               const SizedBox(height: 30),
               const SizedBox(height: 20),
               CustomButton(
-                title: "Verify",
+                title: "Next",
                 color: AppColors.deepsea,
                 textStyle: const TextStyle(
-                  fontSize: 18, // Adjust the font size as needed
+                  fontSize: 16, // Adjust the font size as needed
                   color: Colors.white, // Change the text color as needed
                 ),
-                onPressed:
-                    // _code.length < 4
-                    //     ? null
-                    //     :
-                    () {
-                  // verify();
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const CodePhone(),
-                  //   ),
-                  // );
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/ResetPassword');
                 },
               ),
             ],
