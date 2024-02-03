@@ -5,6 +5,7 @@ import 'package:tame_it/Screens/forgot_Password/Resetpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/Verify_Phone_Number.dart';
 import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class TameIt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:
           // NavBarRoot(),
-          Login(),
+          FiltersScreen(),
+      // Login(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
