@@ -1,14 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
-import 'package:tame_it/Screens/Profile.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Profile.dart';
 import 'package:tame_it/Screens/SignUp.dart';
 import 'package:tame_it/Screens/forgot_Password/Resetpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/Verify_Phone_Number.dart';
 import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
-import 'Screens/Home.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
+import 'Screens/navbar_Root_Screens/Home.dart';
 
 void main() {
   runApp(const TameIt());
@@ -23,7 +24,7 @@ class TameIt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:
           // Login(),
-          Home(),
+          NavBarRoot(),
           
       routes: {
         '/Login': (context) => Login(),
@@ -34,7 +35,7 @@ class TameIt extends StatelessWidget {
         '/CodePhone': (context) => CodePhone(),
         '/Profile': (context) => Profile(),
         '/Home': (context) => Home(),
-        'FiltersScreen':(context) => FiltersScreen(),
+        '/FiltersScreen':(context) => FiltersScreen(),
 
       },
     );

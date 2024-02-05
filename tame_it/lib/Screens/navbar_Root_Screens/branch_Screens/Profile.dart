@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import '../values/values.dart';
-import '../widgets/custom_painters.dart';
+import '../../../values/values.dart';
+import '../../../widgets/custom_painters.dart';
 
 class Profile extends StatefulWidget {
   // Profile({required this.themeBloc});
@@ -26,6 +26,7 @@ class _ProfileState extends State<Profile> {
     var widthOfScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      
       backgroundColor: AppColors.whiteShade2,
       body: DefaultTabController(
         length: 2,

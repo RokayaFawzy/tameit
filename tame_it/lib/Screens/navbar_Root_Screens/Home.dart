@@ -185,7 +185,9 @@ class __HomeStateState extends State<Home> {
                                     color: AppColors.deepsea,
                                   ))
                             ]),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Navigator.of(context).pushNamed('/FiltersScreen');
+                        },
                       ),
                     )
                   ]))
