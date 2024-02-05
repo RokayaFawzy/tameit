@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
               ListView(
                 children: <Widget>[
                   SizedBox(
-                    height: (heightOfScreen * -0.12) + (widthOfScreen * 0.5),
+                    height: (heightOfScreen * -0.10) + (widthOfScreen * 0.5),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -57,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                     height: (heightOfScreen * 0.09),
                   ),
                   SizedBox(
-                    height: 600,
+                    height: 700,
                     child: _buildRegiserForm(),
                   )
                 ],
