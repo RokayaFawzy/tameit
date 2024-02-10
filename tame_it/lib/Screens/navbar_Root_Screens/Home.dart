@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
+import '../../Models/Doctor_model.dart';
+import '../../widgets/custom_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -116,7 +118,7 @@ class __HomeStateState extends State<Home> {
                               borderRadius: BorderRadius.circular(20.0),
                             ))))
               ])),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Row(
@@ -186,13 +188,46 @@ class __HomeStateState extends State<Home> {
                                   ))
                             ]),
                         onPressed: () {
-                          // Navigator.of(context).pushNamed('/FiltersScreen');
-                        },
-                      ),
+                          Navigator.of(context).pushNamed('/');
+                        }
+                      )
                     )
                   ]))
             ],
           ),
+          SizedBox(
+            height: 12,
+          ),
+          DoctorCard(
+            doctor: Doctor(
+                firstName: 'Smith',
+                specialty: 'Psychologist',
+                rating: 5,
+                lastName: ' Wilson',
+                price: '800',
+                experienceYears: '24 yr',
+                interest: 'Depression, Stress, Anxiety',
+                image: ''),
+          ),
         ]))));
   }
 }
+
+
+
+
+
+
+
+
+// ClipRRect(
+          //   borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(10),
+          //     topRight: Radius.circular(10),
+          //   ),
+          //   child: AspectRatio(
+          //     aspectRatio: 10, // adjust aspect ratio as needed
+          //     child: Image.asset(
+          //         'assets/doctor.jpg'), // replace with your doctor image
+          //   ),
+          // ),
