@@ -97,16 +97,17 @@ class __HomeStateState extends State<Home> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
                           child: Image.asset(
-                            'assets/fonts/images/First Imgae.jpg',
+                            'assets/images/First Imgae.jpg',
                             fit: BoxFit.cover,
                           )))),
               const SizedBox(height: 12),
               const Padding(
-                padding: EdgeInsets.only(left:15.0),
+                padding: EdgeInsets.only(left: 15.0),
                 child: Text('Our Services',
-                style: TextStyle(color: AppColors.deepsea,
-                fontSize: 18,
-                fontWeight: FontWeight.w700)),
+                    style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700)),
               ),
               SizedBox(height: 8)
             ]))));

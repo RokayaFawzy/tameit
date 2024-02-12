@@ -7,7 +7,7 @@ import '../Models/Doctor_model.dart';
 class DoctorCard extends StatelessWidget {
   final Doctor doctor;
 
-  DoctorCard({required this.doctor});
+  const DoctorCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class DoctorCard extends StatelessWidget {
                               Text(doctor.interest,),
                             ],
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           RatingBar.builder(
                               initialRating: 0,
                               minRating: 1,

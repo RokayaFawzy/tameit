@@ -25,10 +25,8 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color whiteShade1 = Color(0xFFF6F6F6);
   static const Color whiteShade2 = Color(0xFFF8F9FD);
-  static const Color whiteShade3 = Color(0xFFf7f7f7);
+  static const Color whiteShade3 = Color(0xFFf2f2f2);
   static const Color whiteShade4 = Color(0xFFD3E3F1);
-
-
 
   //deepBlue
   static const Color lightBlueShade1 = Color(0xFFCED5E0);
@@ -94,7 +92,6 @@ class AppColors {
 
   static const Color deepBrown = Color(0xFF666D73);
 
-
 // App Pallette
   static const Color deepsea = Color(0xFF0E7D70);
   static const Color deepsea1 = Color.fromARGB(255, 19, 103, 93);
@@ -106,6 +103,4 @@ class AppColors {
   static const Color Rust = Color(0xFFBB3E03);
   static const Color FireBrick = Color(0xFFAE2012);
   static const Color BrightRed = Color(0xFF9B2226);
-
-
 }
