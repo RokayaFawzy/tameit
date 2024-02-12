@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 
 class NavBarRoot extends StatefulWidget {
@@ -14,7 +15,7 @@ class _NavBarRootState extends State<NavBarRoot> {
   final _screens = [
     Home(),
     Container(),
-    Container(),
+    Therapists(),
     Container(),
     Container(),
   ];
@@ -84,7 +85,7 @@ class _NavBarRootState extends State<NavBarRoot> {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.people_alt), label: "THERAPISTS"),
+                icon: Icon(Icons.people_alt), label: "HOME"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.video_call), label: "ONLINE"),
             BottomNavigationBarItem(
