@@ -92,6 +92,8 @@ class _NavBarRootState extends State<NavBarRoot> {
                 icon: Icon(Icons.person), label: "MY THERAPY"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.question_answer), label: "CHATBOT"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard_outlined), label: "MORE"),
           ],
         ),
       ),

@@ -16,6 +16,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.whiteShade3,
         appBar: AppBar(
             title: const Text(
               '                     Filters',
