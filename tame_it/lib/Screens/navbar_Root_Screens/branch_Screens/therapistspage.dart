@@ -155,36 +155,37 @@ class __TherapistsStateState extends State<Therapists> {
                   padding: const EdgeInsets.only(left: 15.0),
                   child: Row(children: [
                     Container(
-                      width: widthOfScreen * 0.45,
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                            side: MaterialStateProperty.all(const BorderSide(
-                                color: AppColors.deepsea,
-                                width: 1.0,
-                                style: BorderStyle.solid)),
-                            shape: const MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ))),
-                        child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.swap_vert,
-                                color: AppColors.deepsea,
-                                size: 20,
-                              ),
-                              Text(' Sort by',
-                                  style: TextStyle(
+                        width: widthOfScreen * 0.45,
+                        child: OutlinedButton(
+                            style: ButtonStyle(
+                                side: MaterialStateProperty.all(
+                                    const BorderSide(
+                                        color: AppColors.deepsea,
+                                        width: 1.0,
+                                        style: BorderStyle.solid)),
+                                shape: const MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ))),
+                            child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.swap_vert,
                                     color: AppColors.deepsea,
-                                  ))
-                            ]),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/');
-                        }
-                      )
-                    )
+                                    size: 20,
+                                  ),
+                                  Text(' Sort by',
+                                      style: TextStyle(
+                                        color: AppColors.deepsea,
+                                      ))
+                                ]),
+                            onPressed: _showMultiSelect
+                            // () {
+                            //   Navigator.of(context).pushNamed('/');
+                            // }
+                            ))
                   ]))
             ],
           ),
@@ -203,6 +204,67 @@ class __TherapistsStateState extends State<Therapists> {
                 image: ''),
           ),
         ]))));
+  }
+//Sorted bt page
+
+  String _selectedItem = ''; // Declaration and initialization of _selectedItem
+
+  void _showMultiSelect() {
+    final List<String> items = [
+      'Price: low to high',
+      'Price: high to low',
+      'Customer rating',
+      'Most popular'
+    ];
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Sorting By",
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Domine',
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (String item in items)
+                RadioListTile<String>(
+                  title: Text(item,
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                      )),
+                  value: item,
+                  groupValue: _selectedItem,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedItem = value!;
+                    });
+                    Navigator.pop(context);
+                  },
+                  activeColor: AppColors.OrangePeel,
+                ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: TextButton.styleFrom(
+                foregroundColor:
+                    AppColors.OrangePeel, // Changed text color to green
+              ),
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

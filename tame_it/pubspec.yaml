@@ -40,19 +40,22 @@ dependencies:
   google_fonts: ^6.1.0
   icon_forest: ^1.1.8
   melos: ^4.1.0
+  intl: ^0.19.0
+
   flutter_feather_icons: ^2.0.0+1
   flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
+  flutter_test:
+    sdk: flutter
+
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo.jpg"
-  flutter_test:
-    sdk: flutter
-
+  
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
