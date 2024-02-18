@@ -7,6 +7,7 @@ import 'package:tame_it/Screens/forgot_Password/Resetpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/Verify_Phone_Number.dart';
 import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/edit_Profile_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/therapistspage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
@@ -36,7 +37,7 @@ class TameIt extends StatelessWidget {
         '/Profile': (context) => Profile(),
         '/Therapists': (context) => Therapists(),
         '/FiltersScreen':(context) => FiltersScreen(),
-        
+        '/EditInformation':(context)=>EditInformation()
 
       },
     );

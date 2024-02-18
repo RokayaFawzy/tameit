@@ -96,7 +96,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 child: ListTile(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/');
+                      Navigator.of(context).pushNamed('/EditInformation');
                     },
                     leading: const Icon(
                       Icons.person_outline_rounded,
