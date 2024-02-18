@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_text_form_field.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/custom_button.dart';
 
@@ -17,6 +18,7 @@ class EditInformation extends StatefulWidget {
 class _EditInformationState extends State<EditInformation> {
   String? valueChoose;
   List ListItem = ['Female', 'male'];
+  final TextEditingController _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +169,38 @@ class _EditInformationState extends State<EditInformation> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 9,
+              ),
               //TODO:Dropdown
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: _date,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today_rounded),
+                    labelText: "Select Date",
+                    labelStyle: TextStyle(
+                        color: AppColors
+                            .blackShade2), // Text style for "Select Date"
+                  ),
+                  onTap: () async {
+                    DateTime? pickeddate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2110),
+                      //TODO:change color from berbal to appcolor
+                    );
+                    if (pickeddate != null) {
+                      setState(() {
+                        _date.text =
+                            DateFormat('yyyy-MM-dd').format(pickeddate);
+                      });
+                    }
+                  },
+                ),
+              ),
 
               SizedBox(
                 height: 18,
