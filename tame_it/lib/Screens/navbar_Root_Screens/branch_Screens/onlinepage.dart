@@ -15,7 +15,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
       var size,height,width;
   @override
   Widget build(BuildContext context) {
-     size = MediaQuery.of(context).size; 
+    size = MediaQuery.of(context).size; 
     height = size.height;
     width = size.width;
     var heightOfScreen = MediaQuery.of(context).size.height;

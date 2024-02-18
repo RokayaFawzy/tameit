@@ -19,7 +19,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
-    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,

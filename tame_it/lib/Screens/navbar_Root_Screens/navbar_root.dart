@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
@@ -18,7 +19,7 @@ class _NavBarRootState extends State<NavBarRoot> {
     OnlineTherapists(),
     Therapists(),
     Container(),
-    Container(),
+    MorePage(),
   ];
 
   // void _onItemTap(int index) {

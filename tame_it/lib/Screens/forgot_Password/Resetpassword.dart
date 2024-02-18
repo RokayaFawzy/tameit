@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 
@@ -19,7 +18,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
-    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
