@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_text_form_field.dart';
 import 'package:intl/intl.dart';
-
 import '../../../widgets/custom_button.dart';
 
 class EditInformation extends StatefulWidget {
@@ -23,16 +20,19 @@ class _EditInformationState extends State<EditInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: const Text(
-            '                  Edit profile',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 16,
-              fontFamily: 'NunitoSans',
-              fontWeight: FontWeight.w700,
-              height: 1.70,
+          title: Center(
+            child: const Text(
+              'Edit profile',
+              // textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 16,
+                fontFamily: 'NunitoSans',
+                fontWeight: FontWeight.w700,
+                height: 1.70,
+              ),
             ),
           ),
           shadowColor: Colors.white,
@@ -130,7 +130,7 @@ class _EditInformationState extends State<EditInformation> {
                 focusedBorder: Borders.customUnderlineInputBorder(
                   color: AppColors.orange,
                 ),
-                hintText: 'Place',
+                hintText: 'Country',
               ),
               const SizedBox(
                 height: 9,
@@ -179,7 +179,7 @@ class _EditInformationState extends State<EditInformation> {
                   controller: _date,
                   decoration: InputDecoration(
                     icon: Icon(Icons.calendar_today_rounded),
-                    labelText: "Select Date",
+                    labelText: "Birth Date",
                     labelStyle: TextStyle(
                         color: AppColors
                             .blackShade2), // Text style for "Select Date"
