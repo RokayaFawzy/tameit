@@ -10,10 +10,14 @@ class Home extends StatefulWidget {
 }
 
 class __HomeStateState extends State<Home> {
+  var size, height, width;
   @override
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
+    size = MediaQuery.of(context).size;
+    height = size.height;
+    width = size.width;
 
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
@@ -109,7 +113,169 @@ class __HomeStateState extends State<Home> {
                         fontSize: 18,
                         fontWeight: FontWeight.w700)),
               ),
-              SizedBox(height: 8)
+              SizedBox(height: 10),
+              Center(
+                  child: Container(
+                      width: width / 1.1,
+                      height: height / 6,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Row(children: [
+                            SizedBox(
+                                width: width / 3.5,
+                                height: height / 3.5,
+                                child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/p1.jpg',
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.only(left: width / 5),
+                              child: Text('Therapists',
+                                  style: TextStyle(
+                                      fontSize: width / 20,
+                                      color: AppColors.OrangePeel,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ])))),
+              SizedBox(height: 20),
+              Center(
+                  child: Container(
+                      width: width / 1.1,
+                      height: height / 8,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Row(children: [
+                            SizedBox(
+                                width: width / 3.1,
+                                height: height / 8,
+                                child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/p2.jpg',
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.only(left: width / 5),
+                              child: Text(' Group \nTherapy',
+                                  style: TextStyle(
+                                      fontSize: width / 20,
+                                      color: AppColors.OrangePeel,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          ])))),
+              SizedBox(height: 20),
+              Center(
+                  child: Container(
+                      width: width / 1.1,
+                      height: height / 5,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Row(children: [
+                            SizedBox(
+                                width: width / 3,
+                                height: height / 3.5,
+                                child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/p3.jpg',
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.only(left: width / 5),
+                              child: Text('ChatBot',
+                                  style: TextStyle(
+                                      fontSize: width / 20,
+                                      color: AppColors.OrangePeel,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          ])))),
+              SizedBox(height: 20),
+              Center(
+                  child: Container(
+                      width: width / 1.1,
+                      height: height / 4.5,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Row(children: [
+                            SizedBox(
+                                width: width / 3,
+                                height: height / 3,
+                                child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/p4.jpg',
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.only(left: width / 5),
+                              child: Text(' Online \nSessions',
+                                  style: TextStyle(
+                                      fontSize: width / 20,
+                                      color: AppColors.OrangePeel,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          ])))),
+              SizedBox(height: 20),
+              Center(
+                  child: Container(
+                      width: width / 1.1,
+                      height: height / 5,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Row(children: [
+                            Container(
+                                width: width / 3,
+                                height: height / 3.5,
+                                decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.4),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                      offset: Offset(
+                                          0, 5), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/p5.jpg',
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.only(left: width / 5),
+                              child: Text('Testings',
+                                  style: TextStyle(
+                                      fontSize: width / 20,
+                                      color: AppColors.OrangePeel,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          ])))),
+              SizedBox(height: 200)
             ]))));
   }
 }
