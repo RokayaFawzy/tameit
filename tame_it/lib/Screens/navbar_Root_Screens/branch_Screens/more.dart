@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../values/values.dart';
 
 class MorePage extends StatefulWidget {
@@ -61,13 +60,16 @@ class _MorePageState extends State<MorePage> {
                     child: Row(children: [
                       Row(children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            radius: 25,
-                            backgroundImage:
-                                AssetImage('assets/images/123.jpg'),
-                          ),
-                        ),
+                            padding: const EdgeInsets.all(8.0),
+                            //TODO: Circle Border
+                            child: CircleAvatar(
+                              radius: 26,
+                              backgroundColor: Colors.black38,
+                              child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage:
+                                      AssetImage('assets/images/123.jpg')),
+                            )),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -88,7 +90,7 @@ class _MorePageState extends State<MorePage> {
             decoration: const BoxDecoration(
               // color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                  bottom: BorderSide(color:  Colors.grey, width: 0.1)),
             ),
             child: ListTile(
                 onTap: () {
@@ -107,7 +109,7 @@ class _MorePageState extends State<MorePage> {
             decoration: const BoxDecoration(
               // color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                  bottom: BorderSide(color: Colors.grey, width: 0.1)),
             ),
             child: ListTile(
                 onTap: () {
@@ -126,7 +128,7 @@ class _MorePageState extends State<MorePage> {
             decoration: const BoxDecoration(
               // color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                  bottom: BorderSide(color: Colors.grey, width: 0.1)),
             ),
             child: ListTile(
                 onTap: () {
@@ -145,7 +147,7 @@ class _MorePageState extends State<MorePage> {
             decoration: const BoxDecoration(
               // color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                  bottom: BorderSide(color: Colors.grey, width: 0.1)),
             ),
             child: ListTile(
                 onTap: () {
@@ -164,7 +166,7 @@ class _MorePageState extends State<MorePage> {
             decoration: const BoxDecoration(
               // color: Colors.white,
               border: Border(
-                  bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                  bottom: BorderSide(color: Colors.grey, width: 0.1)),
             ),
             child: ListTile(
                 onTap: () {

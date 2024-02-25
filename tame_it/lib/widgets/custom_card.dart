@@ -7,18 +7,18 @@ import '../Models/Doctor_model.dart';
 class DoctorCard extends StatefulWidget {
   final Doctor doctor;
 
- DoctorCard({super.key, required this.doctor});
+  DoctorCard({super.key, required this.doctor});
 
   @override
   State<DoctorCard> createState() => _DoctorCardState();
 }
 
 class _DoctorCardState extends State<DoctorCard> {
-  var size,height,width;
+  var size, height, width;
 
   @override
   Widget build(BuildContext context) {
-     size = MediaQuery.of(context).size; 
+    size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
     return GestureDetector(
@@ -31,33 +31,31 @@ class _DoctorCardState extends State<DoctorCard> {
                 color: Colors.white,
                 child: Row(children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: SizedBox(
-                        width: width/4,
-                        height: height/3.5,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(35),
-                                bottomRight: Radius.circular(35),
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15)),
-                            child: Image.asset(
-                              widget.doctor.image,
-                              fit: BoxFit.cover,
-                            ))),
-                  ),
+                      padding: const EdgeInsets.only(right: 15),
+                      child: SizedBox(
+                          width: width / 4,
+                          height: height / 3.5,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(35),
+                                  bottomRight: Radius.circular(35),
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15)),
+                              child: Image.asset(
+                                widget.doctor.image,
+                                fit: BoxFit.cover,
+                              )))),
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           widget.doctor.firstName + widget.doctor.lastName,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: width/25),
+                              fontWeight: FontWeight.w600,
+                              fontSize: width / 25),
                         ),
                         Text(widget.doctor.specialty,
-                            style:
-                             TextStyle(
-                              fontWeight: FontWeight.w400)),
+                            style: TextStyle(fontWeight: FontWeight.w400)),
                         Text(widget.doctor.price + ' EGP',
                             style: TextStyle(
                               color: AppColors.deepsea,
@@ -79,7 +77,7 @@ class _DoctorCardState extends State<DoctorCard> {
                           const SizedBox(width: 5),
                           Text(
                             widget.doctor.interest,
-                            style: TextStyle(fontSize: width/25),
+                            style: TextStyle(fontSize: width / 25),
                           )
                         ]),
                         const SizedBox(height: 4),
@@ -102,15 +100,15 @@ class _DoctorCardState extends State<DoctorCard> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: width/3.5,
-                                height: height/20,
+                                width: width / 3.5,
+                                height: height / 20,
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Text(
                                     'View Profile',
                                     style: TextStyle(
                                       color: AppColors.OrangePeel,
-                                      fontSize: width/28,
+                                      fontSize: width / 28,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -120,18 +118,19 @@ class _DoctorCardState extends State<DoctorCard> {
                                 width: 10,
                               ),
                               Container(
-                                width: width/3.5,
-                                height: height/20,
+                                width: width / 3.5,
+                                height: height / 20,
                                 child: OutlinedButton(
                                     style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(
-                                            AppColors.deepsea)),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                AppColors.deepsea)),
                                     onPressed: () {},
                                     child: Text(
                                       'Book Now',
                                       style: TextStyle(
                                         color: AppColors.white,
-                                        fontSize: width/32,
+                                        fontSize: width / 32,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     )),
