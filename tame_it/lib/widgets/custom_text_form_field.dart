@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../values/values.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -21,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? titleIcon;
   final TextInputType? textInputType;
   final ValueChanged<String>? onChanged;
+  final void Function(String?)? onSaved;
   final FormFieldValidator<String>? validator;
   final List<TextInputFormatter>? inputFormatters;
   final InputBorder border;
@@ -30,8 +30,10 @@ class CustomTextFormField extends StatelessWidget {
   final double? height;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? textFormFieldMargin;
+  final TextEditingController? controller; // Added TextEditingController
 
-  const CustomTextFormField({super.key, 
+  const CustomTextFormField({
+    Key? key,
     this.prefixIcon,
     this.suffixIcon,
     this.textStyle,
@@ -54,13 +56,16 @@ class CustomTextFormField extends StatelessWidget {
     this.obscured = false,
     this.textInputType,
     this.onChanged,
+    this.onSaved,
     this.validator,
     this.inputFormatters,
     this.width,
     this.height,
+    this.controller, // Added TextEditingController
   })  : assert((!hasTitleIcon && titleIcon == null) ||
             (hasTitleIcon && titleIcon != null)),
-        assert((!hasTitle && title == null) || (hasTitle && title != null));
+        assert((!hasTitle && title == null) || (hasTitle && title != null)),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +75,9 @@ class CustomTextFormField extends StatelessWidget {
         Row(
           children: <Widget>[
             hasTitleIcon ? titleIcon! : Container(),
-            hasTitle ? Text(title!, style: titleStyle) : Container(),
+            hasTitle ? Text(title!, style: titleStyle!) : Container(), // Added null check for titleStyle
           ],
         ),
-//        hasTitle ? SpaceH4() : Container(),
         Container(
           width: width,
           height: height,
@@ -82,6 +86,7 @@ class CustomTextFormField extends StatelessWidget {
             style: textStyle,
             keyboardType: textInputType,
             onChanged: onChanged,
+            onSaved: onSaved,
             validator: validator,
             inputFormatters: inputFormatters,
             decoration: InputDecoration(
@@ -97,6 +102,7 @@ class CustomTextFormField extends StatelessWidget {
               hintStyle: hintTextStyle,
             ),
             obscureText: obscured,
+            controller: controller, // Added controller here
           ),
         ),
       ],
