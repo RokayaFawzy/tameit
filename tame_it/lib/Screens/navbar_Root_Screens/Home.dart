@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tame_it/values/values.dart';
 
@@ -117,16 +120,27 @@ class __HomeStateState extends State<Home> {
               Center(
                   child: Container(
                       width: width / 1.1,
-                      height: height / 6,
+                      height: height / 6.5,
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Row(children: [
-                            SizedBox(
+                            Container(
                                 width: width / 3.5,
                                 height: height / 3.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0,
+                                              5) // changes position of shadow
+                                          )
+                                    ]),
                                 child: ClipRRect(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
@@ -147,16 +161,27 @@ class __HomeStateState extends State<Home> {
               Center(
                   child: Container(
                       width: width / 1.1,
-                      height: height / 8,
+                      height: height / 6.5,
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Row(children: [
-                            SizedBox(
+                            Container(
                                 width: width / 3.1,
-                                height: height / 8,
+                                height: height / 6,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0,
+                                              5) // changes position of shadow
+                                          )
+                                    ]),
                                 child: ClipRRect(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
@@ -177,16 +202,27 @@ class __HomeStateState extends State<Home> {
               Center(
                   child: Container(
                       width: width / 1.1,
-                      height: height / 5,
+                      height: height / 6.5,
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Row(children: [
-                            SizedBox(
+                            Container(
                                 width: width / 3,
                                 height: height / 3.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0,
+                                              5) // changes position of shadow
+                                          )
+                                    ]),
                                 child: ClipRRect(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
@@ -207,16 +243,27 @@ class __HomeStateState extends State<Home> {
               Center(
                   child: Container(
                       width: width / 1.1,
-                      height: height / 4.5,
+                      height: height / 6.5,
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Row(children: [
-                            SizedBox(
+                            Container(
                                 width: width / 3,
-                                height: height / 3,
+                                height: height / 4,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: Offset(0,
+                                              5) // changes position of shadow
+                                          )
+                                    ]),
                                 child: ClipRRect(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
@@ -237,18 +284,18 @@ class __HomeStateState extends State<Home> {
               Center(
                   child: Container(
                       width: width / 1.1,
-                      height: height / 5,
+                      height: height / 6.5,
                       child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
                           child: Row(children: [
                             Container(
                                 width: width / 3,
                                 height: height / 3.5,
                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(15),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.4),
