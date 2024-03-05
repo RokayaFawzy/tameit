@@ -113,7 +113,7 @@ class _MorePageState extends State<MorePage> {
             ),
             child: ListTile(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/');
+                  Navigator.of(context).pushNamed('/ChangePassword');
                 },
                 leading: const Icon(
                   Icons.lock_outline,

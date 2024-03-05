@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:tame_it/utility/validator.dart';
 import '../values/values.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_painters.dart';
@@ -255,7 +254,7 @@ class _SignUpState extends State<SignUp> {
             CustomButton(
               title: 'Register',
               color: AppColors.deepsea,
-              textStyle: theme.textTheme.bodyText1?.copyWith(
+              textStyle: theme.textTheme.bodyLarge?.copyWith(
                 color: AppColors.white,
                 fontSize: widthOfScreen * 0.04,
                 fontWeight: FontWeight.w600,
