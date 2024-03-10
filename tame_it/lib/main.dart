@@ -23,9 +23,9 @@ class TameIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
-      // NavBarRoot(),
-
+      home:
+          // Login(),
+          NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -37,7 +37,7 @@ class TameIt extends StatelessWidget {
         '/Therapists': (context) => Therapists(),
         '/FiltersScreen': (context) => FiltersScreen(),
         '/EditInformation': (context) => EditInformation(),
-        '/Home':(context) => Home()
+        '/Home': (context) => Home()
       },
     );
   }
