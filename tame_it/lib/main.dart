@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/Testings/more%20pages/changePassword.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Profile.dart';
 import 'package:tame_it/Screens/SignUp.dart';
@@ -9,8 +10,10 @@ import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/edit_Profile_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/therapistspage.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
+
+import 'Screens/navbar_Root_Screens/navbar_root.dart';
 
 void main() {
   runApp(const TameIt());
@@ -23,9 +26,9 @@ class TameIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-          // Login(),
-          NavBarRoot(),
+      home: Login(),
+      // NavBarRoot(),
+
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -37,7 +40,7 @@ class TameIt extends StatelessWidget {
         '/Therapists': (context) => Therapists(),
         '/FiltersScreen': (context) => FiltersScreen(),
         '/EditInformation': (context) => EditInformation(),
-        '/Home': (context) => Home()
+        '/Home':(context) => Home()
       },
     );
   }
