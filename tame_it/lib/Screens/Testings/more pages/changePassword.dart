@@ -20,34 +20,27 @@ class _changePasswordState extends State<changePassword> {
     var widthOfScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.whiteShade3,
-      body: DefaultTabController(
-        length: 2,
-        child: GestureDetector(
-          child: Stack(
-            children: <Widget>[
-              ListView(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: widthOfScreen * 0.1,
-                      right: widthOfScreen * 0.3,
-                    ),
+        backgroundColor: AppColors.whiteShade3,
+        body: DefaultTabController(
+            length: 2,
+            child: GestureDetector(
+                child: Stack(children: <Widget>[
+              ListView(children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(
+                    left: widthOfScreen * 0.1,
+                    right: widthOfScreen * 0.3,
                   ),
-                  SizedBox(
-                    height: (heightOfScreen * 0.07),
-                  ),
-                  Container(
-                    height: heightOfScreen,
-                    child: _buildResetPassForm(),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                ),
+                SizedBox(
+                  height: (heightOfScreen * 0.07),
+                ),
+                Container(
+                  height: heightOfScreen,
+                  child: _buildResetPassForm(),
+                )
+              ])
+            ]))));
   }
 
   Widget _buildResetPassForm() {
@@ -87,7 +80,7 @@ class _changePasswordState extends State<changePassword> {
           SizedBox(
             height: Sizes.HEIGHT_14,
           ),
-                SizedBox(
+          SizedBox(
             height: Sizes.HEIGHT_50,
             child: TextField(
               keyboardType: TextInputType.visiblePassword,

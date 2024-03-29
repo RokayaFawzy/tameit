@@ -45,6 +45,7 @@ dependencies:
   flutter_feather_icons: ^2.0.0+1
   flutter_rating_bar: ^4.0.1
   material_design_icons_flutter: ^7.0.7296
+  material_color_utilities: ^0.8.0
   # flutter_flushbar: ^0.0.2
 
 dev_dependencies:
