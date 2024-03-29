@@ -53,16 +53,14 @@ class _changePasswordState extends State<changePassword> {
           Row(
             children: [
               Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  iconSize: 29,
-                  color: AppColors.deepsea,
-                  icon: Icon(FeatherIcons.arrowLeft),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/More');
-                  },
-                ),
-              ),
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                      iconSize: 29,
+                      color: AppColors.deepsea,
+                      icon: Icon(FeatherIcons.arrowLeft),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/More');
+                      })),
               const Expanded(
                 child: Center(
                   child: Text(
