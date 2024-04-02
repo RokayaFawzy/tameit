@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -16,11 +15,14 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final formKey = GlobalKey<FormState>();
-  // late String _userName, _password, _confirmPassword, _email;
-  late String _userName = ''; // Initialize with an empty string
-  late String _password = ''; // Initialize with an empty string
-  late String _confirmPassword = ''; // Initialize with an empty string
-  late String _email = ''; // Initialize with an empty string
+  late String _userName = '';
+  late String _password = '';
+  late String _confirmPassword = '';
+  late String _email = '';
+
+  bool _usernameExists = false;
+  String? _passwordError;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,13 @@ class _SignUpState extends State<SignUp> {
                 child: _buildRegiserForm(widthOfScreen),
               ),
             ),
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
           ],
         ),
       ),
@@ -98,6 +107,41 @@ class _SignUpState extends State<SignUp> {
       final form = formKey.currentState;
       if (form!.validate()) {
         form.save();
+        if (_userName.isEmpty ||
+            _password.isEmpty ||
+            _confirmPassword.isEmpty ||
+            _email.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Please fill in all the fields."),
+            duration: Duration(seconds: 2),
+          ));
+          return;
+        }
+        if (_userName.contains(' ')) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Please enter username with no spaces."),
+            duration: Duration(seconds: 2),
+          ));
+          return;
+        }
+        if (_password != _confirmPassword) {
+          setState(() {
+            _passwordError = "Passwords do not match.";
+          });
+          return;
+        } else {
+          setState(() {
+            _passwordError = null;
+          });
+        }
+        if (_usernameExists) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text("Username already exists. Please choose a different one."),
+            duration: Duration(seconds: 2),
+          ));
+          return;
+        }
         _registerUser();
       }
     };
@@ -111,7 +155,6 @@ class _SignUpState extends State<SignUp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: widthOfScreen * 0.05),
-
             Text(
               "Sign Up",
               style: TextStyle(
@@ -122,8 +165,16 @@ class _SignUpState extends State<SignUp> {
             ),
             SizedBox(height: widthOfScreen * 0.04),
             CustomTextFormField(
-              textInputType: TextInputType.text,
-              // validator: validateEmail,
+              textInputType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your email';
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
               onSaved: (value) => _email = value ?? '',
               onChanged: (data) {
                 _email = data;
@@ -177,6 +228,17 @@ class _SignUpState extends State<SignUp> {
                 color: AppColors.blackShade10,
               ),
               hintText: 'Username',
+              validator: (value) {
+                if (value!.contains(' ')) {
+                  return 'Username should not contain spaces';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  _usernameExists = false;
+                });
+              },
             ),
             SizedBox(height: widthOfScreen * 0.02),
             CustomTextFormField(
@@ -250,6 +312,14 @@ class _SignUpState extends State<SignUp> {
               ),
               hintText: 'Confirm Password',
             ),
+            if (_passwordError != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(
+                  _passwordError!,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
             SizedBox(height: widthOfScreen * 0.07),
             CustomButton(
               title: 'Register',
@@ -261,7 +331,7 @@ class _SignUpState extends State<SignUp> {
               ),
               onPressed: doRegister,
             ),
-            SizedBox(height: widthOfScreen * 0.05), // Add the SizedBox here
+            SizedBox(height: widthOfScreen * 0.05),
             Align(
               alignment: Alignment.center,
               child: SelectableText.rich(
@@ -292,6 +362,9 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> _registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       final url =
           Uri.parse('https://tameit.azurewebsites.net/api/auth/register');
@@ -307,19 +380,23 @@ class _SignUpState extends State<SignUp> {
       );
 
       if (response.statusCode == 200) {
-        // Registration successful
         var responseData = json.decode(response.body);
-        var token = responseData['token']; // Assuming the token key is 'token'
+        var token = responseData['token'];
         print('Registration successful. Token: $token');
-        // Navigate to another screen or show a success message
-        Navigator.of(context).pushNamed('/Home');
+        Navigator.of(context).pushNamed('/NavBarRoot');
+      } else if (response.statusCode == 400) {
+        setState(() {
+          _usernameExists = true;
+        });
       } else {
-        // Registration failed, handle error (e.g., show error message)
         print('Registration failed with status code ${response.statusCode}');
       }
     } catch (e) {
-      // Error occurred during registration process
       print('Error occurred during registration: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 }

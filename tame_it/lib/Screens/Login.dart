@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:tame_it/utility/validator.dart';
 import '../values/values.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_painters.dart';
-import '../widgets/custom_text_form_field.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,20 +38,36 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   bool _rememberMe = true;
+  String? _errorMessage;
 
+  // Future to retrieve token
+  Future<String?> _getTokenFuture = _getToken();
+
+  static Future<String?> _getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  // Method to store token securely
   Future<void> storeToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
   }
 
-// Retrieve token
-  Future<String?> getToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
-  }
-
   // Method to handle login button press
   Future<void> _loginUser(String userName, String password) async {
+    // Clear previous error message
+    setState(() {
+      _errorMessage = null;
+    });
+
+    if (userName.isEmpty || password.isEmpty) {
+      setState(() {
+        _errorMessage = "Please enter both email and password.";
+      });
+      return;
+    }
+
     print('Entered username: $userName');
     print('Entered password: $password');
     // Create LoginDetails object with the entered data
@@ -73,59 +88,27 @@ class _LoginState extends State<Login> {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final String token = responseData['token'];
 
-        // Store token securely (you can use packages like shared_preferences or flutter_secure_storage)
-        // For demonstration, let's assume you have a class named TokenStorage to handle token storage
+        // Store token securely
         await storeToken(token);
 
         // Navigate to home page
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => NavBarRoot()),
         );
       } else {
-        // Login failed, handle error (e.g., show error message)
-        print('Login failed with status code ${response.statusCode}');
-        // Show error message to the user
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Login Failed"),
-              content: Text("Invalid username or password. Please try again."),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
+        // Login failed, handle error
+        setState(() {
+          _errorMessage = "Invalid username or password. Please try again.";
+        });
       }
     } catch (e) {
       // Error occurred during login process
+      setState(() {
+        _errorMessage =
+            "An error occurred while logging in. Please try again later.";
+      });
       print('Error occurred during login: $e');
-      // Show error message to the user
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text(
-                "An error occurred while logging in. Please try again later."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
     }
   }
 
@@ -148,7 +131,18 @@ class _LoginState extends State<Login> {
             drawCircles(heightOfScreen, widthOfScreen),
             Center(
               child: SingleChildScrollView(
-                child: _buildLoginForm(widthOfScreen),
+                child: FutureBuilder<String?>(
+                  future: _getTokenFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Show loading indicator while retrieving token
+                      return CircularProgressIndicator();
+                    } else {
+                      // Once token is retrieved, show login form
+                      return _buildLoginForm(widthOfScreen);
+                    }
+                  },
+                ),
               ),
             ),
           ],
@@ -234,69 +228,70 @@ class _LoginState extends State<Login> {
           const SizedBox(
             height: 20,
           ),
-          CustomTextFormField(
-            textInputType: TextInputType.text,
+          TextFormField(
+            keyboardType: TextInputType.text,
             validator: validateEmail,
             controller: userNameController,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.mail,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                FeatherIcons.mail,
+                color: AppColors.greyShade7,
+                size: Sizes.ICON_SIZE_20,
+              ),
+              hintText: 'Email',
+              errorText: _errorMessage, // Display error message here
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.blackShade2),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orange),
+              ),
+              hintStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.greyShade7,
+              ),
+              labelStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.blackShade10,
+              ),
             ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Email',
           ),
           const SizedBox(
             height: 12.0,
           ),
-          CustomTextFormField(
-            obscured: true,
+          TextFormField(
+            obscureText: true,
             validator: (value) =>
                 value!.isEmpty ? "Please enter password" : null,
             controller: passwordController,
-            textInputType: TextInputType.text,
-            hasTitle: false,
-            hasPrefixIcon: true,
-            prefixIcon: const Icon(
-              FeatherIcons.lock,
-              color: AppColors.greyShade7,
-              size: Sizes.ICON_SIZE_20,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                FeatherIcons.lock,
+                color: AppColors.greyShade7,
+                size: Sizes.ICON_SIZE_20,
+              ),
+              suffixIcon: const Icon(
+                FeatherIcons.eyeOff,
+                color: AppColors.deepsea,
+              ),
+              hintText: 'Password',
+              errorText: _errorMessage, // Display error message here
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.blackShade2),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orange),
+              ),
+              hintStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.greyShade7,
+              ),
+              labelStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.blackShade10,
+              ),
             ),
-            hasSuffixIcon: true,
-            suffixIcon: const Icon(
-              FeatherIcons.eyeOff,
-              color: AppColors.deepsea,
-            ),
-            hintTextStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.greyShade7,
-            ),
-            enabledBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.blackShade2,
-            ),
-            focusedBorder: Borders.customUnderlineInputBorder(
-              color: AppColors.orange,
-            ),
-            textStyle: Styles.customTextStyle(
-              fontSize: Sizes.TEXT_SIZE_20,
-              color: AppColors.blackShade10,
-            ),
-            hintText: 'Password',
           ),
           const SizedBox(
             height: 6,
@@ -376,4 +371,10 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: Login(),
+  ));
 }
