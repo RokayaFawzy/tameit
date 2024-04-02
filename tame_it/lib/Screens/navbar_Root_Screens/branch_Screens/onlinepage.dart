@@ -12,10 +12,10 @@ class OnlineTherapists extends StatefulWidget {
 
 class __OnlineTherapistsStateState extends State<OnlineTherapists> {
   final TextEditingController _searchController = TextEditingController();
-      var size,height,width;
+  var size, height, width;
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size; 
+    size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
     var heightOfScreen = MediaQuery.of(context).size.height;
@@ -43,48 +43,48 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
 
   Widget _buildMyTherapy() {
     return Scaffold(
-        backgroundColor: AppColors.whiteShade3,
-        appBar: AppBar(
-            backgroundColor: AppColors.whiteShade3,
-            shape: const Border(
-                bottom: BorderSide(
-              color: AppColors.whiteShade4,
-              width: 1,
-            )),
-            title: const Text('Online Therapists',
-                style: TextStyle(
-                  color: AppColors.deepsea,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-            actions: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/Profile');
-                        },
-                        child: const CircleAvatar(
-                            radius: 17,
-                            backgroundColor: Colors.black38,
-                            child: CircleAvatar(
-                              radius: 16,
-                              backgroundImage:
-                                  AssetImage('assets/images/123.jpg'),
-                            ))))
-              ])
-            ]),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+      backgroundColor: AppColors.whiteShade3,
+      appBar: AppBar(
+          backgroundColor: AppColors.whiteShade3,
+          shape: const Border(
+              bottom: BorderSide(
+            color: AppColors.whiteShade4,
+            width: 1,
+          )),
+          title: const Text('Online Therapists',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          actions: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/Profile');
+                      },
+                      child: const CircleAvatar(
+                          radius: 17,
+                          backgroundColor: Colors.black38,
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundImage:
+                                AssetImage('assets/images/123.jpg'),
+                          ))))
+            ])
+          ]),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               SizedBox(height: 10),
               Text('    You can start in minutes',
                   style: TextStyle(
                     color: AppColors.deepsea,
-                    fontSize: width/20,
+                    fontSize: width / 20,
                   )),
               SizedBox(height: 2),
               Padding(
@@ -97,7 +97,8 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                             decoration: InputDecoration(
                                 hintText: 'Therapist Name or interest',
                                 hintStyle: TextStyle(
-                                    color: AppColors.greyShade7, fontSize: width/25),
+                                    color: AppColors.greyShade7,
+                                    fontSize: width / 25),
                                 prefixIcon: IconButton(
                                     icon: const Icon(
                                       Icons.search,
@@ -191,18 +192,34 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
               SizedBox(
                 height: 12,
               ),
-              DoctorCard(
-                doctor: Doctor(
-                    firstName: 'Smith',
-                    specialty: 'Psychologist',
-                    rating: 5,
-                    lastName: ' Wilson',
-                    price: '800',
-                    experienceYears: '24 yr',
-                    interest: 'Depression, Stress, Anxiety',
-                    image: 'assets/images/123.jpg'),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: DoctorCard(
+                      doctor: Doctor(
+                        firstName: 'Smith',
+                        specialty: 'Psychologist',
+                        rating: 5,
+                        lastName: ' Wilson',
+                        price: '800',
+                        experienceYears: '24 yr',
+                        interest: 'Depression, Stress, Anxiety',
+                        image: 'assets/images/123.jpg',
+                      ),
+                    ),
+                  );
+                },
               ),
-            ]))));
+              const SizedBox(height: 200),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
 //Sorted by page
