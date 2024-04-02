@@ -91,7 +91,7 @@ class _NavBarRootState extends State<NavBarRoot> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.video_call), label: "ONLINE"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person), label: "MY THERAPY"),
+                icon: Icon(Icons.person), label: "Therapists"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.question_answer), label: "CHATBOT"),
             BottomNavigationBarItem(
