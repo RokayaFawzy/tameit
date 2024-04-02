@@ -17,28 +17,16 @@ class _PhoneVerifyState extends State<PhoneVerify> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
-      appBar: AppBar(
-          title: const Text(
-            '        Verify your phone number',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 16,
-              fontFamily: 'Nunito Sans',
-              fontWeight: FontWeight.w400,
-              height: 0.07,
-            ),
-          ),
-          shadowColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: AppColors.deepsea)),
+      appBar:AppBar(
+          title: Center(
+              child: Text('Verify Your phone number',
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ))),
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
+          backgroundColor: AppColors.whiteShade3),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

@@ -58,26 +58,21 @@ class _CodePhoneState extends State<CodePhone> {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
           title: const Center(
-            child: Text(
-              'Verification code',
-              // textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: 16,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w400,
-                height: 0.07,
-              ),
-            ),
-          ),
-          shadowColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          elevation: 0,
+              child: Text('Verification code',
+                  // textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: 16,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w400,
+                    height: 0.07,
+                  ))),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back_ios),
+          //   onPressed: () {
+          //     Navigator.of(context).pop();
+          //   },
+          // ),
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: AppColors.deepsea)),
       body: SafeArea(
@@ -87,7 +82,7 @@ class _CodePhoneState extends State<CodePhone> {
             shrinkWrap: true,
             children: [
               const Padding(
-                padding: EdgeInsets.only(left: 10,right: 10),
+                padding: EdgeInsets.only(left: 10, right: 10),
                 child: Center(
                   child: Text(
                     textAlign: TextAlign.center,
@@ -104,7 +99,7 @@ class _CodePhoneState extends State<CodePhone> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(left:10.0,right: 10),
+                padding: EdgeInsets.only(left: 10.0, right: 10),
                 child: Center(
                   child: Text(
                     textAlign: TextAlign.center,
