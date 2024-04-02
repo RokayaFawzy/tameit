@@ -45,157 +45,188 @@ class __TherapistsStateState extends State<Therapists> {
   Widget _buildMyTherapy() {
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: AppColors.whiteShade3,
-        appBar: AppBar(
-            backgroundColor: AppColors.whiteShade3,
-            shape: const Border(
-                bottom: BorderSide(
-              color: AppColors.whiteShade4,
-              width: 1,
-            )),
-            title: const Text('Our Therapists',
-                style: TextStyle(
-                  color: AppColors.deepsea,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-            actions: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/Profile');
-                        },
-                        child: const CircleAvatar(
-                            radius: 17,
-                            backgroundColor: Colors.black38,
-                            child: CircleAvatar(
-                              radius: 16,
-                              backgroundImage:
-                                  AssetImage('assets/images/123.jpg'),
-                            ))))
-              ])
-            ]),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Column(children: [
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(children: [
-                Expanded(
-                    child: TextField(
-                        controller: _searchController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            hintText: 'Therapist Name or interest',
-                            hintStyle: const TextStyle(
-                                color: AppColors.greyShade7, fontSize: 15),
-                            prefixIcon: IconButton(
-                                icon: const Icon(
-                                  Icons.search,
-                                  color: AppColors.greyShade7,
-                                ),
-                                onPressed: () {
-                                  // Perform the search here
-                                }),
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () => _searchController.clear(),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ))))
-              ])),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
+      backgroundColor: AppColors.whiteShade3,
+      appBar: AppBar(
+          backgroundColor: AppColors.whiteShade3,
+          shape: const Border(
+              bottom: BorderSide(
+            color: AppColors.whiteShade4,
+            width: 1,
+          )),
+          title: const Text('Our Therapists',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          actions: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/Profile');
+                      },
+                      child: const CircleAvatar(
+                          radius: 17,
+                          backgroundColor: Colors.black38,
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundImage:
+                                AssetImage('assets/images/123.jpg'),
+                          ))))
+            ])
+          ]),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
               Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(children: [
-                    Container(
-                        width: widthOfScreen * 0.45,
-                        child: OutlinedButton(
-                            style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: AppColors.deepsea,
-                                        width: 1.0,
-                                        style: BorderStyle.solid)),
-                                shape: const MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ))),
-                            child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.tune,
-                                    color: AppColors.deepsea,
-                                    size: 20,
-                                  ),
-                                  Text(' Filter by',
-                                      style: TextStyle(
-                                        color: AppColors.deepsea,
-                                      ))
-                                ]),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/FiltersScreen');
-                            }))
+                    Expanded(
+                        child: TextField(
+                            controller: _searchController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                hintText: 'Therapist Name or interest',
+                                hintStyle: const TextStyle(
+                                    color: AppColors.greyShade7, fontSize: 15),
+                                prefixIcon: IconButton(
+                                    icon: const Icon(
+                                      Icons.search,
+                                      color: AppColors.greyShade7,
+                                    ),
+                                    onPressed: () {
+                                      // Perform the search here
+                                    }),
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.clear),
+                                  onPressed: () => _searchController.clear(),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ))))
                   ])),
-              Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Row(children: [
-                    Container(
-                        width: widthOfScreen * 0.45,
-                        child: OutlinedButton(
-                            style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Row(children: [
+                        Container(
+                            width: widthOfScreen * 0.45,
+                            child: OutlinedButton(
+                                style: ButtonStyle(
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: AppColors.deepsea,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)),
+                                    shape: const MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ))),
+                                child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.tune,
                                         color: AppColors.deepsea,
-                                        width: 1.0,
-                                        style: BorderStyle.solid)),
-                                shape: const MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ))),
-                            child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.swap_vert,
-                                    color: AppColors.deepsea,
-                                    size: 20,
-                                  ),
-                                  Text(' Sort by',
-                                      style: TextStyle(
+                                        size: 20,
+                                      ),
+                                      Text(' Filter by',
+                                          style: TextStyle(
+                                            color: AppColors.deepsea,
+                                          ))
+                                    ]),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/FiltersScreen');
+                                }))
+                      ])),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Row(children: [
+                        Container(
+                            width: widthOfScreen * 0.45,
+                            child: OutlinedButton(
+                                style: ButtonStyle(
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: AppColors.deepsea,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)),
+                                    shape: const MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ))),
+                                child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.swap_vert,
                                         color: AppColors.deepsea,
-                                      ))
-                                ]),
-                            onPressed: _showMultiSelect))
-                  ]))
+                                        size: 20,
+                                      ),
+                                      Text(' Sort by',
+                                          style: TextStyle(
+                                            color: AppColors.deepsea,
+                                          ))
+                                    ]),
+                                onPressed: _showMultiSelect))
+                      ]))
+                ],
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              //   DoctorCard(
+              //     doctor: Doctor(
+              //         firstName: 'Smith',
+              //         specialty: 'Psychologist',
+              //         rating: 5,
+              //         lastName: ' Wilson',
+              //         price: '800',
+              //         experienceYears: '24 yr',
+              //         interest: 'Depression, Stress, Anxiety',
+              //         image: 'assets/images/123.jpg'),
+              //   ),
+              // ]))));
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: DoctorCard(
+                      doctor: Doctor(
+                        firstName: 'Smith',
+                        specialty: 'Psychologist',
+                        rating: 5,
+                        lastName: ' Wilson',
+                        price: '800',
+                        experienceYears: '24 yr',
+                        interest: 'Depression, Stress, Anxiety',
+                        image: 'assets/images/123.jpg',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 200),
             ],
           ),
-          SizedBox(
-            height: 12,
-          ),
-          DoctorCard(
-            doctor: Doctor(
-                firstName: 'Smith',
-                specialty: 'Psychologist',
-                rating: 5,
-                lastName: ' Wilson',
-                price: '800',
-                experienceYears: '24 yr',
-                interest: 'Depression, Stress, Anxiety',
-                image: 'assets/images/123.jpg'),
-          ),
-        ]))));
+        ),
+      ),
+    );
   }
+
 //Sorted by page
   String _selectedItem = ''; // Declaration and initialization of _selectedItem
 
