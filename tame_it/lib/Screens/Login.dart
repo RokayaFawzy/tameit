@@ -68,8 +68,23 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    print('Entered username: $userName');
-    print('Entered password: $password');
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            children: <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text("Logging in..."),
+            ],
+          ),
+        );
+      },
+    );
+
     // Create LoginDetails object with the entered data
     LoginDetails loginDetails =
         LoginDetails(userName: userName, password: password);
@@ -91,6 +106,9 @@ class _LoginState extends State<Login> {
         // Store token securely
         await storeToken(token);
 
+        // Close loading indicator
+        Navigator.pop(context);
+
         // Navigate to home page
         Navigator.pushReplacement(
           context,
@@ -101,6 +119,9 @@ class _LoginState extends State<Login> {
         setState(() {
           _errorMessage = "Invalid username or password. Please try again.";
         });
+
+        // Close loading indicator
+        Navigator.pop(context);
       }
     } catch (e) {
       // Error occurred during login process
@@ -109,6 +130,9 @@ class _LoginState extends State<Login> {
             "An error occurred while logging in. Please try again later.";
       });
       print('Error occurred during login: $e');
+
+      // Close loading indicator
+      Navigator.pop(context);
     }
   }
 
