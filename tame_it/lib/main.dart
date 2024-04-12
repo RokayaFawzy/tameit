@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/changePassword.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Profile.dart';
@@ -25,7 +26,8 @@ class TameIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: ChatDoctorPage(),
+      // Login(),
       // NavBarRoot(),
 
       routes: {
