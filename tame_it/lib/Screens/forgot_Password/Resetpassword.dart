@@ -16,18 +16,6 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    var heightOfScreen = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-        body: ListView(children: <Widget>[
-      Container(
-        height: heightOfScreen,
-        child: _buildResetPassForm(),
-      )
-    ]));
-  }
-
-  Widget _buildResetPassForm() {
     var widthOfScreen = MediaQuery.of(context).size.width;
     ThemeData theme = Theme.of(context);
     return Scaffold(

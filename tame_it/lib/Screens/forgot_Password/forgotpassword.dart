@@ -17,26 +17,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    var heightOfScreen = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-        body: ListView(children: <Widget>[
-          Container(
-            height: heightOfScreen,
-            child: _buildForPassForm(),
-          )
-        ]));
-  }
-
-  Widget _buildForPassForm() {
     var widthOfScreen = MediaQuery.of(context).size.width;
     ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
-        backgroundColor: AppColors.whiteShade3
-      ),
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
+          backgroundColor: AppColors.whiteShade3),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
         child: Column(
