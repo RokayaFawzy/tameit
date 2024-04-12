@@ -21,13 +21,13 @@ class _changePasswordState extends State<changePassword> {
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
         appBar: AppBar(
-            title: Center(
-                child: Text('Change Password',
-                    style: TextStyle(
-                      color: AppColors.deepsea,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ))),
+            title: Text('Change Password',
+                style: TextStyle(
+                  color: AppColors.deepsea,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                )),
+            centerTitle: true,
             iconTheme: const IconThemeData(color: AppColors.deepsea),
             backgroundColor: AppColors.whiteShade3),
         body: Container(

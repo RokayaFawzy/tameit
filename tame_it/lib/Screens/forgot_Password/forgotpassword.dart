@@ -51,7 +51,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: 20,
             ),
             SizedBox(
               height: Sizes.HEIGHT_50,
@@ -85,7 +85,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
             ),
             SizedBox(
-              height: 50.0,
+              height: 40.0,
             ),
             const Text(
               'code will send to your email',
@@ -97,23 +97,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               style: TextStyle(
                   color: AppColors.black, fontWeight: FontWeight.bold),
             ),
+            // SizedBox(
+            //   height: 40,
+            // ),
+            // const SelectableText.rich(TextSpan(
+            //     text: 'This code expires in ',
+            //     style: TextStyle(
+            //       color: AppColors.greyShade8,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //     children: <TextSpan>[
+            //       TextSpan(
+            //         text: '5 minutes',
+            //         style: TextStyle(color: AppColors.black),
+            //       )
+            //     ])),
             SizedBox(
-              height: 50,
-            ),
-            const SelectableText.rich(TextSpan(
-                text: 'This code expires in ',
-                style: TextStyle(
-                  color: AppColors.greyShade8,
-                  fontWeight: FontWeight.bold,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '5 minutes',
-                    style: TextStyle(color: AppColors.black),
-                  )
-                ])),
-            SizedBox(
-              height: 35,
+              height: 30,
             ),
             Container(
               width: widthOfScreen * 0.6,

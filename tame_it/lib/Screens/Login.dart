@@ -258,11 +258,11 @@ class _LoginState extends State<Login> {
             controller: userNameController,
             decoration: InputDecoration(
               prefixIcon: const Icon(
-                FeatherIcons.mail,
+                FeatherIcons.user,
                 color: AppColors.greyShade7,
                 size: Sizes.ICON_SIZE_20,
               ),
-              hintText: 'Email',
+              hintText: 'User Name',
               errorText: _errorMessage, // Display error message here
               border: UnderlineInputBorder(
                 borderSide: BorderSide(color: AppColors.blackShade2),
@@ -318,7 +318,7 @@ class _LoginState extends State<Login> {
             ),
           ),
           const SizedBox(
-            height: 6,
+            height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,7 +353,7 @@ class _LoginState extends State<Login> {
             ],
           ),
           const SizedBox(
-            height: 70.0,
+            height: 40.0,
           ),
           CustomButton(
             title: 'Login',
