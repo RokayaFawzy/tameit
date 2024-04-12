@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
           drawCircles(),
           ListView(children: <Widget>[
             SizedBox(
-              height: (heightOfScreen * 0.14),
+              height: (heightOfScreen * 0.10),
             ),
             SizedBox(
               height: 400,
@@ -59,94 +59,90 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _buildProfile() {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
-        child: ListView(children: [
-          Column(children: <Widget>[
-            const CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.black38,
-                child: CircleAvatar(
-                  radius: 39,
-                  backgroundImage: AssetImage(''),
-                )),
-            const SizedBox(
-              height: 12,
-            ),
-            const Text('Sylvia Huber',
-                style: TextStyle(
-                  color: AppColors.deepsea,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                )),
-            const Text('Sylviahuber@mail.com',
-                style: TextStyle(
-                  color: AppColors.deepsea,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                )),
-            const SizedBox(height: 40),
-            Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.white,
-                  border: Border(
-                      bottom:
-                          BorderSide(color: AppColors.greyShade2, width: 0.1)),
-                ),
-                child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/EditInformation');
-                    },
-                    leading: const Icon(
-                      Icons.person_outline_rounded,
-                      color: Colors.grey,
-                    ),
-                    title: const Text('Personal info'),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 15,
-                    ))),
-            Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.white,
-                  border: Border(
-                      bottom:
-                          BorderSide(color: AppColors.greyShade2, width: 0.1)),
-                ),
-                child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/');
-                    },
-                    leading: const Icon(
-                      Icons.medical_services_outlined,
-                      color: Colors.grey,
-                    ),
-                    title: const Text('My appointment'),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 15,
-                    ))),
-            Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.white,
-                  border: Border(
-                      bottom:
-                          BorderSide(color: AppColors.greyShade2, width: 0.1)),
-                ),
-                child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/');
-                    },
-                    leading: const Icon(
-                      Icons.personal_injury_outlined,
-                      color: Colors.grey,
-                    ),
-                    title: const Text('My doctors'),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 15,
-                    ))),
-          ])
-        ]));
+    return Column(children: <Widget>[
+      const CircleAvatar(
+          radius: 40,
+          backgroundColor: Colors.black38,
+          child: CircleAvatar(
+            radius: 39,
+            backgroundImage: AssetImage('assets/images/123.jpg'),
+          )),
+      const SizedBox(
+        height: 12,
+      ),
+      const Text('Sylvia Huber',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          )),
+      const Text('Sylviahuber@mail.com',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+          )),
+      const SizedBox(height: 40),
+      Container(
+          decoration: const BoxDecoration(
+            // color: Colors.white,
+            border: Border(
+                bottom:
+                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+          ),
+          child: ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed('/EditInformation');
+              },
+              leading: const Icon(
+                Icons.person_outline_rounded,
+                color: Colors.grey,
+              ),
+              title: const Text('Personal info'),
+              trailing: const Icon(
+                Icons.arrow_forward_ios_outlined,
+                size: 15,
+              ))),
+      Container(
+          decoration: const BoxDecoration(
+            // color: Colors.white,
+            border: Border(
+                bottom:
+                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+          ),
+          child: ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed('/');
+              },
+              leading: const Icon(
+                Icons.medical_services_outlined,
+                color: Colors.grey,
+              ),
+              title: const Text('My appointment'),
+              trailing: const Icon(
+                Icons.arrow_forward_ios_outlined,
+                size: 15,
+              ))),
+      Container(
+          decoration: const BoxDecoration(
+            // color: Colors.white,
+            border: Border(
+                bottom:
+                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+          ),
+          child: ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed('/');
+              },
+              leading: const Icon(
+                Icons.personal_injury_outlined,
+                color: Colors.grey,
+              ),
+              title: const Text('My doctors'),
+              trailing: const Icon(
+                Icons.arrow_forward_ios_outlined,
+                size: 15,
+              ))),
+    ]);
   }
 }
