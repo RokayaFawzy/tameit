@@ -22,19 +22,19 @@ class _EditInformationState extends State<EditInformation> {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: Center(
-            child: const Text(
-              'Edit profile',
-              // textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: 16,
-                fontFamily: 'NunitoSans',
-                fontWeight: FontWeight.w700,
-                height: 1.70,
-              ),
+          title: const Text(
+            'Edit profile',
+            // textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 16,
+              fontFamily: 'NunitoSans',
+              fontWeight: FontWeight.w700,
+              height: 1.70,
             ),
-          ),
+          ),   
+                 centerTitle: true,
+
           shadowColor: Colors.white,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
