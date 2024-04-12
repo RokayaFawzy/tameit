@@ -22,14 +22,15 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
         appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 27, 138, 125),
-            title: const Center(
-                child: Text('My Profile',
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    )))),
+          backgroundColor: Color.fromARGB(255, 27, 138, 125),
+          title: Text('My Profile',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              )),
+          centerTitle: true,
+        ),
         body: Stack(children: <Widget>[
           drawCircles(),
           ListView(children: <Widget>[
@@ -87,8 +88,7 @@ class _ProfileState extends State<Profile> {
           decoration: const BoxDecoration(
             // color: Colors.white,
             border: Border(
-                bottom:
-                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
           ),
           child: ListTile(
               onTap: () {
@@ -107,8 +107,7 @@ class _ProfileState extends State<Profile> {
           decoration: const BoxDecoration(
             // color: Colors.white,
             border: Border(
-                bottom:
-                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
           ),
           child: ListTile(
               onTap: () {
@@ -127,8 +126,7 @@ class _ProfileState extends State<Profile> {
           decoration: const BoxDecoration(
             // color: Colors.white,
             border: Border(
-                bottom:
-                    BorderSide(color: AppColors.greyShade2, width: 0.1)),
+                bottom: BorderSide(color: AppColors.greyShade2, width: 0.1)),
           ),
           child: ListTile(
               onTap: () {

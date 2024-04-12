@@ -57,16 +57,17 @@ class _CodePhoneState extends State<CodePhone> {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: const Center(
-              child: Text('Verification code',
-                  // textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.deepsea,
-                    fontSize: 16,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w400,
-                    height: 0.07,
-                  ))),
+          title: Text('Verification code',
+              // textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 16,
+                fontFamily: 'Nunito Sans',
+                fontWeight: FontWeight.w400,
+                height: 0.07,
+              )),
+          centerTitle: true,
+
           // leading: IconButton(
           //   icon: const Icon(Icons.arrow_back_ios),
           //   onPressed: () {

@@ -21,13 +21,13 @@ class _ResetPasswordState extends State<ResetPassword> {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: Center(
-              child: Text('Reset Password',
-                  style: TextStyle(
-                    color: AppColors.deepsea,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ))),
+          title: Text('Reset Password',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              )),
+          centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
           backgroundColor: AppColors.whiteShade3),
       body: Container(

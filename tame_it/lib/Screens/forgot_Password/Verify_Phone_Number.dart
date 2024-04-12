@@ -17,14 +17,14 @@ class _PhoneVerifyState extends State<PhoneVerify> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
-      appBar:AppBar(
-          title: Center(
-              child: Text('Verify Your phone number',
-                  style: TextStyle(
-                    color: AppColors.deepsea,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ))),
+      appBar: AppBar(
+          title: Text('Verify Your phone number',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              )),
+          centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
           backgroundColor: AppColors.whiteShade3),
       body: SafeArea(
