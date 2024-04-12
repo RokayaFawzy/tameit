@@ -11,8 +11,20 @@ class AvailableHoursCheckbox extends StatefulWidget {
 class _AvailableHoursCheckboxState extends State<AvailableHoursCheckbox> {
   final List<String> _selectedItems = [];
 
-  List<String> item = ['9 am-12 pm', '12 pm-3 pm', '3 pm-6 pm', '6 pm-9 pm'];
-
+  List<String> item = [
+    '9 am',
+    '10 am',
+    '11 am',
+    '12 pm',
+    '1 pm',
+    '2 pm',
+    '3 pm',
+    '4 pm',
+    '5 pm',
+    '6 pm',
+    '7 pm',
+    '8 pm'
+  ];
 
   void _itemChange(String itemValue, bool isSelected) {
     setState(() {
@@ -51,7 +63,6 @@ class _AvailableHoursCheckboxState extends State<AvailableHoursCheckbox> {
           controlAffinity: ListTileControlAffinity.leading,
           value: _selectedItems.contains(item),
           onChanged: (isChecked) => _itemChange(item, isChecked!),
-        
         );
       }).toList(),
     );
