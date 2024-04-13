@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/changePassword.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Profile.dart';
@@ -40,11 +42,15 @@ class TameIt extends StatelessWidget {
         '/CodePhone': (context) => CodePhone(),
         '/Profile': (context) => Profile(),
         '/Therapists': (context) => Therapists(),
+        '/OnlineTherapists': (context) => OnlineTherapists(),
         '/FiltersScreen': (context) => FiltersScreen(),
         '/EditInformation': (context) => EditInformation(),
         '/Home': (context) => Home(),
         '/More': (context) => MorePage(),
         '/NavBarRoot': (context) => NavBarRoot(),
+        '/DoctorDetails': (context) => DoctorDetails(),
+        '/ChatDoctorPage': (context) => ChatDoctorPage(),
+
       },
     );
   }

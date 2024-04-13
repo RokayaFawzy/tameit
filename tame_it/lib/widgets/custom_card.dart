@@ -23,7 +23,7 @@ class _DoctorCardState extends State<DoctorCard> {
     width = size.width;
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('/Profile');
+          Navigator.of(context).pushNamed('/DoctorDetails');
         },
         child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
@@ -103,7 +103,10 @@ class _DoctorCardState extends State<DoctorCard> {
                                 width: width / 3.5,
                                 height: height / 20,
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/DoctorDetails');
+                                  },
                                   child: Text(
                                     'View Profile',
                                     style: TextStyle(
