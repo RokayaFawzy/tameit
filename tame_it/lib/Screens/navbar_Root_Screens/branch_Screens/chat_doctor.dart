@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/chat_buble.dart';
 

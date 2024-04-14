@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/Testings/testings.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/onlinepage.dart';
@@ -32,6 +33,7 @@ class TameIt extends StatelessWidget {
           // ChatDoctorPage(),
           // Login(),
           NavBarRoot(),
+          
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -50,6 +52,8 @@ class TameIt extends StatelessWidget {
         '/NavBarRoot': (context) => NavBarRoot(),
         '/DoctorDetails': (context) => DoctorDetails(),
         '/ChatDoctorPage': (context) => ChatDoctorPage(),
+        '/Testings': (context) => Testings(),
+
 
       },
     );

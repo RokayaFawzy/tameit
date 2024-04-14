@@ -70,20 +70,16 @@ class _LoginState extends State<Login> {
 
     // Show loading indicator
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Row(
-            children: <Widget>[
-              CircularProgressIndicator(),
-              SizedBox(width: 20),
-              Text("Logging in..."),
-            ],
-          ),
-        );
-      },
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content: Row(children: <Widget>[
+            CircularProgressIndicator(),
+            SizedBox(width: 20),
+            Text("Logging in..."),
+          ]));
+        });
 
     // Create LoginDetails object with the entered data
     LoginDetails loginDetails =
@@ -142,189 +138,168 @@ class _LoginState extends State<Login> {
     var widthOfScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.whiteShade2,
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Stack(
-          children: <Widget>[
-            drawCircles(heightOfScreen, widthOfScreen),
-            Center(
-              child: SingleChildScrollView(
-                child: FutureBuilder<String?>(
-                  future: _getTokenFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      // Show loading indicator while retrieving token
-                      return CircularProgressIndicator();
-                    } else {
-                      // Once token is retrieved, show login form
-                      return _buildLoginForm(widthOfScreen);
-                    }
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        backgroundColor: AppColors.whiteShade2,
+        body: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Stack(children: <Widget>[
+              drawCircles(heightOfScreen, widthOfScreen),
+              Center(
+                  child: SingleChildScrollView(
+                      child: FutureBuilder<String?>(
+                          future: _getTokenFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Show loading indicator while retrieving token
+                              return CircularProgressIndicator();
+                            } else {
+                              // Once token is retrieved, show login form
+                              return _buildLoginForm(widthOfScreen);
+                            }
+                          })))
+            ])));
   }
 
   // Widget to draw decorative circles on the background
   Widget drawCircles(double heightOfScreen, double widthOfScreen) {
-    return Column(
-      children: <Widget>[
-        CustomPaint(
+    return Column(children: <Widget>[
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.60, heightOfScreen * -0.05),
-            radius: widthOfScreen * 0.35,
-            color: const Color.fromARGB(255, 27, 138, 125),
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.60, heightOfScreen * -0.05),
+        radius: widthOfScreen * 0.35,
+        color: const Color.fromARGB(255, 27, 138, 125),
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.94, heightOfScreen * 0.04),
-            radius: widthOfScreen * 0.4,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.94, heightOfScreen * 0.04),
+        radius: widthOfScreen * 0.4,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.1, heightOfScreen * 0.95),
-            radius: widthOfScreen * 0.170,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.1, heightOfScreen * 0.95),
+        radius: widthOfScreen * 0.170,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.33, heightOfScreen * 0.91),
-            radius: widthOfScreen * 0.05,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-      ],
-    );
+        offset: Offset(widthOfScreen * 0.33, heightOfScreen * 0.91),
+        radius: widthOfScreen * 0.05,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      ))
+    ]);
   }
 
   // Widget to build the login form
   Widget _buildLoginForm(double widthOfScreen) {
     ThemeData theme = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Welcome Back!",
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: Sizes.TEXT_SIZE_30,
-                fontWeight: FontWeight.w500,
+        margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("Welcome Back!",
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: Sizes.TEXT_SIZE_30,
+                        fontWeight: FontWeight.w500,
+                      ))),
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("   We're Glad You're Here.",
+                      style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: Sizes.TEXT_SIZE_16,
+                        fontWeight: FontWeight.w500,
+                      ))),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "   We're Glad You're Here.",
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: Sizes.TEXT_SIZE_16,
-                fontWeight: FontWeight.w500,
+              TextFormField(
+                keyboardType: TextInputType.text,
+                validator: validateEmail,
+                controller: userNameController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(
+                    FeatherIcons.user,
+                    color: AppColors.greyShade7,
+                    size: Sizes.ICON_SIZE_20,
+                  ),
+                  hintText: 'User Name',
+                  errorText: _errorMessage, // Display error message here
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.blackShade2),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.orange),
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: Sizes.TEXT_SIZE_20,
+                    color: AppColors.greyShade7,
+                  ),
+                  labelStyle: TextStyle(
+                    fontSize: Sizes.TEXT_SIZE_20,
+                    color: AppColors.blackShade10,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            keyboardType: TextInputType.text,
-            validator: validateEmail,
-            controller: userNameController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(
-                FeatherIcons.user,
-                color: AppColors.greyShade7,
-                size: Sizes.ICON_SIZE_20,
+              const SizedBox(
+                height: 12.0,
               ),
-              hintText: 'User Name',
-              errorText: _errorMessage, // Display error message here
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.blackShade2),
+              TextFormField(
+                obscureText: true,
+                validator: (value) =>
+                    value!.isEmpty ? "Please enter password" : null,
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(
+                    FeatherIcons.lock,
+                    color: AppColors.greyShade7,
+                    size: Sizes.ICON_SIZE_20,
+                  ),
+                  suffixIcon: const Icon(
+                    FeatherIcons.eyeOff,
+                    color: AppColors.deepsea,
+                  ),
+                  hintText: 'Password',
+                  errorText: _errorMessage, // Display error message here
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.blackShade2),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.orange),
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: Sizes.TEXT_SIZE_20,
+                    color: AppColors.greyShade7,
+                  ),
+                  labelStyle: TextStyle(
+                    fontSize: Sizes.TEXT_SIZE_20,
+                    color: AppColors.blackShade10,
+                  ),
+                ),
               ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.orange),
+              const SizedBox(
+                height: 15,
               ),
-              hintStyle: TextStyle(
-                fontSize: Sizes.TEXT_SIZE_20,
-                color: AppColors.greyShade7,
-              ),
-              labelStyle: TextStyle(
-                fontSize: Sizes.TEXT_SIZE_20,
-                color: AppColors.blackShade10,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          TextFormField(
-            obscureText: true,
-            validator: (value) =>
-                value!.isEmpty ? "Please enter password" : null,
-            controller: passwordController,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(
-                FeatherIcons.lock,
-                color: AppColors.greyShade7,
-                size: Sizes.ICON_SIZE_20,
-              ),
-              suffixIcon: const Icon(
-                FeatherIcons.eyeOff,
-                color: AppColors.deepsea,
-              ),
-              hintText: 'Password',
-              errorText: _errorMessage, // Display error message here
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.blackShade2),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.orange),
-              ),
-              hintStyle: TextStyle(
-                fontSize: Sizes.TEXT_SIZE_20,
-                color: AppColors.greyShade7,
-              ),
-              labelStyle: TextStyle(
-                fontSize: Sizes.TEXT_SIZE_20,
-                color: AppColors.blackShade10,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Row(children: [
                   const Text(
                     'Remember me ',
                     style: TextStyle(
@@ -332,68 +307,58 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Checkbox(
-                    value: _rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        _rememberMe = value ?? false;
-                      });
+                      value: _rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          _rememberMe = value ?? false;
+                        });
+                      })
+                ]),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/ForgotPassword');
                     },
-                  ),
-                ],
+                    child: const Text(
+                      'Forgot Password?',
+                      style: TextStyle(color: AppColors.deepsea),
+                    ))
+              ]),
+              const SizedBox(
+                height: 40.0,
+              ),
+              CustomButton(
+                title: 'Login',
+                color: AppColors.deepsea,
+                textStyle: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.white,
+                  fontSize: Sizes.TEXT_SIZE_16,
+                  fontWeight: FontWeight.w600,
+                ),
+                onPressed: () {
+                  _loginUser(userNameController.text, passwordController.text);
+                },
+              ),
+              const SizedBox(
+                height: 50,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/ForgotPassword');
-                },
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(color: AppColors.deepsea),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 40.0,
-          ),
-          CustomButton(
-            title: 'Login',
-            color: AppColors.deepsea,
-            textStyle: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.white,
-              fontSize: Sizes.TEXT_SIZE_16,
-              fontWeight: FontWeight.w600,
-            ),
-            onPressed: () {
-              _loginUser(userNameController.text, passwordController.text);
-            },
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/SignUp');
-            },
-            child: Text.rich(
-              TextSpan(
-                text: 'Not Registered Yet?',
-                style: const TextStyle(
-                  color: AppColors.greyShade8,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Sizes.TEXT_SIZE_18,
-                ),
-                children: <TextSpan>[
-                  const TextSpan(
-                    text: ' Sign Up',
-                    style: TextStyle(color: AppColors.deepsea),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/SignUp');
+                  },
+                  child: Text.rich(TextSpan(
+                      text: 'Not Registered Yet?',
+                      style: const TextStyle(
+                        color: AppColors.greyShade8,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Sizes.TEXT_SIZE_18,
+                      ),
+                      children: <TextSpan>[
+                        const TextSpan(
+                          text: ' Sign Up',
+                          style: TextStyle(color: AppColors.deepsea),
+                        )
+                      ])))
+            ]));
   }
 }
 
