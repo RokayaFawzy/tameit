@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tame_it/values/values.dart';
 
@@ -107,10 +105,15 @@ class __HomeStateState extends State<Home> {
                 ),
               ),
               const SizedBox(height: 5),
-              _buildServiceCard(
-                image: 'assets/images/p5.jpg',
-                title: 'Testings',
-                apparent: true,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/Testings');
+                },
+                child: _buildServiceCard(
+                  image: 'assets/images/p5.jpg',
+                  title: 'Testings',
+                  apparent: true,
+                ),
               ),
               const SizedBox(height: 200),
             ]))));

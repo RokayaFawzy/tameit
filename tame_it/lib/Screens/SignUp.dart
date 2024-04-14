@@ -30,76 +30,64 @@ class _SignUpState extends State<SignUp> {
     var widthOfScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.whiteShade2,
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Stack(
-          children: <Widget>[
-            drawCircles(heightOfScreen, widthOfScreen),
-            Center(
-              child: SingleChildScrollView(
+        backgroundColor: AppColors.whiteShade2,
+        body: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Stack(children: <Widget>[
+              drawCircles(heightOfScreen, widthOfScreen),
+              Center(
+                  child: SingleChildScrollView(
                 child: _buildRegiserForm(widthOfScreen),
-              ),
-            ),
-            if (_isLoading)
-              Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+              )),
+              if (_isLoading)
+                Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+            ])));
   }
 
   Widget drawCircles(double heightOfScreen, double widthOfScreen) {
-    return Column(
-      children: <Widget>[
-        CustomPaint(
+    return Column(children: <Widget>[
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.50, heightOfScreen * -0.05),
-            radius: widthOfScreen * 0.35,
-            color: const Color.fromARGB(255, 27, 138, 125),
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.50, heightOfScreen * -0.05),
+        radius: widthOfScreen * 0.35,
+        color: const Color.fromARGB(255, 27, 138, 125),
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.14, heightOfScreen * 0.04),
-            radius: widthOfScreen * 0.4,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.14, heightOfScreen * 0.04),
+        radius: widthOfScreen * 0.4,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.9, heightOfScreen * 0.95),
-            radius: widthOfScreen * 0.170,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-        CustomPaint(
+        offset: Offset(widthOfScreen * 0.9, heightOfScreen * 0.95),
+        radius: widthOfScreen * 0.170,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      )),
+      CustomPaint(
           painter: DrawCircle(
-            offset: Offset(widthOfScreen * 0.66, heightOfScreen * 0.91),
-            radius: widthOfScreen * 0.05,
-            color: AppColors.deepsea,
-            hasShadow: true,
-            shadowColor: AppColors.deepsea1,
-          ),
-        ),
-      ],
-    );
+        offset: Offset(widthOfScreen * 0.66, heightOfScreen * 0.91),
+        radius: widthOfScreen * 0.05,
+        color: AppColors.deepsea,
+        hasShadow: true,
+        shadowColor: AppColors.deepsea1,
+      ))
+    ]);
   }
 
   Widget _buildRegiserForm(double widthOfScreen) {
@@ -148,217 +136,206 @@ class _SignUpState extends State<SignUp> {
 
     ThemeData theme = Theme.of(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: widthOfScreen * 0.05),
-      child: Form(
-        key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: widthOfScreen * 0.05),
-            Text(
-              "Sign Up",
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: widthOfScreen * 0.08,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(height: widthOfScreen * 0.04),
-            CustomTextFormField(
-              textInputType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your email';
-                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                    .hasMatch(value)) {
-                  return 'Please enter a valid email address';
-                }
-                return null;
-              },
-              onSaved: (value) => _email = value ?? '',
-              onChanged: (data) {
-                _email = data;
-              },
-              hasTitle: false,
-              hasPrefixIcon: true,
-              prefixIcon: Icon(
-                FeatherIcons.mail,
-                color: AppColors.greyShade7,
-                size: widthOfScreen * 0.06,
-              ),
-              hintTextStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.greyShade7,
-              ),
-              enabledBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.blackShade2,
-              ),
-              focusedBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.orange,
-              ),
-              textStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.blackShade10,
-              ),
-              hintText: 'Email',
-            ),
-            SizedBox(height: widthOfScreen * 0.02),
-            CustomTextFormField(
-              textInputType: TextInputType.name,
-              hasTitle: false,
-              onSaved: (value) => _userName = value ?? '',
-              hasPrefixIcon: true,
-              prefixIcon: Icon(
-                FeatherIcons.user,
-                color: AppColors.greyShade7,
-                size: widthOfScreen * 0.06,
-              ),
-              hintTextStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.greyShade7,
-              ),
-              enabledBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.blackShade2,
-              ),
-              focusedBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.orange,
-              ),
-              textStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.blackShade10,
-              ),
-              hintText: 'Username',
-              validator: (value) {
-                if (value!.contains(' ')) {
-                  return 'Username should not contain spaces';
-                }
-                return null;
-              },
-              onChanged: (value) {
-                setState(() {
-                  _usernameExists = false;
-                });
-              },
-            ),
-            SizedBox(height: widthOfScreen * 0.02),
-            CustomTextFormField(
-              textInputType: TextInputType.text,
-              obscured: true,
-              hasTitle: false,
-              validator: (value) =>
-                  value!.isEmpty ? "Please enter password" : null,
-              onSaved: (value) => _password = value ?? '',
-              hasPrefixIcon: true,
-              prefixIcon: Icon(
-                FeatherIcons.lock,
-                color: AppColors.greyShade7,
-                size: widthOfScreen * 0.06,
-              ),
-              hasSuffixIcon: true,
-              suffixIcon: Icon(
-                FeatherIcons.eyeOff,
-                color: AppColors.deepsea,
-                size: widthOfScreen * 0.06,
-              ),
-              hintTextStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.greyShade7,
-              ),
-              enabledBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.blackShade2,
-              ),
-              focusedBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.orange,
-              ),
-              textStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.blackShade10,
-              ),
-              hintText: 'Password',
-            ),
-            SizedBox(height: widthOfScreen * 0.02),
-            CustomTextFormField(
-              textInputType: TextInputType.text,
-              obscured: true,
-              validator: (value) =>
-                  value!.isEmpty ? "Your password is required" : null,
-              onSaved: (value) => _confirmPassword = value ?? '',
-              hasTitle: false,
-              hasPrefixIcon: true,
-              prefixIcon: Icon(
-                FeatherIcons.lock,
-                color: AppColors.greyShade7,
-                size: widthOfScreen * 0.06,
-              ),
-              hasSuffixIcon: true,
-              suffixIcon: Icon(
-                FeatherIcons.eyeOff,
-                color: AppColors.deepsea,
-                size: widthOfScreen * 0.06,
-              ),
-              hintTextStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.greyShade7,
-              ),
-              enabledBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.blackShade2,
-              ),
-              focusedBorder: Borders.customUnderlineInputBorder(
-                color: AppColors.orange,
-              ),
-              textStyle: TextStyle(
-                fontSize: widthOfScreen * 0.04,
-                color: AppColors.blackShade10,
-              ),
-              hintText: 'Confirm Password',
-            ),
-            if (_passwordError != null)
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  _passwordError!,
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            SizedBox(height: widthOfScreen * 0.07),
-            CustomButton(
-              title: 'Register',
-              color: AppColors.deepsea,
-              textStyle: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColors.white,
-                fontSize: widthOfScreen * 0.04,
-                fontWeight: FontWeight.w600,
-              ),
-              onPressed: doRegister,
-            ),
-            SizedBox(height: widthOfScreen * 0.05),
-            Align(
-              alignment: Alignment.center,
-              child: SelectableText.rich(
-                TextSpan(
-                  text: 'Already Have An Account?',
-                  style: TextStyle(
-                    color: AppColors.greyShade8,
-                    fontWeight: FontWeight.bold,
-                    fontSize: widthOfScreen * 0.04,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' Sign In',
-                      style: TextStyle(color: AppColors.deepsea),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap =
-                            () => Navigator.of(context).pushNamed('/Login'),
+        margin: EdgeInsets.symmetric(horizontal: widthOfScreen * 0.05),
+        child: Form(
+            key: formKey,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: widthOfScreen * 0.05),
+                  Text("Sign Up",
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: widthOfScreen * 0.08,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  SizedBox(height: widthOfScreen * 0.04),
+                  CustomTextFormField(
+                    textInputType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) => _email = value ?? '',
+                    onChanged: (data) {
+                      _email = data;
+                    },
+                    hasTitle: false,
+                    hasPrefixIcon: true,
+                    prefixIcon: Icon(
+                      FeatherIcons.mail,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
                     ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: widthOfScreen * 0.001),
-          ],
-        ),
-      ),
-    );
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    hintText: 'Email',
+                  ),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  CustomTextFormField(
+                      textInputType: TextInputType.name,
+                      hasTitle: false,
+                      onSaved: (value) => _userName = value ?? '',
+                      hasPrefixIcon: true,
+                      prefixIcon: Icon(
+                        FeatherIcons.user,
+                        color: AppColors.greyShade7,
+                        size: widthOfScreen * 0.06,
+                      ),
+                      hintTextStyle: TextStyle(
+                        fontSize: widthOfScreen * 0.04,
+                        color: AppColors.greyShade7,
+                      ),
+                      enabledBorder: Borders.customUnderlineInputBorder(
+                        color: AppColors.blackShade2,
+                      ),
+                      focusedBorder: Borders.customUnderlineInputBorder(
+                        color: AppColors.orange,
+                      ),
+                      textStyle: TextStyle(
+                        fontSize: widthOfScreen * 0.04,
+                        color: AppColors.blackShade10,
+                      ),
+                      hintText: 'Username',
+                      validator: (value) {
+                        if (value!.contains(' ')) {
+                          return 'Username should not contain spaces';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _usernameExists = false;
+                        });
+                      }),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  CustomTextFormField(
+                    textInputType: TextInputType.text,
+                    obscured: true,
+                    hasTitle: false,
+                    validator: (value) =>
+                        value!.isEmpty ? "Please enter password" : null,
+                    onSaved: (value) => _password = value ?? '',
+                    hasPrefixIcon: true,
+                    prefixIcon: Icon(
+                      FeatherIcons.lock,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hasSuffixIcon: true,
+                    suffixIcon: Icon(
+                      FeatherIcons.eyeOff,
+                      color: AppColors.deepsea,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    hintText: 'Password',
+                  ),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  CustomTextFormField(
+                    textInputType: TextInputType.text,
+                    obscured: true,
+                    validator: (value) =>
+                        value!.isEmpty ? "Your password is required" : null,
+                    onSaved: (value) => _confirmPassword = value ?? '',
+                    hasTitle: false,
+                    hasPrefixIcon: true,
+                    prefixIcon: Icon(
+                      FeatherIcons.lock,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hasSuffixIcon: true,
+                    suffixIcon: Icon(
+                      FeatherIcons.eyeOff,
+                      color: AppColors.deepsea,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    hintText: 'Confirm Password',
+                  ),
+                  if (_passwordError != null)
+                    Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          _passwordError!,
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  SizedBox(height: widthOfScreen * 0.07),
+                  CustomButton(
+                    title: 'Register',
+                    color: AppColors.deepsea,
+                    textStyle: theme.textTheme.bodyLarge?.copyWith(
+                      color: AppColors.white,
+                      fontSize: widthOfScreen * 0.04,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    onPressed: doRegister,
+                  ),
+                  SizedBox(height: widthOfScreen * 0.05),
+                  Align(
+                      alignment: Alignment.center,
+                      child: SelectableText.rich(TextSpan(
+                          text: 'Already Have An Account?',
+                          style: TextStyle(
+                            color: AppColors.greyShade8,
+                            fontWeight: FontWeight.bold,
+                            fontSize: widthOfScreen * 0.04,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' Sign In',
+                              style: TextStyle(color: AppColors.deepsea),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () =>
+                                    Navigator.of(context).pushNamed('/Login'),
+                            )
+                          ]))),
+                  SizedBox(height: widthOfScreen * 0.001),
+                ])));
   }
 
   Future<void> _registerUser() async {
