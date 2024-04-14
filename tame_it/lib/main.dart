@@ -3,7 +3,7 @@ import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/onlinepage.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/changePassword.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Profile.dart';
@@ -14,8 +14,8 @@ import 'package:tame_it/Screens/forgot_Password/forgotpassword.dart';
 import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/edit_Profile_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/more.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/therapistspage.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 
 void main() {

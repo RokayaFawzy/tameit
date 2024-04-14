@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
-import '../../../Models/Doctor_model.dart';
-import '../../../widgets/custom_card.dart';
+import '../../Models/Doctor_model.dart';
+import '../../widgets/custom_card.dart';
 
 class Therapists extends StatefulWidget {
   const Therapists({super.key});
