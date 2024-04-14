@@ -33,7 +33,6 @@ class TameIt extends StatelessWidget {
           // ChatDoctorPage(),
           // Login(),
           NavBarRoot(),
-          
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -53,8 +52,6 @@ class TameIt extends StatelessWidget {
         '/DoctorDetails': (context) => DoctorDetails(),
         '/ChatDoctorPage': (context) => ChatDoctorPage(),
         '/Testings': (context) => Testings(),
-
-
       },
     );
   }
