@@ -17,7 +17,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var heightOfScreen = MediaQuery.of(context).size.height;
 
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
@@ -35,7 +34,7 @@ class _ProfileState extends State<Profile> {
           drawCircles(),
           ListView(children: <Widget>[
             SizedBox(
-              height: (heightOfScreen * 0.10),
+              height: 75,
             ),
             SizedBox(
               height: 400,
