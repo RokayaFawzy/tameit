@@ -6,7 +6,6 @@ import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 
-//TODO: try with the api
 class ResetPassword extends StatefulWidget {
   final String username;
 
@@ -35,7 +34,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     super.dispose();
   }
 
-  Future<void> resetPassword(String newPassword) async {
+  Future<void> resetPassword(String newPassword, String confirmPassword) async {
     setState(() {
       _isLoading = true; // Show loading indicator
     });
@@ -44,7 +43,11 @@ class _ResetPasswordState extends State<ResetPassword> {
         'https://tameit.azurewebsites.net/api/auth/forgotPassword/resetPassword/${widget.username}';
     final Map<String, String> requestBody = {
       'newPassword': newPassword,
+      'confirmNewPassword': confirmPassword,
     };
+
+    print('API URL: $apiUrl');
+    print('Request Body: $requestBody');
 
     try {
       final response = await http.post(
@@ -53,6 +56,9 @@ class _ResetPasswordState extends State<ResetPassword> {
         headers: {'Content-Type': 'application/json'},
       );
 
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
         // Password reset successful
         print('Password reset successful.');
@@ -60,11 +66,18 @@ class _ResetPasswordState extends State<ResetPassword> {
           context,
           MaterialPageRoute(builder: (context) => Login()),
         );
+      } else if (response.statusCode == 417) {
+        // Password reset failed due to a conflict
+        print('Password reset failed. Status code: ${response.statusCode}');
+        // Display error dialog to the user
+        showErrorDialog(
+            'Password reset failed due to a conflict. Please try again later.');
       } else {
         // Password reset failed
         print('Password reset failed. Status code: ${response.statusCode}');
         // Display error dialog to the user
-        showErrorDialog('Password reset failed. Please try again.');
+        showErrorDialog(
+            'Password reset failed. Status code: ${response.statusCode}');
       }
     } catch (e) {
       // Handle network or server errors
@@ -97,7 +110,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     var widthOfScreen = MediaQuery.of(context).size.width;
-    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
@@ -208,25 +220,27 @@ class _ResetPasswordState extends State<ResetPassword> {
                   String newPassword = _newPasswordController.text.trim();
                   String confirmPassword =
                       _confirmPasswordController.text.trim();
-                  if (newPassword.isNotEmpty && confirmPassword.isNotEmpty) {
-                    if (newPassword == confirmPassword) {
-                      resetPassword(newPassword);
-                    } else {
-                      // Show error message for password mismatch
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Passwords do not match.'),
-                        ),
-                      );
-                    }
-                  } else {
-                    // Show error message for empty fields
+
+                  if (newPassword.isEmpty || confirmPassword.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Please fill all fields.'),
                       ),
                     );
+                    return; // Stop execution if fields are empty
                   }
+
+                  if (newPassword != confirmPassword) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Passwords do not match.'),
+                      ),
+                    );
+                    return; // Stop execution if passwords don't match
+                  }
+
+                  // If all validations pass, proceed to reset password
+                  resetPassword(newPassword, confirmPassword);
                 },
               ),
             ),
