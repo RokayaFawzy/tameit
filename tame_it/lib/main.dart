@@ -31,8 +31,8 @@ class TameIt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:
           // ChatDoctorPage(),
-          // Login(),
-          NavBarRoot(),
+          Login(),
+      // NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -40,7 +40,10 @@ class TameIt extends StatelessWidget {
         '/ChangePassword': (context) => changePassword(),
         '/ForgotPassword': (context) => ForgotPassword(),
         '/ResetPassword': (context) => ResetPassword(),
-        '/CodePhone': (context) => CodePhone(),
+        '/CodePhone': (context) => CodePhone(
+              username: '',
+              sendVerificationEmail: (String) {},
+            ),
         '/Profile': (context) => Profile(),
         '/Therapists': (context) => Therapists(),
         '/OnlineTherapists': (context) => OnlineTherapists(),

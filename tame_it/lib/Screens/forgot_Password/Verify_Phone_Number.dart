@@ -5,6 +5,7 @@ import 'package:tame_it/widgets/custom_button.dart';
 import '../../values/values.dart';
 
 class PhoneVerify extends StatefulWidget {
+
   const PhoneVerify({super.key});
 
   @override
@@ -12,6 +13,7 @@ class PhoneVerify extends StatefulWidget {
 }
 
 class _PhoneVerifyState extends State<PhoneVerify> {
+
   String? phone;
   @override
   Widget build(BuildContext context) {
@@ -77,12 +79,12 @@ class _PhoneVerifyState extends State<PhoneVerify> {
                   color: Colors.white, // Change the text color as needed
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CodePhone(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   // MaterialPageRoute(
+                  //   //   // builder: (context) => const CodePhone(username: ,),
+                  //   // ),
+                  // );
                 },
               ),
             ],
