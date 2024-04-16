@@ -39,7 +39,7 @@ class TameIt extends StatelessWidget {
         '/Verify_Phone_Number': (context) => PhoneVerify(),
         '/ChangePassword': (context) => changePassword(),
         '/ForgotPassword': (context) => ForgotPassword(),
-        '/ResetPassword': (context) => ResetPassword(),
+        '/ResetPassword': (context) => ResetPassword(username: '',),
         '/CodePhone': (context) => CodePhone(
               username: '',
               sendVerificationEmail: (String) {},
