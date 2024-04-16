@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:tame_it/Screens/forgot_Password/Resetpassword.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 
@@ -9,7 +10,9 @@ class CodePhone extends StatefulWidget {
   final String username;
   final Function(String) sendVerificationEmail;
 
-  const CodePhone({Key? key,    required this.sendVerificationEmail, required this.username}) : super(key: key);
+  const CodePhone(
+      {Key? key, required this.sendVerificationEmail, required this.username})
+      : super(key: key);
 
   @override
   _CodePhoneState createState() => _CodePhoneState();
@@ -81,7 +84,13 @@ class _CodePhoneState extends State<CodePhone> {
 
         if (response.statusCode == 200) {
           // Verification successful, navigate to ResetPassword screen
-          Navigator.pushNamed(context, '/ResetPassword');
+          // Navigator.pushNamed(context, '/ResetPassword');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResetPassword(username: widget.username),
+            ),
+          );
         } else {
           // Handle other status codes or errors
           final errorMessage = response.body;
