@@ -32,14 +32,16 @@ class TameIt extends StatelessWidget {
       home:
           // ChatDoctorPage(),
           Login(),
-      // NavBarRoot(),
+          // NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
         '/Verify_Phone_Number': (context) => PhoneVerify(),
-        '/ChangePassword': (context) => changePassword(),
+        '/ChangePassword': (context) => ChangePassword(),
         '/ForgotPassword': (context) => ForgotPassword(),
-        '/ResetPassword': (context) => ResetPassword(username: '',),
+        '/ResetPassword': (context) => ResetPassword(
+              username: '',
+            ),
         '/CodePhone': (context) => CodePhone(
               username: '',
               sendVerificationEmail: (String) {},
