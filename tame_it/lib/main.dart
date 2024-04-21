@@ -3,6 +3,7 @@ import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/BlogPage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/changePassword.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
@@ -31,8 +32,8 @@ class TameIt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:
           // ChatDoctorPage(),
-          Login(),
-          // NavBarRoot(),
+          // Login(),
+          NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -57,6 +58,7 @@ class TameIt extends StatelessWidget {
         '/DoctorDetails': (context) => DoctorDetails(),
         '/ChatDoctorPage': (context) => ChatDoctorPage(),
         '/Testings': (context) => Testings(),
+        '/BlogPage': (context) => BlogPage()
       },
     );
   }

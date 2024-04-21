@@ -49,31 +49,40 @@ class __HomeStateState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
               Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text('Welcome to TAME IT',
-                      style: GoogleFonts.jacquesFrancois(
-                          textStyle: const TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 18,
-                      )))),
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'Welcome to TAME IT',
+                  style: GoogleFonts.jacquesFrancois(
+                    textStyle: const TextStyle(
+                      color: AppColors.deepsea,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        'assets/images/First Imgae.jpg',
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ))),
+                padding: EdgeInsets.all(15.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'assets/images/First Imgae.jpg',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+              ),
               const SizedBox(height: 12),
               Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child: Text('Our Services',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ))),
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Our Services',
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
               const SizedBox(height: 5),
               GestureDetector(
                 onTap: () {

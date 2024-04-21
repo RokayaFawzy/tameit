@@ -165,7 +165,7 @@ class _MorePageState extends State<MorePage> {
                 ),
                 child: ListTile(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/');
+                      Navigator.of(context).pushNamed('/BlogPage');
                     },
                     leading: const Icon(
                       Icons.public,
