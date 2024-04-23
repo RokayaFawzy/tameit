@@ -331,7 +331,10 @@ class _SignUpState extends State<SignUp> {
                               style: TextStyle(color: AppColors.deepsea),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () =>
-                                    Navigator.of(context).pushNamed('/Login'),
+                                    // Navigator.of(context).pushNamed('/Login'),
+                              Navigator.pop(context),
+
+                              // Navigator.pushReplacementNamed(context, '/Login'),
                             )
                           ]))),
                   SizedBox(height: widthOfScreen * 0.001),
