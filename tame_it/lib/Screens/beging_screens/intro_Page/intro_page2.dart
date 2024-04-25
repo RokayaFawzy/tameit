@@ -11,7 +11,18 @@ class _IntPage2State extends State<IntPage2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      
+      child: Align(
+        alignment: const Alignment(0.03, -0.38),
+        child: Container(
+          alignment: Alignment(0.03, -0.38),
+          child: Image.asset(
+            "assets/images/B2.png",
+            width: 600, // Adjust the width as needed
+            height: 600, // Adjust the height as needed
+          ),
+        ),
+      ),
     );
   }
 }

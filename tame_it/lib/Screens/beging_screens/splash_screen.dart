@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/beging_screens/Carousel_Slider%20.dart';
 import 'package:tame_it/values/values.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,9 +16,9 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => Login()));
+    Future.delayed(Duration(seconds: 6), () {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => OnBoardingScreen()));
     });
   }
 
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
               AppColors.Sidecar,
               AppColors.Sidecar,
 
-              AppColors.seaBlue3,
+              AppColors.Bermuda,
               AppColors.whiteShade3,
               // AppColors.Sidecar,
               // AppColors.seaBlue3,
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: Container(
             alignment: Alignment(0.03, -0.38),
             child: Image.asset(
-              "assets/images/image.png",
+              "assets/images/begin.png",
               width: 600, // Adjust the width as needed
               height: 600, // Adjust the height as needed
             ),

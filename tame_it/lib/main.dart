@@ -33,11 +33,8 @@ class TameIt extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:
-          // ChatDoctorPage(),
-          // Login(),
-          // SplashScreen(),
-          OnBoardingScreen(),
-      // NavBarRoot(),
+          SplashScreen(),
+          // NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
