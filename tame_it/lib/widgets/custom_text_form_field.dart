@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../values/values.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final bool obscureText;
   final TextStyle? textStyle;
   final TextStyle? hintTextStyle;
   final TextStyle? labelStyle;
@@ -30,10 +31,11 @@ class CustomTextFormField extends StatelessWidget {
   final double? height;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? textFormFieldMargin;
-  final TextEditingController? controller; // Added TextEditingController
+  final TextEditingController? controller;
 
   const CustomTextFormField({
     Key? key,
+    this.obscureText = true, // Make it optional with a default value
     this.prefixIcon,
     this.suffixIcon,
     this.textStyle,
@@ -61,7 +63,7 @@ class CustomTextFormField extends StatelessWidget {
     this.inputFormatters,
     this.width,
     this.height,
-    this.controller, // Added TextEditingController
+    this.controller,
   })  : assert((!hasTitleIcon && titleIcon == null) ||
             (hasTitleIcon && titleIcon != null)),
         assert((!hasTitle && title == null) || (hasTitle && title != null)),
@@ -97,11 +99,19 @@ class CustomTextFormField extends StatelessWidget {
               enabledBorder: enabledBorder,
               focusedBorder: focusedBorder,
               prefixIcon: hasPrefixIcon ? prefixIcon : null,
-              suffixIcon: hasSuffixIcon ? suffixIcon : null,
+              suffixIcon: hasSuffixIcon
+                  ? GestureDetector(
+                      onTap: () {
+                        // Toggle password visibility
+                        onChanged?.call((!obscureText!) as String);
+                      },
+                      child: suffixIcon,
+                    )
+                  : null,
               hintText: hintText,
               hintStyle: hintTextStyle,
             ),
-            obscureText: obscured,
+            obscureText: obscured && obscureText, // Apply password visibility
             controller: controller, // Added controller here
           ),
         ),
