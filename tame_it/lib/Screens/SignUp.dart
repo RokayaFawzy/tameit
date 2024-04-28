@@ -19,10 +19,17 @@ class _SignUpState extends State<SignUp> {
   late String _password = '';
   late String _confirmPassword = '';
   late String _email = '';
+  bool _isPasswordVisible = false;
 
   bool _usernameExists = false;
   String? _passwordError;
   bool _isLoading = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +235,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: widthOfScreen * 0.02),
                   CustomTextFormField(
                     textInputType: TextInputType.text,
+                    obscureText: !_isPasswordVisible,
                     obscured: true,
                     hasTitle: false,
                     validator: (value) =>
@@ -240,10 +248,15 @@ class _SignUpState extends State<SignUp> {
                       size: widthOfScreen * 0.06,
                     ),
                     hasSuffixIcon: true,
-                    suffixIcon: Icon(
-                      FeatherIcons.eyeOff,
-                      color: AppColors.deepsea,
-                      size: widthOfScreen * 0.06,
+                    suffixIcon: GestureDetector(
+                      onTap:
+                          _togglePasswordVisibility, // Call method to toggle visibility
+                      child: Icon(
+                        _isPasswordVisible
+                            ? FeatherIcons.eye
+                            : FeatherIcons.eyeOff, // Change icon based on flag
+                        color: AppColors.deepsea,
+                      ),
                     ),
                     hintTextStyle: TextStyle(
                       fontSize: widthOfScreen * 0.04,
@@ -263,6 +276,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: widthOfScreen * 0.02),
                   CustomTextFormField(
+                    obscureText: !_isPasswordVisible,
                     textInputType: TextInputType.text,
                     obscured: true,
                     validator: (value) =>
@@ -276,10 +290,15 @@ class _SignUpState extends State<SignUp> {
                       size: widthOfScreen * 0.06,
                     ),
                     hasSuffixIcon: true,
-                    suffixIcon: Icon(
-                      FeatherIcons.eyeOff,
-                      color: AppColors.deepsea,
-                      size: widthOfScreen * 0.06,
+                    suffixIcon: GestureDetector(
+                      onTap:
+                          _togglePasswordVisibility, // Call method to toggle visibility
+                      child: Icon(
+                        _isPasswordVisible
+                            ? FeatherIcons.eye
+                            : FeatherIcons.eyeOff, // Change icon based on flag
+                        color: AppColors.deepsea,
+                      ),
                     ),
                     hintTextStyle: TextStyle(
                       fontSize: widthOfScreen * 0.04,
@@ -332,7 +351,7 @@ class _SignUpState extends State<SignUp> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () =>
                                     // Navigator.of(context).pushNamed('/Login'),
-                              Navigator.pop(context),
+                                    Navigator.pop(context),
 
                               // Navigator.pushReplacementNamed(context, '/Login'),
                             )
