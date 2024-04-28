@@ -13,7 +13,12 @@ import 'package:tame_it/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const TameIt());
+    bool rememberMe = true;
+    String? username = 'example_username';
+    String? password = 'example_password';
+
+    await tester.pumpWidget(
+        TameIt(rememberMe: rememberMe, username: username, password: password));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

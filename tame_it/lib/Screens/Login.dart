@@ -37,6 +37,7 @@ class _LoginState extends State<Login> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  bool _isPasswordVisible = false;
   bool _rememberMe = true;
   String? _errorMessage;
 
@@ -102,6 +103,12 @@ class _LoginState extends State<Login> {
         // Store token securely
         await storeToken(token);
 
+        if (_rememberMe) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('userName', userName);
+          prefs.setString('password', password);
+        }
+
         // Close loading indicator
         Navigator.pop(context);
 
@@ -130,6 +137,12 @@ class _LoginState extends State<Login> {
       // Close loading indicator
       Navigator.pop(context);
     }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
   }
 
   @override
@@ -262,7 +275,7 @@ class _LoginState extends State<Login> {
                 height: 12.0,
               ),
               TextFormField(
-                obscureText: true,
+                obscureText: !_isPasswordVisible,
                 validator: (value) =>
                     value!.isEmpty ? "Please enter password" : null,
                 controller: passwordController,
@@ -273,9 +286,15 @@ class _LoginState extends State<Login> {
                     color: AppColors.greyShade7,
                     size: Sizes.ICON_SIZE_20,
                   ),
-                  suffixIcon: const Icon(
-                    FeatherIcons.eyeOff,
-                    color: AppColors.deepsea,
+                  suffixIcon: GestureDetector(
+                    onTap:
+                        _togglePasswordVisibility, // Call method to toggle visibility
+                    child: Icon(
+                      _isPasswordVisible
+                          ? FeatherIcons.eye
+                          : FeatherIcons.eyeOff, // Change icon based on flag
+                      color: AppColors.deepsea,
+                    ),
                   ),
                   hintText: 'Password',
                   errorText: _errorMessage, // Display error message here
@@ -362,8 +381,8 @@ class _LoginState extends State<Login> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Login(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: Login(),
+//   ));
+// }
