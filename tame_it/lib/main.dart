@@ -20,21 +20,37 @@ import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.d
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const TameIt());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool rememberMe = prefs.getBool('rememberMe') ?? false;
+  String? username = prefs.getString('username');
+  String? password = prefs.getString('password');
+
+  runApp(
+      TameIt(rememberMe: rememberMe, username: username, password: password));
 }
 
 class TameIt extends StatelessWidget {
-  const TameIt({super.key});
+  final bool rememberMe;
+  final String? username;
+  final String? password;
+
+  const TameIt(
+      {required this.rememberMe, this.username, this.password, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-          SplashScreen(),
-          // NavBarRoot(),
+      home: rememberMe && username != null && password != null
+          ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
+          : SplashScreen(),
+      //  Login(),
+      // NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),

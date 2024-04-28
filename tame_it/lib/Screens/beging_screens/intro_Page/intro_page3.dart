@@ -14,11 +14,11 @@ class _IntPage3State extends State<IntPage3> {
       child: Align(
         alignment: const Alignment(0.03, -0.38),
         child: Container(
-          alignment: Alignment(0.03, -0.38),
+          alignment: Alignment(0.03, 0.06),
           child: Image.asset(
             "assets/images/B3.png",
-            width: 600, // Adjust the width as needed
-            height: 600, // Adjust the height as needed
+            width: 550, // Adjust the width as needed
+            height: 550, // Adjust the height as needed
           ),
         ),
       ),
