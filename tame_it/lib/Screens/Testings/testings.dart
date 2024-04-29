@@ -18,7 +18,7 @@ class _TestingsState extends State<Testings> {
         title: Text('Psychometer',
             style: TextStyle(
               color: AppColors.deepsea,
-              fontSize: 18,
+              fontSize: 25,
               fontWeight: FontWeight.w400,
             )),
         centerTitle: true,
@@ -65,307 +65,345 @@ class _TestingsState extends State<Testings> {
           children: [
             Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "Depression, Anxiety \nand stress scale",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'This test is designed to measure your psychological state with regards to the degree of depression, stress and anxiety. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
-                            style: TextStyle(color: Color(0XFF979797)),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/Dep_Anx_Str');
+                  },
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "Depression, Anxiety \nand stress scale",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'This test is designed to measure your psychological state with regards to the degree of depression, stress and anxiety. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
+                              style: TextStyle(color: Color(0XFF979797)),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
             Padding(
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "Anxiety scale",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'This test is designed to measure your anxiety degree. Please read the test sentences and choose the best answer that fits',
-                            style: TextStyle(color: Color(0XFF979797)),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/AnxietyScale');
+                  },
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "Anxiety scale",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'This test is designed to measure your anxiety degree. Please read the test sentences and choose the best answer that fits',
+                              style: TextStyle(color: Color(0XFF979797)),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
             Padding(
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "Depression scale",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'This test is designed to measure your depression degree. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
-                            style: TextStyle(color: Color(0XFF979797)),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/DepressionScale');
+                  },
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "Depression scale",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'This test is designed to measure your depression degree. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
+                              style: TextStyle(color: Color(0XFF979797)),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
             Padding(
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "OCD scale",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Obsessions are unwelcome or distressing ideas, thoughts, images or impulses that repeatedly enter your mind. '
-                            'They may seem to occur against your will. They may be repugnant to you, are often senseless, and may not fit ' 
-                            'your actual personality at all (for example, the recurrent thought or impulse to harm to your children, ' 
-                            'even though you never This test is designed to measure your obsessive compulsive symptoms. ' 
-                            'Obsessions are unwelcome or distressing ideas, thoughts, images or impulses that repeatedly enter your mind. ' 
-                            'They may seem to occur against your will. They may be repugnant to you, are often senseless, and may not ' 
-                            'fit your actual personality at all. Compulsions are behaviors or acts that you feel driven to perform, ' 
-                            'even though you may recognize them as senseless or excessive. At times, you may try to resist doing them, ' 
-                            'but this may prove difficult. You may experience anxiety that does not diminish until the behavior is completed. ' 
-                            'Please read the test sentences and choose the best answer that fits you during the last 2 weeks. ' 
-                            'This test is designed to measure your obsessive compulsive symptoms. Obsessions are unwelcome or distressing ideas, ' 
-                            'thoughts, images or impulses that repeatedly enter your mind. They may seem to occur against your will. They may be repugnant to you, ' 
-                            'are often senseless, and may not fit your actual personality at all. Compulsions are behaviors or acts that you feel driven to perform, ' 
-                            'even though you may recognize them as senseless or excessive. At times, you may try to resist doing them, but this may prove difficult. ' 
-                            'You may experience anxiety that does not diminish until the behavior is completed. Please read the test sentences and ' 
-                            'choose the best answer that fits you during the last 2 weeks.',
-                            style: TextStyle(color: Color(0XFF979797)),
-                            maxLines: null,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/OCDScale');
+                  },
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "OCD scale",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Obsessions are unwelcome or distressing ideas, thoughts, images or impulses that repeatedly enter your mind. '
+                              'They may seem to occur against your will. They may be repugnant to you, are often senseless, and may not fit '
+                              'your actual personality at all (for example, the recurrent thought or impulse to harm to your children, '
+                              'even though you never This test is designed to measure your obsessive compulsive symptoms. '
+                              'Obsessions are unwelcome or distressing ideas, thoughts, images or impulses that repeatedly enter your mind. '
+                              'They may seem to occur against your will. They may be repugnant to you, are often senseless, and may not '
+                              'fit your actual personality at all. Compulsions are behaviors or acts that you feel driven to perform, '
+                              'even though you may recognize them as senseless or excessive. At times, you may try to resist doing them, '
+                              'but this may prove difficult. You may experience anxiety that does not diminish until the behavior is completed. '
+                              'Please read the test sentences and choose the best answer that fits you during the last 2 weeks. '
+                              'This test is designed to measure your obsessive compulsive symptoms. Obsessions are unwelcome or distressing ideas, '
+                              'thoughts, images or impulses that repeatedly enter your mind. They may seem to occur against your will. They may be repugnant to you, '
+                              'are often senseless, and may not fit your actual personality at all. Compulsions are behaviors or acts that you feel driven to perform, '
+                              'even though you may recognize them as senseless or excessive. At times, you may try to resist doing them, but this may prove difficult. '
+                              'You may experience anxiety that does not diminish until the behavior is completed. Please read the test sentences and '
+                              'choose the best answer that fits you during the last 2 weeks.',
+                              style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: null,
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
             Padding(
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "PTSD",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'This test assesses the psychological impact of stressful events after its ends by few months. Below is a list of problems and complaints that person sometimes have in response to stressful life experiences. Please read each one carefully, choose the answer that fits you mostly to indicate how much you have been bothered by that problem in the last month',
-                            style: TextStyle(color: Color(0XFF979797)),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                   onTap: () {
+                    Navigator.of(context).pushNamed('/PTSDScale');
+                  },
+                  child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "PTSD",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'This test assesses the psychological impact of stressful events after its ends by few months. Below is a list of problems and complaints that person sometimes have in response to stressful life experiences. Please read each one carefully, choose the answer that fits you mostly to indicate how much you have been bothered by that problem in the last month',
+                              style: TextStyle(color: Color(0XFF979797)),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
             Padding(
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    color: AppColors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  "Adult ADHD Self-Report Scale",
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20), // Adjust as needed
-                              Flexible(
-                                child: Text(
-                                  'Referrals: \nEvery 2 weeks',
-                                  style: TextStyle(color: Color(0XFF50555C)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Attention deficit hyperactivity disorder (ADHD) in adults is a mental health related disorder and includes a set of persistent problems, such as difficulty in attention, hyperactivity, and impulsive behavior. Attention deficit disorder with hyperactivity in adults may lead to unstable relationships, poor work or school performance, decreased self-confidence, and other problems.',
-                            style: TextStyle(color: Color(0XFF979797)),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                child: GestureDetector(
+                   onTap: () {
+                    Navigator.of(context).pushNamed('/Adult ADHD Self-ReportScale');
+                  },
+                  child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      color: AppColors.white,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text('Test Duration:- 1:30 Mins'),
+                                  child: Text(
+                                    "Adult ADHD Self-Report Scale",
+                                    style: TextStyle(
+                                      color: AppColors.deepsea,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 20), // Adjust as needed
                                 Flexible(
-                                  child: Text('Cost: Free'),
-                                )
-                              ]),
-                        ]))),
+                                  child: Text(
+                                    'Referrals: \nEvery 2 weeks',
+                                    style: TextStyle(color: Color(0XFF50555C)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Attention deficit hyperactivity disorder (ADHD) in adults is a mental health related disorder and includes a set of persistent problems, such as difficulty in attention, hyperactivity, and impulsive behavior. Attention deficit disorder with hyperactivity in adults may lead to unstable relationships, poor work or school performance, decreased self-confidence, and other problems.',
+                              style: TextStyle(color: Color(0XFF979797)),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text('Test Duration:- 1:30 Mins'),
+                                  ),
+                                  SizedBox(width: 20), // Adjust as needed
+                                  Flexible(
+                                    child: Text('Cost: Free'),
+                                  )
+                                ]),
+                          ])),
+                )),
           ],
         ),
         SizedBox(height: 100),

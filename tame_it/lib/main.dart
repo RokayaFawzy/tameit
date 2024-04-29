@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/Testings/Depressionscale.dart';
+import 'package:tame_it/Screens/Testings/OCDscale.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
 import 'package:tame_it/Screens/beging_screens/Carousel_Slider%20.dart';
 import 'package:tame_it/Screens/beging_screens/splash_screen.dart';
@@ -19,6 +21,8 @@ import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/edit_Profile_
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
+import 'Screens/Testings/Anxietyscale.dart';
+import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,9 +52,10 @@ class TameIt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: rememberMe && username != null && password != null
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
-          : SplashScreen(),
+          : 
+          // SplashScreen(),
       //  Login(),
-      // NavBarRoot(),
+      NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -75,7 +80,12 @@ class TameIt extends StatelessWidget {
         '/DoctorDetails': (context) => DoctorDetails(),
         '/ChatDoctorPage': (context) => ChatDoctorPage(),
         '/Testings': (context) => Testings(),
-        '/BlogPage': (context) => BlogPage()
+        '/BlogPage': (context) => BlogPage(),
+        '/Dep_Anx_Str': (context) => Dep_Anx_Str(),
+        '/AnxietyScale': (context) => AnxietyScale(),
+        '/DepressionScale': (context) => DepressionScale(),
+        '/OCDScale': (context) => OCDScale(),
+
       },
     );
   }
