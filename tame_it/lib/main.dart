@@ -3,7 +3,6 @@ import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/Testings/Depressionscale.dart';
 import 'package:tame_it/Screens/Testings/OCDscale.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
-import 'package:tame_it/Screens/beging_screens/Carousel_Slider%20.dart';
 import 'package:tame_it/Screens/beging_screens/splash_screen.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
