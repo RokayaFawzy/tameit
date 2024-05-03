@@ -356,7 +356,7 @@ class _TestingsState extends State<Testings> {
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
                 child: GestureDetector(
                    onTap: () {
-                    Navigator.of(context).pushNamed('/Adult ADHD Self-ReportScale');
+                    Navigator.of(context).pushNamed('/Adult_ADHD_Self_ReportScale');
                   },
                   child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),

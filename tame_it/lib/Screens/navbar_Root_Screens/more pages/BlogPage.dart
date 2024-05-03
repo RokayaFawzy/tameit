@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/list_row.dart';
 
@@ -14,8 +14,6 @@ class _BlogPageState extends State<BlogPage> {
   @override
   @override
   Widget build(BuildContext context) {
-    var widthOfScreen = MediaQuery.of(context).size.width;
-    ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(

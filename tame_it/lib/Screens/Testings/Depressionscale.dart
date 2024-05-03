@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/Testings/question.dart';
-// import 'package:tame_it/Screens/Testings/result.dart';
-
 import '../../values/values.dart';
 
 class DepressionScale extends StatefulWidget {
