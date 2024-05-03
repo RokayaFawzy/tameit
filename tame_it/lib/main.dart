@@ -5,6 +5,7 @@ import 'package:tame_it/Screens/Testings/Depressionscale.dart';
 import 'package:tame_it/Screens/Testings/OCDscale.dart';
 import 'package:tame_it/Screens/Testings/PTSD.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
+import 'package:tame_it/Screens/beging_screens/splash_screen.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/BlogPage.dart';
