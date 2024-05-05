@@ -3,7 +3,7 @@ import 'package:tame_it/widgets/Toggle_rating.dart';
 import 'package:tame_it/widgets/toggle_gender.dart';
 import 'package:tame_it/widgets/toggle_hours_checkbox.dart';
 import 'package:tame_it/values/values.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({super.key});
@@ -13,7 +13,7 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  final TextEditingController _date = TextEditingController();
+  // final TextEditingController _date = TextEditingController();
 
   // Add this variable
   @override

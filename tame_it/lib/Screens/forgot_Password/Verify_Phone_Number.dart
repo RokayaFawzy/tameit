@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:tame_it/Screens/forgot_Password/verification_code.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 import '../../values/values.dart';
 

@@ -41,7 +41,7 @@ class _AvailableHoursCheckboxState extends State<AvailableHoursCheckbox> {
     return Column(
       // shrinkWrap: true, // Important to avoid height issues in Column
       children: item.asMap().entries.map((entry) {
-        int index = entry.key;
+        // int index = entry.key;
         String item = entry.value;
 
         return CheckboxListTile(
