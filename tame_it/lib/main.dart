@@ -55,14 +55,15 @@ class TameIt extends StatelessWidget {
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
           :
           // SplashScreen(),
-          //  Login(),
-          NavBarRoot(),
+           Login(),
+          // NavBarRoot(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
         '/Verify_Phone_Number': (context) => PhoneVerify(),
         '/ChangePassword': (context) => ChangePassword(),
         '/ForgotPassword': (context) => ForgotPassword(),
+      
         '/ResetPassword': (context) => ResetPassword(
               username: '',
             ),
@@ -87,7 +88,8 @@ class TameIt extends StatelessWidget {
         '/DepressionScale': (context) => DepressionScale(),
         '/OCDScale': (context) => OCDScale(),
         '/PTSDScale': (context) => PTSD(),
-        '/Adult_ADHD_Self_ReportScale': (context) => Adult_ADHD_Self_Report_Scale(),
+        '/Adult_ADHD_Self_ReportScale': (context) =>
+            Adult_ADHD_Self_Report_Scale(),
       },
     );
   }
