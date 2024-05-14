@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Blogs/mostread.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/list_row.dart';
+
+import 'Blogs/articals.dart';
 
 class BlogPage extends StatefulWidget {
   const BlogPage({super.key});
@@ -86,6 +89,34 @@ class _BlogPageState extends State<BlogPage> {
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 300,
+                  child: const Articles(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Most Read ',
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 300,
+                  child: const MostRead(),
                 ),
               ),
             ],
