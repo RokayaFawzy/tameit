@@ -18,6 +18,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   final TextEditingController _confirmNewPasswordController =
       TextEditingController();
 
+  bool _isNewPasswordVisible = false;
+  bool _isConfirmNewPasswordVisible = false;
   Future<String?> _getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
@@ -153,10 +155,19 @@ class _ChangePasswordState extends State<ChangePassword> {
                     fontSize: Sizes.TEXT_SIZE_14,
                     color: Color.fromARGB(255, 137, 182, 177),
                   ),
-                  suffixIcon: const Icon(
-                    FeatherIcons.eyeOff,
-                    size: Sizes.ICON_SIZE_22,
-                    color: Color.fromARGB(255, 137, 182, 177),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isNewPasswordVisible
+                          ? FeatherIcons.eye
+                          : FeatherIcons.eyeOff,
+                      size: Sizes.ICON_SIZE_22,
+                      color: Color.fromARGB(255, 137, 182, 177),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isNewPasswordVisible = !_isNewPasswordVisible;
+                      });
+                    },
                   ),
                   enabled: true,
                   enabledBorder: const OutlineInputBorder(
@@ -171,7 +182,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   filled: true,
                   fillColor: Color.fromARGB(94, 200, 201, 205),
                 ),
-                obscureText: true,
+                obscureText: !_isNewPasswordVisible,
               ),
             ),
             SizedBox(height: 25),
@@ -187,10 +198,20 @@ class _ChangePasswordState extends State<ChangePassword> {
                     fontSize: Sizes.TEXT_SIZE_14,
                     color: Color.fromARGB(255, 137, 182, 177),
                   ),
-                  suffixIcon: const Icon(
-                    FeatherIcons.eyeOff,
-                    size: Sizes.ICON_SIZE_22,
-                    color: Color.fromARGB(255, 137, 182, 177),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isConfirmNewPasswordVisible
+                          ? FeatherIcons.eye
+                          : FeatherIcons.eyeOff,
+                      size: Sizes.ICON_SIZE_22,
+                      color: Color.fromARGB(255, 137, 182, 177),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isConfirmNewPasswordVisible =
+                            !_isConfirmNewPasswordVisible;
+                      });
+                    },
                   ),
                   enabled: true,
                   enabledBorder: const OutlineInputBorder(
@@ -205,7 +226,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   filled: true,
                   fillColor: Color.fromARGB(94, 200, 201, 205),
                 ),
-                obscureText: true,
+                obscureText: !_isConfirmNewPasswordVisible,
               ),
             ),
             SizedBox(
