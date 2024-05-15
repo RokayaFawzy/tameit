@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
 
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/ADHD.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/Anxiety.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/DepressionBlog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PTSDblog.dart';
+
 class ListRow extends StatelessWidget {
   const ListRow({super.key});
 
@@ -22,7 +27,12 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -0.38),
                   child: IconButton(
                     icon: Image.asset("assets/images/o1.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ADHDBlog()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -40,7 +50,12 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -1.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o2.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => GADBlog()),
+                      );
+                    },
                     iconSize: 80, // Adjust the size of the icon/image as needed
                   ),
                 ),
@@ -72,7 +87,12 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o3.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PTSDArticle()),
+                      );
+                    },
                     iconSize: 80, // Adjust the size of the icon/image as needed
                   ),
                 ),
@@ -105,7 +125,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -1.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o4.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DepressionArticle()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
