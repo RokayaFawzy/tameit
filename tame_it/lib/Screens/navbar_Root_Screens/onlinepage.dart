@@ -71,7 +71,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                           child: CircleAvatar(
                             radius: 16,
                             backgroundImage:
-                                AssetImage('assets/images/123.jpg'),
+                                  AssetImage('assets/images/newlogo.jpg'),
                           ))))
             ])
           ]),

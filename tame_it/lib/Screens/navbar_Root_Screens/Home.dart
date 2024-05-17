@@ -40,7 +40,7 @@ class __HomeStateState extends State<Home> {
                       backgroundColor: Colors.black38,
                       child: CircleAvatar(
                         radius: 16,
-                        backgroundImage: AssetImage('assets/images/123.jpg'),
+                        backgroundImage: AssetImage('assets/images/newlogo.jpg'),
                       )))
             ]),
         body: SafeArea(
