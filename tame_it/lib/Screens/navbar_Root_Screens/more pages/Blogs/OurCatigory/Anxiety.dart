@@ -19,18 +19,18 @@ class _GADBlogState extends State<GADBlog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-        title: const Text(
-          'Generalized Anxiety Disorder (GAD)',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 14,
+          title: const Text(
+            'Generalized Anxiety Disorder (GAD)',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 14,
+            ),
           ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
-        backgroundColor: AppColors.whiteShade3
-      ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
+          backgroundColor: AppColors.whiteShade3),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return SingleChildScrollView(
@@ -101,8 +101,7 @@ class _GADBlogState extends State<GADBlog> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-                "assets/images/anx2.webp"), // Replace with your image URL or use AssetImage for local images
+            Image.asset("assets/images/anx2.webp"),
             const SizedBox(height: 10),
             Text(
               'Generalized Anxiety Disorder (GAD) involves excessive nervousness and worry about a variety of activities or events; individuals with GAD experience anxiety most days for six months or more.\n\n'

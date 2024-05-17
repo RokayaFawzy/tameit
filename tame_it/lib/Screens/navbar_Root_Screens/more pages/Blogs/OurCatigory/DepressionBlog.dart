@@ -20,6 +20,7 @@ class _DepressionArticleState extends State<DepressionArticle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
           title: const Text(
             'Depression',
@@ -38,7 +39,7 @@ class _DepressionArticleState extends State<DepressionArticle> {
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(
                 children: [
-                   Image.asset(
+                  Image.asset(
                     "assets/images/dep1.jpg",
                     fit: BoxFit.cover,
                     height: 200, // adjust height as needed
@@ -99,9 +100,9 @@ class _DepressionArticleState extends State<DepressionArticle> {
     switch (section) {
       case 'Overview':
         return Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-              Image.asset(
+            Image.asset(
                 "assets/images/anx2.webp"), // Replace with your image URL or use AssetImage for local images
             const SizedBox(height: 10),
             const Text(

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Blogs/OurCatigory/SleepDisorderBlog.dart';
 import 'package:tame_it/values/values.dart';
-
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/MemoryBlog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/NeuroticBlog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/OCDBlog.dart';
 import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/ADHD.dart';
 import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/Anxiety.dart';
 import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/DepressionBlog.dart';
 import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PTSDblog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PanicDisorderBlog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PersonalityBlog.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/StressRelatedBlob.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/eatdisorder.dart';
+import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/schizophreniablog.dart';
 
 class ListRow extends StatelessWidget {
   const ListRow({super.key});
@@ -164,7 +172,12 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o5.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OCDBlog()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -197,7 +210,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o6.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EatingDisordersBlog()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -229,7 +248,14 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o7.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BorderlinePersonalityDisorderBlog()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -284,7 +310,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o8.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SchizophreniaBlog()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -317,13 +349,18 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o9.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SleepDisorders()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
                 const Positioned(
-                  top:
-                      76, // Adjust the top position to place the text below the image
+                  top: 76,
                   left: 0,
                   child: Text(
                     'Sleep Disorders',
@@ -350,7 +387,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.4),
                   child: IconButton(
                     icon: Image.asset("assets/images/o10.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PanicDisorder()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -395,7 +438,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o11.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StressRelatedDisorders()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -440,7 +489,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o12.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MemoryDisorders()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),
@@ -485,7 +540,13 @@ class ListRow extends StatelessWidget {
                   alignment: const Alignment(0.03, -2.7),
                   child: IconButton(
                     icon: Image.asset("assets/images/o13.jpg"),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NeurologicalFunctionalDisorder()),
+                      );
+                    },
                     iconSize: 1,
                   ),
                 ),

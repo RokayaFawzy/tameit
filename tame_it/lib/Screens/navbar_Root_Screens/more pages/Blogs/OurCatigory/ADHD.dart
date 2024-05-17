@@ -23,18 +23,18 @@ class _ADHDBlogState extends State<ADHDBlog> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-        title: const Text(
-          'Attention-Deficit Hyperactivity Disorder (ADHD)',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 14,
+          title: const Text(
+            'Attention-Deficit Hyperactivity Disorder (ADHD)',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 14,
+            ),
           ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
-        backgroundColor: AppColors.whiteShade3
-      ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
+          backgroundColor: AppColors.whiteShade3),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return SingleChildScrollView(
