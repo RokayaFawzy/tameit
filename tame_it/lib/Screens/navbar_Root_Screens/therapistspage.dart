@@ -73,7 +73,7 @@ class __TherapistsStateState extends State<Therapists> {
                           child: CircleAvatar(
                             radius: 16,
                             backgroundImage:
-                                AssetImage('assets/images/123.jpg'),
+                                AssetImage('assets/images/newlogo.jpg'),
                           ))))
             ])
           ]),
