@@ -23,6 +23,8 @@ class _PTSDArticleState extends State<PTSDArticle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: AppColors.whiteShade3,
+
       appBar: AppBar(
           title: const Text(
             'Post-Traumatic Stress Disorder (PTSD)',
