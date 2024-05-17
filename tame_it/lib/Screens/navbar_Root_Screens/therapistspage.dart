@@ -2,6 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
 import '../../Models/Doctor_model.dart';
 import '../../widgets/custom_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class UserDetails {
+  final String userName;
+  final String email;
+  final String? imageUrl;
+
+  UserDetails({
+    required this.userName,
+    required this.email,
+    this.imageUrl,
+  });
+
+  factory UserDetails.fromJson(Map<String, dynamic> json) {
+    return UserDetails(
+      userName: json['userName'] ?? '',
+      email: json['email'] ?? '',
+      imageUrl: json['imageUrl'],
+    );
+  }
+}
 
 class Therapists extends StatefulWidget {
   const Therapists({super.key});
@@ -11,7 +34,47 @@ class Therapists extends StatefulWidget {
 }
 
 class __TherapistsStateState extends State<Therapists> {
+  late Future<UserDetails> userDetails;
+
   final TextEditingController _searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    userDetails = fetchUserDetails();
+  }
+
+  Future<UserDetails> fetchUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token not found');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('https://tameit.azurewebsites.net/api/auth/userDetails'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('Response data: $responseData');
+        return UserDetails.fromJson(responseData);
+      } else {
+        print(
+            'Failed to load user details. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception(
+            'Failed to load user details. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching user details: $e');
+      throw Exception('Error fetching user details');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +105,7 @@ class __TherapistsStateState extends State<Therapists> {
             ]))));
   }
 
+//Our Therapists
   Widget _buildMyTherapy() {
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -62,19 +126,36 @@ class __TherapistsStateState extends State<Therapists> {
           actions: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/Profile');
-                      },
-                      child: const CircleAvatar(
-                          radius: 17,
-                          backgroundColor: Colors.black38,
-                          child: CircleAvatar(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/Profile');
+                  },
+                  child: CircleAvatar(
+                    radius: 17,
+                    backgroundColor: Colors.black38,
+                    child: FutureBuilder<UserDetails>(
+                      future: userDetails,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator(); // or any loading indicator
+                        } else if (snapshot.hasError) {
+                          return const Icon(Icons.error); // handle error
+                        } else {
+                          return CircleAvatar(
                             radius: 16,
-                            backgroundImage:
-                                AssetImage('assets/images/newlogo.jpg'),
-                          ))))
+                            backgroundImage: snapshot.data!.imageUrl != null
+                                ? NetworkImage(snapshot.data!.imageUrl!)
+                                : AssetImage('assets/images/newlogo.jpg')
+                                    as ImageProvider, // Change this line
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              )
             ])
           ]),
       body: SafeArea(
