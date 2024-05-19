@@ -22,8 +22,6 @@ class _NavBarRootState extends State<NavBarRoot> {
     MorePage(),
   ];
 
-  
-
   // static get imageProvider => null;
 
   // void _onItemTap(int index) {
