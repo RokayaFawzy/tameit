@@ -27,6 +27,7 @@ import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Personal.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,6 +77,7 @@ class TameIt extends StatelessWidget {
         '/OnlineTherapists': (context) => OnlineTherapists(),
         '/FiltersScreen': (context) => FiltersScreen(),
         '/EditInformation': (context) => EditInformation(),
+        '/PersonalInformation': (context) => PersonalInformation(),
         '/Home': (context) => Home(),
         '/More': (context) => MorePage(),
         '/NavBarRoot': (context) => NavBarRoot(),

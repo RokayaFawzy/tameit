@@ -127,7 +127,8 @@ class _ProfileState extends State<Profile> {
             radius: 39,
             backgroundImage: userDetails.imageUrl != null
                 ? NetworkImage(userDetails.imageUrl!)
-                : const AssetImage('assets/images/newlogo.jpg') as ImageProvider,
+                : const AssetImage('assets/images/newlogo.jpg')
+                    as ImageProvider,
           ),
         ),
         const SizedBox(height: 12),
@@ -152,7 +153,7 @@ class _ProfileState extends State<Profile> {
           icon: Icons.person_outline_rounded,
           title: 'Personal info',
           onTap: () {
-            Navigator.of(context).pushNamed('/EditInformation');
+            Navigator.of(context).pushNamed('/PersonalInformation');
           },
         ),
         buildListTile(

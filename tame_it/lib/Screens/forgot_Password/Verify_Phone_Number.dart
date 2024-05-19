@@ -4,7 +4,6 @@ import 'package:tame_it/widgets/custom_button.dart';
 import '../../values/values.dart';
 
 class PhoneVerify extends StatefulWidget {
-
   const PhoneVerify({super.key});
 
   @override
@@ -12,7 +11,6 @@ class PhoneVerify extends StatefulWidget {
 }
 
 class _PhoneVerifyState extends State<PhoneVerify> {
-
   String? phone;
   @override
   Widget build(BuildContext context) {

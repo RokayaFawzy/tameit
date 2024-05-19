@@ -137,6 +137,15 @@ class _SignUpState extends State<SignUp> {
           ));
           return;
         }
+        // Validate password strength
+        if (!isStrongPassword(_password)) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                "Please enter a strong password containing both letters and numbers."),
+            duration: Duration(seconds: 2),
+          ));
+          return;
+        }
         _registerUser();
       }
     };
@@ -360,6 +369,11 @@ class _SignUpState extends State<SignUp> {
                 ])));
   }
 
+  bool isStrongPassword(String password) {
+    // Password should contain at least one letter and one number
+    return RegExp(r'^(?=.*[A-Za-z])(?=.*\d).{8,}$').hasMatch(password);
+  }
+
   Future<void> _registerUser() async {
     setState(() {
       _isLoading = true;
@@ -382,7 +396,7 @@ class _SignUpState extends State<SignUp> {
         var responseData = json.decode(response.body);
         var token = responseData['token'];
         print('Registration successful. Token: $token');
-        Navigator.of(context).pushNamed('/NavBarRoot');
+        Navigator.of(context).pushNamed('/Login');
       } else if (response.statusCode == 400) {
         setState(() {
           _usernameExists = true;
