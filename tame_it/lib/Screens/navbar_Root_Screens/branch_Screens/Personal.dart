@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,6 +32,7 @@ class PersonalInformation extends StatefulWidget {
 
 class _PersonalInformationState extends State<PersonalInformation> {
   late Future<UserDetails> userDetails;
+  bool _isLoading = true;
 
   final TextEditingController userNameController =
       TextEditingController(text: '');
@@ -53,6 +53,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
     super.initState();
     fetchPatientDetails();
     userDetails = fetchUserDetails();
+    userDetails.whenComplete(() => setState(() {
+          _isLoading = false;
+        }));
   }
 
   Future<UserDetails> fetchUserDetails() async {
@@ -90,7 +93,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
 
   Future<void> fetchPatientDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     String? token = prefs.getString('token');
 
     final url = Uri.parse(
@@ -154,171 +156,182 @@ class _PersonalInformationState extends State<PersonalInformation> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Stack(
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.center,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.black38,
-                      child: FutureBuilder<UserDetails>(
-                        future: userDetails,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator(); // or any loading indicator
-                          } else if (snapshot.hasError) {
-                            return Icon(Icons.error); // handle error
-                          } else {
-                            return CircleAvatar(
+          child: FutureBuilder<UserDetails>(
+            future: userDetails,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 20),
+                      Text('Loading...'),
+                    ],
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Stack(
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional.center,
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.black38,
+                            child: CircleAvatar(
                               radius: 49,
                               backgroundImage: snapshot.data?.imageUrl != null
                                   ? NetworkImage(snapshot.data!.imageUrl!)
                                   : AssetImage('assets/images/newlogo.jpg')
                                       as ImageProvider,
-                            );
-                          }
-                        },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      enabled: false,
+                      controller: userNameController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'First Name',
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              TextField(
-                keyboardType: TextInputType.text,
-                enabled: false,
-                controller: userNameController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  hintText: 'First Name',
-                ),
-              ),
-              SizedBox(height: 9),
-              TextField(
-                keyboardType: TextInputType.text,
-                enabled: false,
-                controller: lastNameController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  hintText: 'Last Name',
-                ),
-              ),
-              SizedBox(height: 9),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                enabled: false,
-                controller: emailController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  hintText: 'Email',
-                ),
-              ),
-              SizedBox(height: 9),
-              IntlPhoneField(
-                decoration: InputDecoration(
-                  labelText: "Phone Number",
-                  labelStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),
-                initialValue: '+123456789', // Set initial phone number
-                enabled: false,
-              ),
-              SizedBox(height: 9),
-              TextField(
-                keyboardType: TextInputType.text,
-                enabled: false,
-                controller: countryController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  hintText: 'Country',
-                ),
-              ),
-              SizedBox(height: 9),
-              TextField(
-                keyboardType: TextInputType.text,
-                enabled: false,
-                controller: cityController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  hintText: 'City',
-                ),
-              ),
-              SizedBox(height: 9),
-              Padding(
-                padding: const EdgeInsets.only(left: 1, right: 1),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: DropdownButton(
-                    hint: Text("Select Gender"),
-                    dropdownColor: Colors.white,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 36,
-                    isExpanded: true,
-                    underline: SizedBox(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                    SizedBox(height: 9),
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      enabled: false,
+                      controller: lastNameController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'Last Name',
+                      ),
                     ),
-                    value: gender, // Set initial value
-                    onChanged: null, // Disable the dropdown
-                    items: ['FEMALE', 'MALE', null].map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem ?? 'Other'),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-              SizedBox(height: 9),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.calendar_today_rounded),
-                    labelText: "Birth Date",
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  controller: birthDateController,
-                ),
-              ),
-            ],
+                    SizedBox(height: 9),
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      enabled: false,
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'Email',
+                      ),
+                    ),
+                    SizedBox(height: 9),
+                    TextField(
+                      keyboardType: TextInputType.phone,
+                      enabled: false,
+                      controller: phoneNumberController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'Phone Number',
+                      ),
+                    ),
+                    SizedBox(height: 9),
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      enabled: false,
+                      controller: countryController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'Country',
+                      ),
+                    ),
+                    SizedBox(height: 9),
+                    TextField(
+                      keyboardType: TextInputType.text,
+                      enabled: false,
+                      controller: cityController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.orange),
+                        ),
+                        hintText: 'City',
+                      ),
+                    ),
+                    SizedBox(height: 9),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 1, right: 1),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: DropdownButton(
+                          hint: Text("Select Gender"),
+                          dropdownColor: Colors.white,
+                          icon: Icon(Icons.arrow_drop_down),
+                          iconSize: 36,
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          value: gender, // Set initial value
+                          onChanged: null, // Disable the dropdown
+                          items: ['FEMALE', 'MALE', null].map((valueItem) {
+                            return DropdownMenuItem(
+                              value: valueItem,
+                              child: Text(valueItem ?? 'Other'),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 9),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.calendar_today_rounded),
+                          labelText: "Birth Date",
+                          labelStyle: TextStyle(color: Colors.black),
+                        ),
+                        controller: birthDateController,
+                      ),
+                    ),
+                  ],
+                );
+              }
+            },
           ),
         ),
       ),

@@ -1,35 +1,53 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_text_form_field.dart';
-import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../widgets/custom_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class EditInformation extends StatefulWidget {
-  EditInformation({super.key});
+  EditInformation({Key? key}) : super(key: key);
 
   @override
   State<EditInformation> createState() => _EditInformationState();
 }
 
 class _EditInformationState extends State<EditInformation> {
-  String? valueChoose;
-  List ListItem = ['FEMALE', 'MALE'];
-  final TextEditingController _date = TextEditingController();
+  List<String> listItem = ['FEMALE', 'MALE'];
+  late TextEditingController _date;
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
+  String? _valueChoose;
 
-  Future<void> _getImageFromCamera() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      setState(() {
-        _image = pickedFile;
-      });
-    }
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+
+  bool _isLoading = false;
+  String? _storedImagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _date = TextEditingController();
+    _getImagePath();
+  }
+
+  Future<void> _getImagePath() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _storedImagePath = prefs.getString('userImagePath');
+    });
   }
 
   Future<void> _getImageFromGallery() async {
@@ -50,14 +68,6 @@ class _EditInformationState extends State<EditInformation> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Camera'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _getImageFromCamera();
-                },
-              ),
-              ListTile(
                 leading: Icon(Icons.photo_library),
                 title: Text('Gallery'),
                 onTap: () {
@@ -70,6 +80,160 @@ class _EditInformationState extends State<EditInformation> {
         );
       },
     );
+  }
+
+  Future<void> _changeUserImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (_image == null || token == null) return;
+
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse('https://tameit.azurewebsites.net/api/user/changeUserImage'),
+    );
+    request.headers['Authorization'] = 'Bearer $token';
+    request.files.add(await http.MultipartFile.fromPath('file', _image!.path));
+    request.fields['name'] = 'image';
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print('User image updated successfully.');
+      var imagePath =
+          json.decode(await response.stream.bytesToString())['data'];
+      prefs.setString('userImagePath', imagePath);
+      setState(() {
+        _storedImagePath = imagePath;
+      });
+    } else {
+      print('Failed to update user image.');
+    }
+  }
+
+  Future<void> _editPatientDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null) return;
+    final url = Uri.parse(
+        'https://tameit.azurewebsites.net/api/patient/editPatientDetails');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    Map<String, dynamic> requestBody = {};
+
+    if (_firstNameController.text.isNotEmpty) {
+      requestBody['firstName'] = _firstNameController.text;
+    }
+    if (_lastNameController.text.isNotEmpty) {
+      requestBody['lastName'] = _lastNameController.text;
+    }
+    if (_emailController.text.isNotEmpty) {
+      requestBody['email'] = _emailController.text;
+    }
+    if (_phoneNumberController.text.isNotEmpty) {
+      requestBody['phoneNumber'] = _phoneNumberController.text;
+    }
+    if (_valueChoose != null) {
+      requestBody['gender'] = _valueChoose?.toUpperCase();
+    }
+    if (_cityController.text.isNotEmpty) {
+      requestBody['city'] = _cityController.text;
+    }
+    if (_countryController.text.isNotEmpty) {
+      requestBody['country'] = _countryController.text;
+    }
+    if (_date.text.isNotEmpty) {
+      requestBody['birthDate'] = _date.text;
+    }
+
+    final body = json.encode(requestBody);
+
+    final response = await http.put(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      print('Patient details updated successfully.');
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Patient details updated successfully.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      print('Failed to update patient details. Response: ${response.body}');
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to update patient details.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> _saveChanges() async {
+    // if (_firstNameController.text.isEmpty ||
+    //     _lastNameController.text.isEmpty ||
+    //     _emailController.text.isEmpty ||
+    //     _phoneNumberController.text.isEmpty ||
+    //     _valueChoose == null ||
+    //     _cityController.text.isEmpty ||
+    //     _countryController.text.isEmpty ||
+    //     _date.text.isEmpty) {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text('Error'),
+    //         content: Text('Please fill in all fields.'),
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text('OK'),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    //   return;
+    // }
+
+    setState(() {
+      _isLoading = true;
+    });
+    await _changeUserImage();
+    await _editPatientDetails();
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _storeSelectedGender(String? gender) {
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('gender', gender ?? '');
+    });
   }
 
   @override
@@ -92,7 +256,7 @@ class _EditInformationState extends State<EditInformation> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           },
         ),
         elevation: 0,
@@ -100,190 +264,214 @@ class _EditInformationState extends State<EditInformation> {
         iconTheme: const IconThemeData(color: AppColors.deepsea),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Stack(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: ListView(
+                shrinkWrap: true,
                 children: [
-                  Align(
-                    alignment: AlignmentDirectional.center,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.black38,
-                      child: CircleAvatar(
-                        radius: 49,
-                        backgroundImage: _image != null
-                            ? FileImage(File(_image!.path))
-                            : AssetImage('assets/images/123.jpg')
-                                as ImageProvider,
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.black38,
+                          child: CircleAvatar(
+                            radius: 49,
+                            backgroundImage: _storedImagePath != null
+                                ? CachedNetworkImageProvider(_storedImagePath!)
+                                : AssetImage('assets/images/userimage.jpg')
+                                    as ImageProvider,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 2,
+                        right: 1,
+                        left: 3,
+                        child: Align(
+                          alignment: const Alignment(0.2, 0),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            color: AppColors.deepsea,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.white,
+                                size: 17,
+                              ),
+                              onPressed: () =>
+                                  _showImageSourceActionSheet(context),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  CustomTextFormField(
+                    controller: _firstNameController,
+                    textInputType: TextInputType.text,
+                    enabledBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.deepsea,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    hintText: 'First Name',
+                  ),
+                  const SizedBox(height: 9),
+                  CustomTextFormField(
+                    controller: _lastNameController,
+                    textInputType: TextInputType.text,
+                    enabledBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.deepsea,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    hintText: 'Last Name',
+                  ),
+                  const SizedBox(height: 9),
+                  CustomTextFormField(
+                    controller: _emailController,
+                    textInputType: TextInputType.text,
+                    enabledBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.deepsea,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    hintText: 'Email',
+                  ),
+                  const SizedBox(height: 9),
+                  IntlPhoneField(
+                    controller: _phoneNumberController,
+                    decoration: const InputDecoration(
+                      labelText: "Phone Number",
+                      labelStyle: TextStyle(color: AppColors.deepsea),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(),
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 2,
-                    right: 1,
-                    left: 3,
-                    child: Align(
-                      alignment: const Alignment(0.2, 0),
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        color: AppColors.deepsea,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.white,
-                            size: 17,
+                  const SizedBox(height: 9),
+                  CustomTextFormField(
+                    controller: _countryController,
+                    textInputType: TextInputType.text,
+                    enabledBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.deepsea,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    hintText: 'Country',
+                  ),
+                  const SizedBox(height: 9),
+                  CustomTextFormField(
+                    controller: _cityController,
+                    textInputType: TextInputType.text,
+                    enabledBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.deepsea,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    hintText: 'City',
+                  ),
+                  const SizedBox(height: 9),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Gender',
+                      ),
+                      value: _valueChoose,
+                      items: listItem.map((String? valueItem) {
+                        return DropdownMenuItem<String>(
+                          value: valueItem,
+                          child: Text(
+                            valueItem!,
+                            style: TextStyle(
+                              color: AppColors.deepsea,
+                            ),
                           ),
-                          onPressed: () => _showImageSourceActionSheet(context),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valueChoose = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 9),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: TextField(
+                      controller: _date,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.calendar_today_rounded),
+                        labelText: "Birth Date",
+                        labelStyle: TextStyle(
+                          color: AppColors.deepsea,
                         ),
                       ),
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2110),
+                        );
+                        if (pickedDate != null) {
+                          setState(() {
+                            _date.text =
+                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                          });
+                        }
+                      },
                     ),
+                  ),
+                  const SizedBox(height: 18),
+                  CustomButton(
+                    title: "Save Changes",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                    color: AppColors.deepsea,
+                    onPressed: () async {
+                      await _saveChanges();
+                    },
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              CustomTextFormField(
-                textInputType: TextInputType.text,
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.blackShade2,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-                hintText: 'First Name',
-              ),
-              const SizedBox(height: 9),
-              CustomTextFormField(
-                textInputType: TextInputType.text,
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.blackShade2,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-                hintText: 'Last Name',
-              ),
-              const SizedBox(height: 9),
-              CustomTextFormField(
-                textInputType: TextInputType.text,
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.blackShade2,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-                hintText: 'Email',
-              ),
-              const SizedBox(height: 9),
-              const IntlPhoneField(
-                decoration: InputDecoration(
-                  labelText: "Phone Number",
-                  labelStyle: TextStyle(color: AppColors.deepsea),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 9),
-              CustomTextFormField(
-                textInputType: TextInputType.text,
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.blackShade2,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-                hintText: 'Country',
-              ),
-              const SizedBox(height: 9),
-              CustomTextFormField(
-                textInputType: TextInputType.text,
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.blackShade2,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-                hintText: 'City',
-              ),
-              const SizedBox(height: 9),
-              Padding(
-                padding: const EdgeInsets.only(left: 1, right: 1),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.black, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: DropdownButton(
-                    hint: Text("   Select the Gender"),
-                    dropdownColor: AppColors.whiteShade1,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 36,
-                    isExpanded: true,
-                    underline: SizedBox(),
-                    style: TextStyle(
-                      color: AppColors.deepsea,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    value: valueChoose,
-                    onChanged: (newValue) {
-                      setState(() {
-                        valueChoose = newValue as String?;
-                      });
+            ),
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: FutureBuilder(
+                    future: Future.delayed(Duration(seconds: 20)),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        _isLoading = false;
+                        return Text(
+                            'Loading timeout it will Loading soon go on',
+                            style: TextStyle(color: Colors.white));
+                      } else {
+                        return CircularProgressIndicator();
+                      }
                     },
-                    items: ListItem.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
-                      );
-                    }).toList(),
                   ),
                 ),
               ),
-              const SizedBox(height: 9),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextField(
-                  controller: _date,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.calendar_today_rounded),
-                    labelText: "Birth Date",
-                    labelStyle: TextStyle(
-                      color: AppColors.blackShade2,
-                    ),
-                  ),
-                  onTap: () async {
-                    DateTime? pickeddate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2110),
-                    );
-                    if (pickeddate != null) {
-                      setState(() {
-                        _date.text =
-                            DateFormat('dd-MM-yyyy').format(pickeddate);
-                      });
-                    }
-                  },
-                ),
-              ),
-              SizedBox(height: 18),
-              CustomButton(
-                title: "Save Changes",
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-                color: AppColors.deepsea,
-                onPressed: () {},
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );

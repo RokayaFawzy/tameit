@@ -71,7 +71,7 @@ class _NavBarRootState extends State<NavBarRoot> {
 
       body: _screens[_selectedIndex],
       bottomNavigationBar: SizedBox(
-        height: 90,
+        height: 49,
         child: BottomNavigationBar(
           backgroundColor: AppColors.deepsea,
           type: BottomNavigationBarType.fixed,
