@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Blogs/mostread.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/list_row.dart';
 
-import 'Blogs/articals.dart';
+import '../branch_Screens/Blogs/articals.dart';
+import '../branch_Screens/Blogs/mostread.dart';
 
 class BlogPage extends StatefulWidget {
   const BlogPage({super.key});
@@ -119,6 +119,7 @@ class _BlogPageState extends State<BlogPage> {
                   child: const MostRead(),
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ],

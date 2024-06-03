@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Blogs/OurCatigory/SleepDisorderBlog.dart';
 import 'package:tame_it/values/values.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/MemoryBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/NeuroticBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/OCDBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/ADHD.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/Anxiety.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/DepressionBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PTSDblog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PanicDisorderBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/PersonalityBlog.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/StressRelatedBlob.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/eatdisorder.dart';
-import '../Screens/navbar_Root_Screens/more pages/Blogs/OurCatigory/schizophreniablog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/ADHD.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/Anxiety.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/DepressionBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/MemoryBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/NeuroticBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/OCDBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/PTSDblog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/PanicDisorderBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/PersonalityBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/SleepDisorderBlog.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/StressRelatedBlob.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/eatdisorder.dart';
+import '../Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/schizophreniablog.dart';
+
 
 class ListRow extends StatelessWidget {
   const ListRow({super.key});
