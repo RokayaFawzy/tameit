@@ -1,3 +1,4 @@
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
 
@@ -41,7 +42,7 @@ class _TestingsState extends State<Testings> {
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: Text(
+                child: ExpandableText(
                     'How much do I know about myself, do I suffer from depression or anxiety? ,'
                     ' Should I visit a therapist, do I need psychiatric treatment? , '
                     'In just a few minutes these tests will answer all your head questions to know more about your psychological condition '
@@ -52,13 +53,15 @@ class _TestingsState extends State<Testings> {
                     'and to review all information regarding your mental health condition, life stage, or treatment with your treating professional. '
                     'Never disregard professional healthcare advice or delay seeking treatment because of something you have read on, or accessed through, '
                     'this platform.\nAll tests are Scientific, Reliable, Trusted.',
-                    maxLines: null,
+                    maxLines: 3,
+                    expandText: 'Read more',
+                    collapseText: 'Read less',
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 18,
                     )),
               ),
-              SizedBox(height: 160)
+              SizedBox(height: 40)
             ])),
         SizedBox(height: 15),
         Column(
@@ -98,9 +101,12 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'This test is designed to measure your psychological state with regards to the degree of depression, stress and anxiety. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
                               style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -153,9 +159,12 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'This test is designed to measure your anxiety degree. Please read the test sentences and choose the best answer that fits',
                               style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -208,9 +217,12 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'This test is designed to measure your depression degree. Please read the test sentences and choose the best answer that fits you during the last 2 weeks.',
                               style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -263,7 +275,7 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'Obsessions are unwelcome or distressing ideas, thoughts, images or impulses that repeatedly enter your mind. '
                               'They may seem to occur against your will. They may be repugnant to you, are often senseless, and may not fit '
                               'your actual personality at all (for example, the recurrent thought or impulse to harm to your children, '
@@ -281,7 +293,9 @@ class _TestingsState extends State<Testings> {
                               'You may experience anxiety that does not diminish until the behavior is completed. Please read the test sentences and '
                               'choose the best answer that fits you during the last 2 weeks.',
                               style: TextStyle(color: Color(0XFF979797)),
-                              maxLines: null,
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -302,11 +316,12 @@ class _TestingsState extends State<Testings> {
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
                 child: GestureDetector(
-                   onTap: () {
+                  onTap: () {
                     Navigator.of(context).pushNamed('/PTSDScale');
                   },
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                       color: AppColors.white,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,13 +348,17 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'This test assesses the psychological impact of stressful events after its ends by few months. Below is a list of problems and complaints that person sometimes have in response to stressful life experiences. Please read each one carefully, choose the answer that fits you mostly to indicate how much you have been bothered by that problem in the last month',
                               style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     child: Text('Test Duration:- 1:30 Mins'),
@@ -355,11 +374,13 @@ class _TestingsState extends State<Testings> {
                 padding:
                     const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
                 child: GestureDetector(
-                   onTap: () {
-                    Navigator.of(context).pushNamed('/Adult_ADHD_Self_ReportScale');
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed('/Adult_ADHD_Self_ReportScale');
                   },
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                       color: AppColors.white,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,13 +407,17 @@ class _TestingsState extends State<Testings> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Text(
+                            ExpandableText(
                               'Attention deficit hyperactivity disorder (ADHD) in adults is a mental health related disorder and includes a set of persistent problems, such as difficulty in attention, hyperactivity, and impulsive behavior. Attention deficit disorder with hyperactivity in adults may lead to unstable relationships, poor work or school performance, decreased self-confidence, and other problems.',
                               style: TextStyle(color: Color(0XFF979797)),
+                              maxLines: 3,
+                              expandText: 'Read more',
+                              collapseText: 'Read less',
                             ),
                             SizedBox(height: 10),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     child: Text('Test Duration:- 1:30 Mins'),

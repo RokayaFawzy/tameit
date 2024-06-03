@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/Blogs/OurCatigory/buble.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Blogs/OurCatigory/buble.dart';
 import 'package:tame_it/values/values.dart';
 
 class ADHDBlog extends StatefulWidget {
