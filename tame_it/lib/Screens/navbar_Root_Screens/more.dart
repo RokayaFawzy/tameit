@@ -138,45 +138,38 @@ class _MorePageState extends State<MorePage> {
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
         appBar: AppBar(
-          backgroundColor: AppColors.whiteShade3,
-          shape: const Border(
-            bottom: BorderSide(
-              color: AppColors.whiteShade4,
-              width: 1,
+            backgroundColor: AppColors.whiteShade3,
+            shape: const Border(
+              bottom: BorderSide(
+                color: AppColors.whiteShade4,
+                width: 1,
+              ),
             ),
-          ),
-          title: const Text(
-            'More',
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            title: const Text(
+              'More',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+            actions: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/Profile');
-                    },
-                    child: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Colors.black38,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundImage: imageProvider,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/Profile');
+                        },
+                        child: CircleAvatar(
+                            radius: 17,
+                            backgroundColor: Colors.black38,
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundImage: imageProvider,
+                            ))))
+              ])
+            ]),
         body: SafeArea(
             child: Column(children: [
           SizedBox(height: 10),

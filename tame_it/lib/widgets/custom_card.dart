@@ -126,9 +126,12 @@ class _DoctorCardState extends State<DoctorCard> {
                                 child: OutlinedButton(
                                     style: ButtonStyle(
                                         backgroundColor:
-                                            MaterialStatePropertyAll(
+                                            WidgetStatePropertyAll(
                                                 AppColors.deepsea)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/AppointmentBooking');
+                                    },
                                     child: Text(
                                       'Book Now',
                                       style: TextStyle(

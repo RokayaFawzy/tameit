@@ -261,7 +261,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/AppointmentBooking');
+                                },
                                 child: Text('Book Appointment',
                                     style: TextStyle(color: AppColors.white)),
                                 style: ElevatedButton.styleFrom(
