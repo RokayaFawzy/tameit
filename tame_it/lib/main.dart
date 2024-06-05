@@ -26,6 +26,8 @@ import 'package:tame_it/values/values.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
+import 'Screens/navbar_Root_Screens/branch_Screens/my_appointment.dart';
+import 'Screens/navbar_Root_Screens/branch_Screens/my_doctor.dart';
 import 'Screens/navbar_Root_Screens/more pages/payment.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,6 +101,8 @@ class TameIt extends StatelessWidget {
             Adult_ADHD_Self_Report_Scale(),
         '/AppointmentBooking': (context) => AppointmentBooking(),
         '/PaymentFormPage':(context) => PaymentFormPage(),
+        '/MyAppointments':(context)=>MyAppointments(),
+        '/MyDoctor':(context) => MyDoctor(),
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(

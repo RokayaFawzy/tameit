@@ -303,7 +303,7 @@ class _MorePageState extends State<MorePage> {
               ),
               child: ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushNamed('/PaymentFormPage');
                   },
                   leading: const Icon(
                     Icons.payment,
