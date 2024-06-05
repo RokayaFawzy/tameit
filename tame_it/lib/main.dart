@@ -23,6 +23,8 @@ import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.d
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
+import 'AdminScreens/doctor/add_Doctor_Admain.dart';
+import 'AdminScreens/doctor/edit_Doctor_Admain.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
@@ -61,11 +63,12 @@ class TameIt extends StatelessWidget {
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
           :
           // SplashScreen(),
-          Login(),
+          // Login(),
           // NavBarRoot(),
           // PaymentFormPage(),
           // AppointmentBooking(),
-          
+          // AddDoctorAdmain(),
+          EditDoctorAdmain(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -100,9 +103,9 @@ class TameIt extends StatelessWidget {
         '/Adult_ADHD_Self_ReportScale': (context) =>
             Adult_ADHD_Self_Report_Scale(),
         '/AppointmentBooking': (context) => AppointmentBooking(),
-        '/PaymentFormPage':(context) => PaymentFormPage(),
-        '/MyAppointments':(context)=>MyAppointments(),
-        '/MyDoctor':(context) => MyDoctor(),
+        '/PaymentFormPage': (context) => PaymentFormPage(),
+        '/MyAppointments': (context) => MyAppointments(),
+        '/MyDoctor': (context) => MyDoctor(),
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(
