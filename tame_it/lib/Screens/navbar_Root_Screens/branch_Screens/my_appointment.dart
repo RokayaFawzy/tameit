@@ -91,7 +91,10 @@ class MyAppointments extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/ChatDoctorPage');
+                                },
                                 child: Row(
                                   children: [
                                     Icon(

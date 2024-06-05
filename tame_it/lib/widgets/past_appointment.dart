@@ -134,7 +134,9 @@ class PastAppointment extends StatelessWidget {
                         Radius.circular(25)), // Adjust the border radius
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/ChatDoctorPage');
+                },
                 child: Row(
                   children: [
                     Icon(
