@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../Models/Doctor_model.dart';
 import '../../../values/values.dart';
 import '../../../widgets/custom_card.dart';
+import '../../../widgets/past_appointment.dart';
 
 class MyDoctor extends StatefulWidget {
   const MyDoctor({super.key});
@@ -50,7 +51,7 @@ class _MyDoctorState extends State<MyDoctor> {
                         child: Text(
                           "The doctors with whom I have booked appointments :",
                           style: TextStyle(
-                            color: AppColors.deepsea,
+                            color: AppColors.OrangePeel,
                             fontSize: fontSize,
                             fontFamily: "Domine",
                             fontWeight: FontWeight.w700,
@@ -61,29 +62,8 @@ class _MyDoctorState extends State<MyDoctor> {
                     ],
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 2, // Assuming there are 2 doctors
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: DoctorCard(
-                        // Assuming DoctorCard requires a Doctor object
-                        doctor: Doctor(
-                          firstName: 'Smith',
-                          specialty: 'Psychologist',
-                          rating: 5,
-                          lastName: ' Wilson',
-                          price: '800',
-                          experienceYears: '24 yr',
-                          interest: 'Depression, Stress, Anxiety',
-                          image: 'assets/images/123.jpg',
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                const SizedBox(height: 12),
+                PastAppointment(),
               ],
             ),
           ],
