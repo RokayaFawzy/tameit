@@ -25,6 +25,8 @@ import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
+import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
+import 'Screens/navbar_Root_Screens/more pages/payment.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Personal.dart';
@@ -58,7 +60,10 @@ class TameIt extends StatelessWidget {
           :
           // SplashScreen(),
           Login(),
-      // NavBarRoot(),
+          // NavBarRoot(),
+          // PaymentFormPage(),
+          // AppointmentBooking(),
+          
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -92,6 +97,8 @@ class TameIt extends StatelessWidget {
         '/PTSDScale': (context) => PTSD(),
         '/Adult_ADHD_Self_ReportScale': (context) =>
             Adult_ADHD_Self_Report_Scale(),
+        '/AppointmentBooking': (context) => AppointmentBooking(),
+        '/PaymentFormPage':(context) => PaymentFormPage(),
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(

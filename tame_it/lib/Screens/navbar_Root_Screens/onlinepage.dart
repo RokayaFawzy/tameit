@@ -114,67 +114,67 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
 
   Widget _buildMyTherapy() {
     return Scaffold(
-      backgroundColor: AppColors.whiteShade3,
-      appBar: AppBar(
         backgroundColor: AppColors.whiteShade3,
-        shape: const Border(
-          bottom: BorderSide(
-            color: AppColors.whiteShade4,
-            width: 1,
+        appBar: AppBar(
+          backgroundColor: AppColors.whiteShade3,
+          shape: const Border(
+            bottom: BorderSide(
+              color: AppColors.whiteShade4,
+              width: 1,
+            ),
           ),
-        ),
-        title: const Text(
-          'Online Therapists',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          title: const Text(
+            'Online Therapists',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Profile');
-                  },
-                  child: CircleAvatar(
-                    radius: 17,
-                    backgroundColor: Colors.black38,
-                    child: FutureBuilder<UserDetails>(
-                      future: userDetails,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator(); // or any loading indicator
-                        } else if (snapshot.hasError) {
-                          return const Icon(Icons.error); // handle error
-                        } else {
-                          return CircleAvatar(
-                            radius: 16,
-                            backgroundImage: snapshot.data!.imageUrl != null
-                                ? NetworkImage(snapshot.data!.imageUrl!)
-                                : AssetImage('assets/images/newlogo.jpg')
-                                    as ImageProvider, // Change this line
-                          );
-                        }
-                      },
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/Profile');
+                    },
+                    child: CircleAvatar(
+                      radius: 17,
+                      backgroundColor: Colors.black38,
+                      child: FutureBuilder<UserDetails>(
+                        future: userDetails,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // or any loading indicator
+                          } else if (snapshot.hasError) {
+                            return const Icon(Icons.error); // handle error
+                          } else {
+                            return CircleAvatar(
+                              radius: 16,
+                              backgroundImage: snapshot.data!.imageUrl != null
+                                  ? NetworkImage(snapshot.data!.imageUrl!)
+                                  : AssetImage('assets/images/newlogo.jpg')
+                                      as ImageProvider, // Change this line
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+              ],
+            ),
+          ],
+        ),
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
               SizedBox(height: 10),
               Text(
                 'You can start in minutes',
@@ -213,12 +213,12 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                          )
+                        )
+                      )
+                    )
+                  ]
+                )
               ),
               SizedBox(
                 height: 8,
@@ -226,51 +226,44 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Row(
-                      children: [
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Row(children: [
                         Container(
-                          width: width * 0.45,
-                          child: OutlinedButton(
-                            style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: AppColors.deepsea,
-                                  width: 1.0,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.tune,
-                                  color: AppColors.deepsea,
-                                  size: 20,
-                                ),
-                                Text(
-                                  ' Filter by',
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
+                            width: width * 0.45,
+                            child: OutlinedButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all(
+                                    BorderSide(
+                                      color: AppColors.deepsea,
+                                      width: 1.0,
+                                      style: BorderStyle.solid,
+                                    ),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/FiltersScreen');
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.tune,
+                                        color: AppColors.deepsea,
+                                        size: 20,
+                                      ),
+                                      Text(' Filter by',
+                                          style: TextStyle(
+                                            color: AppColors.deepsea,
+                                          ))
+                                    ]),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/FiltersScreen');
+                                }))
+                      ])),
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Row(
@@ -321,35 +314,28 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                 height: 12,
               ),
               ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 10, // Assuming there are 10 therapists
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: DoctorCard(
-                      // Assuming DoctorCard requires a UserDetails object
-                      // You might need to modify this according to your actual implementation
-                      doctor: Doctor(
-                        firstName: 'Smith',
-                        specialty: 'Psychologist',
-                        rating: 5,
-                        lastName: ' Wilson',
-                        price: '800',
-                        experienceYears: '24 yr',
-                        interest: 'Depression, Stress, Anxiety',
-                        image: 'assets/images/123.jpg',
-                      ),
-                    ),
-                  );
-                },
-              ),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 10, // Assuming there are 10 therapists
+                  itemBuilder: (context, index) {
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: DoctorCard(
+                            // Assuming DoctorCard requires a UserDetails object
+                            // You might need to modify this according to your actual implementation
+                            doctor: Doctor(
+                          firstName: 'Smith',
+                          specialty: 'Psychologist',
+                          rating: 5,
+                          lastName: ' Wilson',
+                          price: '800',
+                          experienceYears: '24 yr',
+                          interest: 'Depression, Stress, Anxiety',
+                          image: 'assets/images/123.jpg',
+                        )));
+                  }),
               SizedBox(height: 200),
-            ],
-          ),
-        ),
-      ),
-    );
+            ]))));
   }
 
   //Sorted by page
