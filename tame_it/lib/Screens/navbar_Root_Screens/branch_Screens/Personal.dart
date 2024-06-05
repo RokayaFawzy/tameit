@@ -135,12 +135,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
         ),
         centerTitle: true,
         shadowColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios),
+        //   onPressed: () {
+        //     Navigator.of(context).pop();
+        //   },
+        // ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),

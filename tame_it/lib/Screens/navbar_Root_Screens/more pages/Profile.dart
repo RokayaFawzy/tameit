@@ -160,14 +160,14 @@ class _ProfileState extends State<Profile> {
           icon: Icons.medical_services_outlined,
           title: 'My appointment',
           onTap: () {
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushNamed('/MyAppointments');
           },
         ),
         buildListTile(
           icon: Icons.personal_injury_outlined,
           title: 'My doctors',
           onTap: () {
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushNamed('/MyDoctor');
           },
         ),
       ],

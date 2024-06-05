@@ -253,12 +253,12 @@ class _EditInformationState extends State<EditInformation> {
         ),
         centerTitle: true,
         shadowColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: AppColors.deepsea),
