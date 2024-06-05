@@ -126,7 +126,7 @@ class _DoctorCardState extends State<DoctorCard> {
                                 child: OutlinedButton(
                                     style: ButtonStyle(
                                         backgroundColor:
-                                            WidgetStatePropertyAll(
+                                            MaterialStatePropertyAll(
                                                 AppColors.deepsea)),
                                     onPressed: () {
                                       Navigator.of(context)
