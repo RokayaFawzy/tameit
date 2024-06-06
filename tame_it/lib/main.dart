@@ -63,12 +63,12 @@ class TameIt extends StatelessWidget {
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
           :
           // SplashScreen(),
-          // Login(),
-          // NavBarRoot(),
-          // PaymentFormPage(),
-          // AppointmentBooking(),
-          // AddDoctorAdmain(),
-          EditDoctorAdmain(),
+          Login(),
+      // NavBarRoot(),
+      // PaymentFormPage(),
+      // AppointmentBooking(),
+      // AddDoctorAdmain(),
+      // EditDoctorAdmain(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),

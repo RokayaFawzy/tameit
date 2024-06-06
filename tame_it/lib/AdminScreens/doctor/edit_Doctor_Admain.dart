@@ -12,6 +12,88 @@ class EditDoctorAdmain extends StatefulWidget {
 }
 
 class _EditDoctorAdmainState extends State<EditDoctorAdmain> {
+  // List to keep track of clinic fields
+  List<Widget> _clinicFields = [];
+  // List to keep track of specialization fields
+  List<Widget> _specializationFields = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Add initial specialization field
+    _specializationFields.add(_buildSpecializationField());
+    // Add initial clinic field
+    _clinicFields.add(_buildClinicField());
+  }
+
+  // Function to build a specialization field
+  Widget _buildSpecializationField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: CustomTextFormField(
+              hintText: 'Specialization',
+              enabledBorder: Borders.customOutlineInputBorder(
+                color: AppColors.deepsea,
+              ),
+              focusedBorder: Borders.customUnderlineInputBorder(
+                color: AppColors.orange,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              setState(() {
+                _specializationFields.add(_buildSpecializationField());
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Function to build a clinic field
+  Widget _buildClinicField() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Clinic',
+                  style: TextStyle(color: AppColors.deepsea),
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  setState(() {
+                    _clinicFields.add(_buildClinicField());
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        CustomTextFormField(
+          hintText: 'Clinic',
+          enabledBorder: Borders.customOutlineInputBorder(
+            color: AppColors.deepsea,
+          ),
+          focusedBorder: Borders.customUnderlineInputBorder(
+            color: AppColors.orange,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,25 +193,7 @@ class _EditDoctorAdmainState extends State<EditDoctorAdmain> {
                   color: AppColors.orange,
                 ),
               ),
-              const SizedBox(
-                height: 9,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Location',
-                  style: TextStyle(color: AppColors.deepsea),
-                ),
-              ),
-              CustomTextFormField(
-                hintText: 'Location',
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.deepsea,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
-              ),
+
               const SizedBox(
                 height: 18,
               ),
@@ -216,33 +280,17 @@ class _EditDoctorAdmainState extends State<EditDoctorAdmain> {
                   style: TextStyle(color: AppColors.deepsea),
                 ),
               ),
-              CustomTextFormField(
-                hintText: 'Specialization',
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.deepsea,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
+
+              Column(
+                children: _specializationFields,
               ),
               const SizedBox(
                 height: 9,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Clinic',
-                  style: TextStyle(color: AppColors.deepsea),
-                ),
-              ),
-              CustomTextFormField(
-                hintText: 'Clinic',
-                enabledBorder: Borders.customOutlineInputBorder(
-                  color: AppColors.deepsea,
-                ),
-                focusedBorder: Borders.customUnderlineInputBorder(
-                  color: AppColors.orange,
-                ),
+
+              // Add clinic fields here
+              Column(
+                children: _clinicFields,
               ),
               const SizedBox(
                 height: 12,
@@ -257,7 +305,7 @@ class _EditDoctorAdmainState extends State<EditDoctorAdmain> {
                         color: Colors.white,
                       ),
                       color: AppColors.deepsea,
-                      title: " Edit ",
+                      title: "Edit",
                       onPressed: () {},
                     )),
               ),
