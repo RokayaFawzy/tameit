@@ -3,6 +3,8 @@ import 'package:tame_it/widgets/Toggle_rating.dart';
 import 'package:tame_it/widgets/toggle_gender.dart';
 import 'package:tame_it/widgets/toggle_hours_checkbox.dart';
 import 'package:tame_it/values/values.dart';
+
+import '../../../widgets/custom_text_form_field.dart';
 // import 'package:intl/intl.dart';
 
 class FiltersScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
           title: const Text(
-            '                     Filters',
+            '                          Filters',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.deepsea,
@@ -33,12 +35,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
           ),
           shadowColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: AppColors.deepsea)),
@@ -121,8 +117,51 @@ class _FiltersScreenState extends State<FiltersScreen> {
               //     },
               //   ),
               // ),
-
-              AvailableHoursCheckbox(),
+              const SizedBox(
+                height: 9,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Specialization',
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontFamily: "Domine",
+                  ),
+                ),
+              ),
+              CustomTextFormField(
+                hintText: 'Specialization',
+                enabledBorder: Borders.customOutlineInputBorder(
+                  color: AppColors.deepsea,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+              ),
+              const SizedBox(
+                height: 9,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Year Of Experiance',
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontFamily: "Domine",
+                  ),
+                ),
+              ),
+              CustomTextFormField(
+                hintText: 'Year Of Experiance',
+                enabledBorder: Borders.customOutlineInputBorder(
+                  color: AppColors.deepsea,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.orange,
+                ),
+              ),
+              // AvailableHoursCheckbox(),
               SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
