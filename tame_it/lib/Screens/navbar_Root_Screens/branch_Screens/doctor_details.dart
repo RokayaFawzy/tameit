@@ -2,24 +2,164 @@ import 'package:flutter/material.dart';
 import 'package:tame_it/values/values.dart';
 
 class DoctorDetails extends StatefulWidget {
-  const DoctorDetails({super.key});
+  const DoctorDetails({Key? key}) : super(key: key);
 
   @override
   State<DoctorDetails> createState() => _DoctorDetailsState();
 }
 
 class _DoctorDetailsState extends State<DoctorDetails> {
+  List<String> clinicNames = ['Naser city clinic'];
+  List<String> clinicLocation = ['Naser city clinic'];
+  List<String> clinicNumber = ['Naser city clinic'];
+
+  void _addClinicName() {
+    setState(() {
+      clinicNames.add('New clinic name');
+      clinicLocation.add('New clinic Location');
+      clinicNumber.add('New clinicNumber');
+    });
+  }
+
+  // Define a method to build Clinic Details section
+  Widget _buildClinicDetailsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildClinicNamesSection(),
+        _buildClinicLocationSection(),
+        _buildClinicNumberSection(),
+      ],
+    );
+  }
+
+  // Define a method to build Clinic Names section
+  Widget _buildClinicNamesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Clinic Names',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        SizedBox(height: 15),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: clinicNames
+              .map((name) => Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(32)),
+                      color: AppColors.greyShade5,
+                    ),
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ],
+    );
+  }
+
+  // Define a method to build Clinic Location section
+  Widget _buildClinicLocationSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Clinic Location',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        SizedBox(height: 15),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: clinicLocation
+              .map((name) => Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(32)),
+                      color: AppColors.greyShade5,
+                    ),
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ],
+    );
+  }
+
+  // Define a method to build Clinic Number section
+  Widget _buildClinicNumberSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Clinic Number',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        SizedBox(height: 15),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: clinicNumber
+              .map((name) => Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(32)),
+                      color: AppColors.greyShade5,
+                    ),
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.whiteShade3,
         appBar: AppBar(
-          title: Text('Therapist Profile',
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              )),
+          title: Text(
+            'Therapist Profile',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
           centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
         ),
@@ -30,28 +170,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               floating: false,
               pinned: true,
             ),
-
-            //    SliverToBoxAdapter(
-            //   child: Container(
-            //     color: AppColors.Bermuda,
-            //     height: 20,
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.end,
-            //       children: <Widget>[
-            //         Container(
-            //           height: 20,
-            //           decoration: BoxDecoration(
-            //             color: Colors.white,
-            //               borderRadius: BorderRadius.only(
-            //                 topLeft: const Radius.circular(20.0),
-            //                 topRight: const Radius.circular(20.0),
-            //               ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -62,7 +180,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         topLeft: const Radius.circular(20.0),
                         topRight: const Radius.circular(20.0),
                       ),
-                      // color: AppColors.Bermuda
                     ),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,8 +199,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                     children: [
                                   IconButton(
                                       onPressed: () {
-                                        Navigator.of(context)
-                                            .pushNamed('/ChatDoctorPage');
+                                        // Call the method to show clinic details
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return _buildClinicDetailsSection();
+                                          },
+                                        );
                                       },
                                       icon: Icon(
                                         Icons.chat,
@@ -242,6 +364,25 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 'I am also the head of the Administration of Prep Middle East Academy for Psychological Services.',
                                 maxLines: null),
                           ),
+                          SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Clinic',
+                                style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.add, color: AppColors.deepsea),
+                                onPressed: _addClinicName,
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          _buildClinicDetailsSection(),
                           SizedBox(height: 200)
                         ]));
               },
