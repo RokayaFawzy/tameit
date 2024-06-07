@@ -85,31 +85,24 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: AppColors.whiteShade3,
-      body: DefaultTabController(
-        length: 2,
-        child: GestureDetector(
-          child: Stack(
-            children: <Widget>[
-              ListView(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: widthOfScreen * 0.1,
-                      right: widthOfScreen * 0.3,
-                    ),
+        backgroundColor: AppColors.whiteShade3,
+        body: DefaultTabController(
+            length: 2,
+            child: GestureDetector(
+                child: Stack(children: <Widget>[
+              ListView(children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(
+                    left: widthOfScreen * 0.1,
+                    right: widthOfScreen * 0.3,
                   ),
-                  Container(
-                    height: heightOfScreen,
-                    child: _buildMyTherapy(),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                ),
+                Container(
+                  height: heightOfScreen,
+                  child: _buildMyTherapy(),
+                )
+              ])
+            ]))));
   }
 
   Widget _buildMyTherapy() {
@@ -131,6 +124,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -185,41 +179,35 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
               ),
               SizedBox(height: 2),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(children: [
                     Expanded(
-                      child: TextField(
-                        controller: _searchController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: 'Therapist Name or interest',
-                          hintStyle: TextStyle(
-                            color: AppColors.greyShade7,
-                            fontSize: width / 25,
-                          ),
-                          prefixIcon: IconButton(
-                            icon: Icon(
-                              Icons.search,
-                              color: AppColors.greyShade7,
-                            ),
-                            onPressed: () {
-                              // Perform the search here
-                            },
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () => _searchController.clear(),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          )
-                        )
-                      )
-                    )
-                  ]
-                )
-              ),
+                        child: TextField(
+                            controller: _searchController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                hintText: 'Therapist Name or interest',
+                                hintStyle: TextStyle(
+                                  color: AppColors.greyShade7,
+                                  fontSize: width / 25,
+                                ),
+                                prefixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                    color: AppColors.greyShade7,
+                                  ),
+                                  onPressed: () {
+                                    // Perform the search here
+                                  },
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.clear),
+                                  onPressed: () => _searchController.clear(),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ))))
+                  ])),
               SizedBox(
                 height: 8,
               ),

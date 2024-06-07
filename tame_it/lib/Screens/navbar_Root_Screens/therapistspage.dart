@@ -123,39 +123,39 @@ class __TherapistsStateState extends State<Therapists> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
           actions: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Profile');
-                  },
-                  child: CircleAvatar(
-                    radius: 17,
-                    backgroundColor: Colors.black38,
-                    child: FutureBuilder<UserDetails>(
-                      future: userDetails,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator(); // or any loading indicator
-                        } else if (snapshot.hasError) {
-                          return const Icon(Icons.error); // handle error
-                        } else {
-                          return CircleAvatar(
-                            radius: 16,
-                            backgroundImage: snapshot.data!.imageUrl != null
-                                ? NetworkImage(snapshot.data!.imageUrl!)
-                                : AssetImage('assets/images/newlogo.jpg')
-                                    as ImageProvider, // Change this line
-                          );
-                        }
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/Profile');
                       },
-                    ),
-                  ),
-                ),
-              )
+                      child: CircleAvatar(
+                          radius: 17,
+                          backgroundColor: Colors.black38,
+                          child: FutureBuilder<UserDetails>(
+                              future: userDetails,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator(); // or any loading indicator
+                                } else if (snapshot.hasError) {
+                                  return const Icon(
+                                      Icons.error); // handle error
+                                } else {
+                                  return CircleAvatar(
+                                    radius: 16,
+                                    backgroundImage: snapshot.data!.imageUrl !=
+                                            null
+                                        ? NetworkImage(snapshot.data!.imageUrl!)
+                                        : AssetImage(
+                                                'assets/images/newlogo.jpg')
+                                            as ImageProvider, // Change this line
+                                  );
+                                }
+                              }))))
             ])
           ]),
       body: SafeArea(

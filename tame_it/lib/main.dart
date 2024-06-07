@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/AdminScreens/Users/ListUsers.dart';
+import 'package:tame_it/AdminScreens/adminhome.dart';
 import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/Testings/Adult_ADHD.dart';
 import 'package:tame_it/Screens/Testings/Depressionscale.dart';
@@ -23,6 +25,7 @@ import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/filter_Page.d
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
+import 'AdminScreens/doctor/ListDoctors.dart';
 import 'AdminScreens/doctor/add_Doctor_Admain.dart';
 import 'AdminScreens/doctor/edit_Doctor_Admain.dart';
 import 'DoctorScreens/DoctorHome.dart';
@@ -66,11 +69,9 @@ class TameIt extends StatelessWidget {
           // SplashScreen(),
           // Login(),
           // NavBarRoot(),
-          // PaymentFormPage(),
-          // AppointmentBooking(),
-          // AddDoctorAdmain(),
-          // EditDoctorAdmain(),
-          HomeDoctor(),
+          // AddDoctorAdmin(),
+          // EditDoctorAdmin(),
+          AdminHomePage(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -108,6 +109,11 @@ class TameIt extends StatelessWidget {
         '/PaymentFormPage': (context) => PaymentFormPage(),
         '/MyAppointments': (context) => MyAppointments(),
         '/MyDoctor': (context) => MyDoctor(),
+        '/AdminHomePage': (context) => AdminHomePage(),
+        '/ListUsers': (context) => ListUsers(),
+        '/ListDoctors': (context) => ListDoctors(),
+        '/EditDoctorAdmin': (context) => EditDoctorAdmin(),
+        '/AddDoctorAdmin': (context) => AddDoctorAdmin(),
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(
