@@ -25,6 +25,7 @@ import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 import 'AdminScreens/doctor/add_Doctor_Admain.dart';
 import 'AdminScreens/doctor/edit_Doctor_Admain.dart';
+import 'DoctorScreens/DoctorHome.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
@@ -63,12 +64,13 @@ class TameIt extends StatelessWidget {
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
           :
           // SplashScreen(),
-          Login(),
-      // NavBarRoot(),
-      // PaymentFormPage(),
-      // AppointmentBooking(),
-      // AddDoctorAdmain(),
-      // EditDoctorAdmain(),
+          // Login(),
+          // NavBarRoot(),
+          // PaymentFormPage(),
+          // AppointmentBooking(),
+          // AddDoctorAdmain(),
+          // EditDoctorAdmain(),
+          HomeDoctor(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
