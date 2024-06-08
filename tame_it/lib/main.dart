@@ -71,7 +71,8 @@ class TameIt extends StatelessWidget {
           // NavBarRoot(),
           // AddDoctorAdmin(),
           // EditDoctorAdmin(),
-          AdminHomePage(),
+          // AdminHomePage(),
+          HomeDoctor(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
