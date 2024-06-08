@@ -13,7 +13,7 @@ class MyAppointments extends StatelessWidget {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
         title: const Text(
-          '              My Appointment',
+          'My Appointment',
           style: TextStyle(
             color: AppColors.deepsea,
             fontSize: 18,
@@ -21,6 +21,7 @@ class MyAppointments extends StatelessWidget {
           ),
         ),
         shadowColor: Colors.white,
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: AppColors.deepsea),

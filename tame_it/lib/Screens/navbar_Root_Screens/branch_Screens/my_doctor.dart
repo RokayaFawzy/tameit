@@ -23,7 +23,7 @@ class _MyDoctorState extends State<MyDoctor> {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
         title: const Text(
-          '                 My doctor',
+          'My doctor',
           style: TextStyle(
             color: AppColors.deepsea,
             fontSize: 18,
@@ -31,6 +31,7 @@ class _MyDoctorState extends State<MyDoctor> {
           ),
         ),
         shadowColor: Colors.white,
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: AppColors.deepsea),
