@@ -61,39 +61,44 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/123.jpg',
-                                      ),
-                                      fit: BoxFit.fill,
-                                    )))),
-                            SizedBox(width: 10),
-                            Flexible(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                  Text(
-                                    'Dr. Georgia Griffin',
-                                    style: TextStyle(
-                                      fontSize: screenWidth * 0.05,
-                                      fontWeight: FontWeight.w400,
-                                      // color: AppColors.deepsea,
-                                    ),
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/123.jpg',
                                   ),
-                                  Text('Psychologist',
-                                      style: TextStyle(
-                                          fontSize: screenWidth * 0.04))
-                                ]))
-                          ]),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Dr. Georgia Griffin',
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.05,
+                                    fontWeight: FontWeight.w400,
+                                    // color: AppColors.deepsea,
+                                  ),
+                                ),
+                                Text('Psychologist',
+                                    style:
+                                        TextStyle(fontSize: screenWidth * 0.04))
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                       const SizedBox(height: 25),
                       const Text(
                         'Choose Date',
@@ -169,8 +174,8 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       Center(
                         child: ElevatedButton(
                             onPressed: () {
-                                    Navigator.of(context)
-                                      .pushNamed('/PaymentFormPage');
+                              Navigator.of(context)
+                                  .pushNamed('/PaymentFormPage');
                             },
                             child: Text('Make Appointment',
                                 style: TextStyle(color: AppColors.white)),

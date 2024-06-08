@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/DoctorScreens/appointment/ShowMyAppointment.dart';
 
 import '../../values/values.dart';
+import 'select_free_time.dart';
 
 class Appointment extends StatelessWidget {
   const Appointment({super.key});
@@ -52,10 +54,10 @@ class Appointment extends StatelessWidget {
               SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => ListPatient()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SelectFreeTime()),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 40.0),
@@ -81,10 +83,11 @@ class Appointment extends StatelessWidget {
               SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => RoomChat()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShowMyAppointment()),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0),
