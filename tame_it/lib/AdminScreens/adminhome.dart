@@ -33,6 +33,7 @@ class __AdminHomePageStateState extends State<AdminHomePage> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
+          centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
         ),
         drawer: const MyDrawer(),

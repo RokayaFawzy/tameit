@@ -24,7 +24,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
           title: const Text(
-            '                          Filters',
+            'Filters',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.deepsea,
@@ -34,6 +34,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               height: 1.70,
             ),
           ),
+          centerTitle: true,
           shadowColor: Colors.white,
           elevation: 0,
           backgroundColor: Colors.transparent,
