@@ -174,46 +174,40 @@ class _MorePageState extends State<MorePage> {
             child: Column(children: [
           SizedBox(height: 10),
           Center(
-            child: Container(
-              width: width / 1.2,
-              height: height / 9,
-              child: Card(
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 26,
-                        backgroundColor: Colors.black38,
-                        child: CircleAvatar(
-                            radius: 25, backgroundImage: imageProvider),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              child: Container(
+                  width: width / 1.2,
+                  height: height / 9,
+                  child: Card(
+                      color: Colors.white,
+                      child: Row(children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            userDetails.userName,
-                            style: TextStyle(
-                              color: AppColors.deepsea,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 26,
+                            backgroundColor: Colors.black38,
+                            child: CircleAvatar(
+                                radius: 25, backgroundImage: imageProvider),
                           ),
                         ),
-                        Text(
-                          userDetails.email,
-                          style: TextStyle(fontSize: width / 25),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  userDetails.userName,
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                userDetails.email,
+                                style: TextStyle(fontSize: width / 25),
+                              )
+                            ])
+                      ])))),
           SizedBox(height: 15),
           Container(
               decoration: const BoxDecoration(

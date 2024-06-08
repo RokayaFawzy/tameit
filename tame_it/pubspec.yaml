@@ -32,8 +32,8 @@ dependencies:
     sdk: flutter
   http: ^1.2.0
   shared_preferences: ^2.0.8
-  image_picker: ^0.8.4+2
-  permission_handler: ^10.0.0
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
   expandable_text: ^2.3.0
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,7 +41,7 @@ dependencies:
   flutter_verification_code: ^1.1.6
   intl_phone_field: ^3.1.0
   cupertino_icons: ^1.0.2
-  google_fonts: 6.1.0
+  google_fonts: ^6.2.1
   icon_forest: ^1.1.8
   melos: ^6.0.0
   intl: ^0.19.0
@@ -49,7 +49,7 @@ dependencies:
   flutter_feather_icons: ^2.0.0+1
   flutter_rating_bar: ^4.0.1
   material_design_icons_flutter: ^7.0.7296
-  material_color_utilities: 0.5.0
+  material_color_utilities: ^0.8.0
   smooth_page_indicator: ^1.1.0
   cached_network_image: ^3.3.1
   # flutter_flushbar: ^0.0.2

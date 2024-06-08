@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-
 import '../../values/values.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_form_field.dart';
 
-class AddDoctorAdmain extends StatefulWidget {
-  const AddDoctorAdmain({super.key});
+class AddDoctorAdmin extends StatefulWidget {
+  const AddDoctorAdmin({super.key});
 
   @override
-  State<AddDoctorAdmain> createState() => _AddDoctorAdmainState();
+  State<AddDoctorAdmin> createState() => _AddDoctorAdminState();
 }
 
-class _AddDoctorAdmainState extends State<AddDoctorAdmain> {
+class _AddDoctorAdminState extends State<AddDoctorAdmin> {
   // List to keep track of specialization fields
   List<Widget> _specializationFields = [];
   // List to keep track of clinic fields
@@ -58,65 +57,56 @@ class _AddDoctorAdmainState extends State<AddDoctorAdmain> {
 
   // Function to build a clinic field
   Widget _buildClinicField() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Clinic',
-                  style: TextStyle(color: AppColors.deepsea),
-                ),
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Clinic',
+                style: TextStyle(color: AppColors.deepsea),
               ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    _clinicFields.add(_buildClinicField());
-                  });
-                },
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  _clinicFields.add(_buildClinicField());
+                });
+              },
+            ),
+          ],
         ),
-        CustomTextFormField(
+      ),
+      CustomTextFormField(
           hintText: 'Clinic',
           enabledBorder: Borders.customOutlineInputBorder(
             color: AppColors.deepsea,
           ),
           focusedBorder: Borders.customUnderlineInputBorder(
             color: AppColors.orange,
-          ),
-        ),
-      ],
-    );
+          ))
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
-          title: const Text(
-            '                      ADD Doctor',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              height: 1.70,
-            ),
-          ),
+          backgroundColor: AppColors.whiteShade3,
+          title: const Text('ADD Doctor',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                height: 1.70,
+              )),
           shadowColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
+          centerTitle: true,
           elevation: 0,
-          backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: AppColors.deepsea)),
       body: SafeArea(
         child: Padding(
