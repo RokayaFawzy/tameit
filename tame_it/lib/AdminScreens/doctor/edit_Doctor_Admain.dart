@@ -222,6 +222,21 @@ class _EditDoctorAdminState extends State<EditDoctorAdmin> {
                   const SizedBox(height: 9),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'About',
+                        style: TextStyle(color: AppColors.deepsea),
+                      )),
+                  CustomTextFormField(
+                      hintText: 'About',
+                      enabledBorder: Borders.customOutlineInputBorder(
+                        color: AppColors.deepsea,
+                      ),
+                      focusedBorder: Borders.customUnderlineInputBorder(
+                        color: AppColors.orange,
+                      )),
+                  const SizedBox(height: 9),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text('Specialization',
                           style: TextStyle(color: AppColors.deepsea))),
 
