@@ -109,10 +109,93 @@ class _EditInformationState extends State<EditInformation> {
     }
   }
 
+  // Future<void> _editPatientDetails() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? token = prefs.getString('token');
+  //   if (token == null) return;
+  //   final url = Uri.parse(
+  //       'https://tameit.azurewebsites.net/api/patient/editPatientDetails');
+  //   final headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer $token',
+  //   };
+
+  //   Map<String, dynamic> requestBody = {};
+
+  //   if (_firstNameController.text.isNotEmpty) {
+  //     requestBody['firstName'] = _firstNameController.text;
+  //   }
+  //   if (_lastNameController.text.isNotEmpty) {
+  //     requestBody['lastName'] = _lastNameController.text;
+  //   }
+  //   if (_emailController.text.isNotEmpty) {
+  //     requestBody['email'] = _emailController.text;
+  //   }
+  //   if (_phoneNumberController.text.isNotEmpty) {
+  //     requestBody['phoneNumber'] = _phoneNumberController.text;
+  //   }
+  //   if (_valueChoose != null) {
+  //     requestBody['gender'] = _valueChoose?.toUpperCase();
+  //   }
+  //   if (_cityController.text.isNotEmpty) {
+  //     requestBody['city'] = _cityController.text;
+  //   }
+  //   if (_countryController.text.isNotEmpty) {
+  //     requestBody['country'] = _countryController.text;
+  //   }
+  //   if (_date.text.isNotEmpty) {
+  //     requestBody['birthDate'] = _date.text;
+  //   }
+
+  //   final body = json.encode(requestBody);
+
+  //   final response = await http.put(url, headers: headers, body: body);
+  //   if (response.statusCode == 200) {
+  //     print('Patient details updated successfully.');
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('Success'),
+  //           content: Text('Patient details updated successfully.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     print('Failed to update patient details. Response: ${response.body}');
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('Error'),
+  //           content: Text('Failed to update patient details.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
+
   Future<void> _editPatientDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     if (token == null) return;
+
     final url = Uri.parse(
         'https://tameit.azurewebsites.net/api/patient/editPatientDetails');
     final headers = {
@@ -149,46 +232,56 @@ class _EditInformationState extends State<EditInformation> {
 
     final body = json.encode(requestBody);
 
-    final response = await http.put(url, headers: headers, body: body);
-    if (response.statusCode == 200) {
-      print('Patient details updated successfully.');
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Success'),
-            content: Text('Patient details updated successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      print('Failed to update patient details. Response: ${response.body}');
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to update patient details.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+    try {
+      final response = await http.put(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        print('Patient details updated successfully.');
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Patient details updated successfully.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        print('Failed to update patient details. Response: ${response.body}');
+        _showErrorDialog('Failed to update patient details. Please try again.');
+      }
+    } catch (e) {
+      print('Error: $e');
+      _showErrorDialog('An error occurred. Please try again.');
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _saveChanges() async {
@@ -431,7 +524,7 @@ class _EditInformationState extends State<EditInformation> {
                         if (pickedDate != null) {
                           setState(() {
                             _date.text =
-                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                                DateFormat('dd-MM-yyyy').format(pickedDate);
                           });
                         }
                       },

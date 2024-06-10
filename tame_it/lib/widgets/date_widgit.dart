@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../values/values.dart';
 
 class DateWidget extends StatelessWidget {
@@ -7,44 +6,57 @@ class DateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double containerSize = MediaQuery.of(context).size.width * 0.3;
+
     return Container(
-      width: MediaQuery.of(context).size.width * 0.3,
-      height: MediaQuery.of(context).size.width * 0.3,
-      padding: const EdgeInsets.all(10),
+      width: containerSize,
+      height: containerSize,
+      padding: const EdgeInsets.all(5),
       child: Container(
-          color: AppColors.deepsea,
-          child: const Column(
-            children: [
-              SizedBox(height: 4),
-              Text(
+        color: AppColors.deepsea,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 3),
+            const Flexible(
+              child: Text(
                 'January',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    height: 1.50,
-                    fontWeight: FontWeight.w600),
+                  color: Colors.white,
+                  fontSize: 10,
+                  height: 1.50,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              SizedBox(height: 15),
-              Text(
+            ),
+            const SizedBox(height: 2),
+            const Flexible(
+              child: Text(
                 '21',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    height: 1.50,
-                    fontFamily: "Domine",
-                    fontWeight: FontWeight.w600),
+                  color: Colors.white,
+                  fontSize: 26,
+                  height: 1.50,
+                  fontFamily: "Domine",
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              SizedBox(height: 8),
-              Text(
+            ),
+            const SizedBox(height: 9),
+            Flexible(
+              child: Text(
                 'at ' + '4:30 pm',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    height: 1.50,
-                    fontWeight: FontWeight.w600),
-              )
-            ],
-          )),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  height: 1.50,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
