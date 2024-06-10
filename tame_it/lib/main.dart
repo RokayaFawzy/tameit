@@ -68,11 +68,11 @@ class TameIt extends StatelessWidget {
           :
           // SplashScreen(),
           // Login(),
-      // NavBarRoot(),
-      // AddDoctorAdmin(),
-      // EditDoctorAdmin(),
-      // AdminHomePage(),
-      HomeDoctor(),
+          // NavBarRoot(),
+          // AddDoctorAdmin(),
+          // EditDoctorAdmin(),
+          AdminHomePage(),
+      // HomeDoctor(),
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
