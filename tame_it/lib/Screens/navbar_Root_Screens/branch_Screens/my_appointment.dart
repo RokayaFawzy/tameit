@@ -9,6 +9,9 @@ class MyAppointments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
@@ -27,43 +30,39 @@ class MyAppointments extends StatelessWidget {
         iconTheme: const IconThemeData(color: AppColors.deepsea),
       ),
       body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Column(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
                 const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Upcoming Appointments",
-                        style: TextStyle(
-                          color: AppColors.deepsea,
-                          fontSize: 16,
-                          fontFamily: "Domine",
-                          fontWeight: FontWeight.w700,
-                          height: 1.20,
-                        ),
-                      ),
-                    ],
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Upcoming Appointments",
+                    style: TextStyle(
+                      color: AppColors.deepsea,
+                      fontSize: 16,
+                      fontFamily: "Domine",
+                      fontWeight: FontWeight.w700,
+                      height: 1.20,
+                    ),
                   ),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const DateWidget(),
-                    Column(
-                      children: [
-                        const DrCardUpcoming(),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30.0),
-                              child: Row(
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const DrCardUpcoming(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "  Confirmed  ",
                                     style: TextStyle(
                                       fontSize: 15,
@@ -71,50 +70,51 @@ class MyAppointments extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     Icons.check,
                                     size: 20,
                                     color: AppColors.OrangePeel,
                                   ),
                                 ],
                               ),
-                            ),
-                            Container(
-                              width: 100,
-                              margin: const EdgeInsets.all(11),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: AppColors.OrangePeel,
-                                  foregroundColor: Colors.white,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(25),
+                              Container(
+                                width: screenWidth * 0.3,
+                                margin: const EdgeInsets.all(2),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: AppColors.OrangePeel,
+                                    foregroundColor: Colors.white,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(25),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed('/ChatDoctorPage');
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.question_answer_outlined,
-                                      size: 14,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 12),
-                                    const Text(
-                                      'Chat',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ],
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/ChatDoctorPage');
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.question_answer_outlined,
+                                        size: 14,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      const Text(
+                                        'Chat',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -125,28 +125,24 @@ class MyAppointments extends StatelessWidget {
                   endIndent: 15,
                   height: 15,
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Past appointments",
-                        style: TextStyle(
-                          color: AppColors.deepsea,
-                          fontSize: 16,
-                          fontFamily: "Domine",
-                          fontWeight: FontWeight.w700,
-                          height: 1.20,
-                        ),
-                      ),
-                    ],
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Past appointments",
+                    style: TextStyle(
+                      color: AppColors.deepsea,
+                      fontSize: 16,
+                      fontFamily: "Domine",
+                      fontWeight: FontWeight.w700,
+                      height: 1.20,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 const PastAppointment(),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
