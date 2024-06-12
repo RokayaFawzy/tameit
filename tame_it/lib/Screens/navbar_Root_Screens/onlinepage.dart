@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/values/values.dart';
+import 'package:tame_it/widgets/online_doctorCard.dart';
 import '../../Models/Doctor_model.dart';
-import '../../widgets/custom_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -308,7 +308,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                   itemBuilder: (context, index) {
                     return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: DoctorCard(
+                        child: onlineDoctorCard(
                             // Assuming DoctorCard requires a UserDetails object
                             // You might need to modify this according to your actual implementation
                             doctor: Doctor(

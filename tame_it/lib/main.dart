@@ -38,9 +38,12 @@ import 'Screens/navbar_Root_Screens/more pages/payment.dart';
 import 'Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/Personal.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.storage.request();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool rememberMe = prefs.getBool('rememberMe') ?? false;
   String? username = prefs.getString('username');
@@ -67,11 +70,11 @@ class TameIt extends StatelessWidget {
           ? NavBarRoot() // Automatically log in if "Remember me" was checked and credentials are stored
           :
           // SplashScreen(),
-          // Login(),
-          // NavBarRoot(),
-          // AddDoctorAdmin(),
-          // EditDoctorAdmin(),
-          AdminHomePage(),
+          Login(),
+      // NavBarRoot(),
+      // AddDoctorAdmin(),
+      // EditDoctorAdmin(),
+      // AdminHomePage(),
       // HomeDoctor(),
       routes: {
         '/Login': (context) => Login(),
