@@ -1,8 +1,32 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/DoctorScreens/drawer.dart';
 import '../values/values.dart';
 import 'appointment/Appointment.dart';
 import 'patient/Patients.dart';
+
+class UserDetails {
+  final String userName;
+  final String email;
+  final String? imageUrl;
+
+  UserDetails({
+    required this.userName,
+    required this.email,
+    this.imageUrl,
+  });
+
+  factory UserDetails.fromJson(Map<String, dynamic> json) {
+    return UserDetails(
+      userName: json['userName'] ?? '',
+      email: json['email'] ?? '',
+      imageUrl: json['imageUrl'],
+    );
+  }
+}
 
 class HomeDoctor extends StatefulWidget {
   const HomeDoctor({super.key});
@@ -12,8 +36,71 @@ class HomeDoctor extends StatefulWidget {
 }
 
 class _HomeDoctorState extends State<HomeDoctor> {
+  late Future<UserDetails> userDetails;
+  @override
+  void initState() {
+    super.initState();
+    userDetails = fetchUserDetails();
+  }
+
+  Future<UserDetails> fetchUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token not found');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('https://tameit.azurewebsites.net/api/auth/userDetails'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('Response data: $responseData');
+        return UserDetails.fromJson(responseData);
+      } else {
+        print(
+            'Failed to load user details. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception(
+            'Failed to load user details. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching user details: $e');
+      throw Exception('Error fetching user details');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<UserDetails>(
+      future: userDetails,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          if (snapshot.data != null) {
+            final imageProvider = snapshot.data!.imageUrl != null
+                ? NetworkImage(snapshot.data!.imageUrl!)
+                : const AssetImage('assets/images/newlogo.jpg');
+            return buildUI(
+                snapshot.data!, imageProvider as ImageProvider<Object>);
+          } else {
+            return Text('User details not available');
+          }
+        }
+      },
+    );
+  }
+
+  Widget buildUI(UserDetails userDetails, ImageProvider imageProvider) {
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
@@ -51,7 +138,7 @@ class _HomeDoctorState extends State<HomeDoctor> {
                 padding: EdgeInsets.all(15.0),
                 child: Center(
                   child: Text(
-                    'Hi Doctor ' + 'Sara  ',
+                    'Hi Doctor ' + userDetails.userName,
                     style: TextStyle(
                         fontSize: 22,
                         // color: AppColors.deepsea,

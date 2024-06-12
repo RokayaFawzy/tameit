@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:tame_it/DoctorScreens/DoctorHome.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:tame_it/utility/validator.dart';
+import '../AdminScreens/adminhome.dart';
 import '../values/values.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_painters.dart';
@@ -95,10 +97,14 @@ class _LoginState extends State<Login> {
         headers: {'Content-Type': 'application/json'},
       );
 
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
-        // Login successful, extract and store token
+        // Login successful, extract and store token and role
         final Map<String, dynamic> responseData = json.decode(response.body);
         final String token = responseData['token'];
+        final String role = responseData['role'];
 
         // Store token securely
         await storeToken(token);
@@ -113,10 +119,31 @@ class _LoginState extends State<Login> {
         Navigator.pop(context);
 
         // Navigate to home page
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavBarRoot()),
-        );
+        switch (role) {
+          case 'PATIENT':
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => NavBarRoot()),
+            );
+            break;
+          case 'ADMIN':
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => AdminHomePage()),
+            );
+            break;
+          case 'DOCTOR':
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeDoctor()),
+            );
+            break;
+          default:
+            setState(() {
+              _errorMessage = "Unknown role. Please contact support.";
+            });
+            break;
+        }
       } else {
         // Login failed, handle error
         setState(() {
@@ -220,105 +247,108 @@ class _LoginState extends State<Login> {
   Widget _buildLoginForm(double widthOfScreen) {
     ThemeData theme = Theme.of(context);
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Welcome Back!",
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: Sizes.TEXT_SIZE_30,
-                        fontWeight: FontWeight.w500,
-                      ))),
-              const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("   We're Glad You're Here.",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: Sizes.TEXT_SIZE_16,
-                        fontWeight: FontWeight.w500,
-                      ))),
-              const SizedBox(
-                height: 20,
+      margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Align(
+              alignment: Alignment.topLeft,
+              child: Text("Welcome Back!",
+                  style: TextStyle(
+                    color: AppColors.deepsea,
+                    fontSize: Sizes.TEXT_SIZE_30,
+                    fontWeight: FontWeight.w500,
+                  ))),
+          const Align(
+              alignment: Alignment.topLeft,
+              child: Text("   We're Glad You're Here.",
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: Sizes.TEXT_SIZE_16,
+                    fontWeight: FontWeight.w500,
+                  ))),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.text,
+            validator: validateEmail,
+            controller: userNameController,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                FeatherIcons.user,
+                color: AppColors.greyShade7,
+                size: Sizes.ICON_SIZE_20,
               ),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                validator: validateEmail,
-                controller: userNameController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(
-                    FeatherIcons.user,
-                    color: AppColors.greyShade7,
-                    size: Sizes.ICON_SIZE_20,
-                  ),
-                  hintText: 'User Name',
-                  errorText: _errorMessage, // Display error message here
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blackShade2),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.orange),
-                  ),
-                  hintStyle: TextStyle(
-                    fontSize: Sizes.TEXT_SIZE_20,
-                    color: AppColors.greyShade7,
-                  ),
-                  labelStyle: TextStyle(
-                    fontSize: Sizes.TEXT_SIZE_20,
-                    color: AppColors.blackShade10,
-                  ),
+              hintText: 'User Name',
+              errorText: _errorMessage, // Display error message here
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.blackShade2),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orange),
+              ),
+              hintStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.greyShade7,
+              ),
+              labelStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.blackShade10,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 12.0,
+          ),
+          TextFormField(
+            obscureText: !_isPasswordVisible,
+            validator: (value) =>
+                value!.isEmpty ? "Please enter password" : null,
+            controller: passwordController,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                FeatherIcons.lock,
+                color: AppColors.greyShade7,
+                size: Sizes.ICON_SIZE_20,
+              ),
+              suffixIcon: GestureDetector(
+                onTap:
+                    _togglePasswordVisibility, // Call method to toggle visibility
+                child: Icon(
+                  _isPasswordVisible
+                      ? FeatherIcons.eye
+                      : FeatherIcons.eyeOff, // Change icon based on flag
+                  color: AppColors.deepsea,
                 ),
               ),
-              const SizedBox(
-                height: 12.0,
+              hintText: 'Password',
+              errorText: _errorMessage, // Display error message here
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.blackShade2),
               ),
-              TextFormField(
-                obscureText: !_isPasswordVisible,
-                validator: (value) =>
-                    value!.isEmpty ? "Please enter password" : null,
-                controller: passwordController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(
-                    FeatherIcons.lock,
-                    color: AppColors.greyShade7,
-                    size: Sizes.ICON_SIZE_20,
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap:
-                        _togglePasswordVisibility, // Call method to toggle visibility
-                    child: Icon(
-                      _isPasswordVisible
-                          ? FeatherIcons.eye
-                          : FeatherIcons.eyeOff, // Change icon based on flag
-                      color: AppColors.deepsea,
-                    ),
-                  ),
-                  hintText: 'Password',
-                  errorText: _errorMessage, // Display error message here
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blackShade2),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.orange),
-                  ),
-                  hintStyle: TextStyle(
-                    fontSize: Sizes.TEXT_SIZE_20,
-                    color: AppColors.greyShade7,
-                  ),
-                  labelStyle: TextStyle(
-                    fontSize: Sizes.TEXT_SIZE_20,
-                    color: AppColors.blackShade10,
-                  ),
-                ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orange),
               ),
-              const SizedBox(
-                height: 15,
+              hintStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.greyShade7,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Row(children: [
+              labelStyle: TextStyle(
+                fontSize: Sizes.TEXT_SIZE_20,
+                color: AppColors.blackShade10,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
                   const Text(
                     'Remember me ',
                     style: TextStyle(
@@ -326,63 +356,67 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Checkbox(
-                      value: _rememberMe,
-                      onChanged: (value) {
-                        setState(() {
-                          _rememberMe = value ?? false;
-                        });
-                      })
-                ]),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/ForgotPassword');
+                    value: _rememberMe,
+                    onChanged: (value) {
+                      setState(() {
+                        _rememberMe = value ?? false;
+                      });
                     },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: AppColors.deepsea),
-                    ))
-              ]),
-              const SizedBox(
-                height: 40.0,
-              ),
-              CustomButton(
-                title: 'Login',
-                color: AppColors.deepsea,
-                textStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.white,
-                  fontSize: Sizes.TEXT_SIZE_16,
-                  fontWeight: FontWeight.w600,
-                ),
-                onPressed: () {
-                  _loginUser(userNameController.text, passwordController.text);
-                },
-              ),
-              const SizedBox(
-                height: 50,
+                  ),
+                ],
               ),
               GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/SignUp');
-                  },
-                  child: Text.rich(TextSpan(
-                      text: 'Not Registered Yet?',
-                      style: const TextStyle(
-                        color: AppColors.greyShade8,
-                        fontWeight: FontWeight.bold,
-                        fontSize: Sizes.TEXT_SIZE_18,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                          text: ' Sign Up',
-                          style: TextStyle(color: AppColors.deepsea),
-                        )
-                      ])))
-            ]));
+                onTap: () {
+                  Navigator.of(context).pushNamed('/ForgotPassword');
+                },
+                child: const Text(
+                  'Forgot Password?',
+                  style: TextStyle(color: AppColors.deepsea),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 40.0,
+          ),
+          CustomButton(
+            title: 'Login',
+            color: AppColors.deepsea,
+            textStyle: theme.textTheme.bodyMedium?.copyWith(
+              color: AppColors.white,
+              fontSize: Sizes.TEXT_SIZE_16,
+              fontWeight: FontWeight.w600,
+            ),
+            onPressed: () {
+              _loginUser(userNameController.text, passwordController.text);
+            },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/SignUp');
+            },
+            child: Text.rich(
+              TextSpan(
+                text: 'Not Registered Yet?',
+                style: const TextStyle(
+                  color: AppColors.greyShade8,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Sizes.TEXT_SIZE_18,
+                ),
+                children: <TextSpan>[
+                  const TextSpan(
+                    text: ' Sign Up',
+                    style: TextStyle(color: AppColors.deepsea),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
-
-// void main() {
-//   runApp(MaterialApp(
-//     home: Login(),
-//   ));
-// }
