@@ -5,22 +5,54 @@ import 'package:http/http.dart' as http;
 
 import '../../../values/values.dart';
 
-class UserDetails {
-  final String userName;
+class User {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String imageUrl;
   final String email;
-  final String? imageUrl;
+  final String phoneNumber;
+  final String? gender; // Nullable field
+  final String city;
+  final String country;
+  final String birthDate;
 
-  UserDetails({
-    required this.userName,
+  User({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.imageUrl,
     required this.email,
-    this.imageUrl,
+    required this.phoneNumber,
+    required this.gender,
+    required this.city,
+    required this.country,
+    required this.birthDate,
   });
 
-  factory UserDetails.fromJson(Map<String, dynamic> json) {
-    return UserDetails(
-      userName: json['userName'] ?? '',
-      email: json['email'] ?? '',
-      imageUrl: json['imageUrl'],
+  factory User.fromJson(Map<String, dynamic> json) {
+    int id = json['id'] ?? 0;
+    String firstName = json['firstName'] ?? '';
+    String lastName = json['lastName'] ?? '';
+    String imageUrl = json['imageUrl'] ?? '';
+    String email = json['email'] ?? '';
+    String phoneNumber = json['phoneNumber'] ?? '';
+    String? gender = json['gender']; // Nullable gender field
+    String city = json['city'] ?? '';
+    String country = json['country'] ?? '';
+    String birthDate = json['birthDate'] ?? '';
+
+    return User(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      imageUrl: imageUrl,
+      email: email,
+      phoneNumber: phoneNumber,
+      gender: gender,
+      city: city,
+      country: country,
+      birthDate: birthDate,
     );
   }
 }
@@ -31,34 +63,15 @@ class PersonalInformation extends StatefulWidget {
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
-  late Future<UserDetails> userDetails;
-  bool _isLoading = true;
-
-  final TextEditingController userNameController =
-      TextEditingController(text: '');
-  final TextEditingController lastNameController =
-      TextEditingController(text: '');
-  final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController countryController =
-      TextEditingController(text: '');
-  final TextEditingController cityController = TextEditingController(text: '');
-  final TextEditingController phoneNumberController =
-      TextEditingController(text: '');
-  final TextEditingController birthDateController =
-      TextEditingController(text: '');
-  String? gender;
+  late Future<User> userDetails;
 
   @override
   void initState() {
     super.initState();
-    fetchPatientDetails();
     userDetails = fetchUserDetails();
-    userDetails.whenComplete(() => setState(() {
-          _isLoading = false;
-        }));
   }
 
-  Future<UserDetails> fetchUserDetails() async {
+  Future<User> fetchUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
@@ -68,7 +81,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
 
     try {
       final response = await http.get(
-        Uri.parse('https://tameit.azurewebsites.net/api/auth/userDetails'),
+        Uri.parse(
+            'https://tameit.azurewebsites.net/api/patient/getPatientDetails'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -77,7 +91,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print('Response data: $responseData');
-        return UserDetails.fromJson(responseData);
+        return User.fromJson(responseData);
       } else {
         print(
             'Failed to load user details. Status code: ${response.statusCode}');
@@ -88,33 +102,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
     } catch (e) {
       print('Error fetching user details: $e');
       throw Exception('Error fetching user details');
-    }
-  }
-
-  Future<void> fetchPatientDetails() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    final url = Uri.parse(
-        'https://tameit.azurewebsites.net/api/patient/getPatientDetails');
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer $token',
-    });
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      setState(() {
-        userNameController.text = data['firstName'] ?? '';
-        lastNameController.text = data['lastName'] ?? '';
-        emailController.text = data['email'] ?? '';
-        countryController.text = data['country'] ?? '';
-        cityController.text = data['city'] ?? '';
-        phoneNumberController.text = data['phoneNumber'] ?? '';
-        birthDateController.text = data['birthDate'] ?? '';
-        gender = data['gender']; // Fetch gender
-      });
-    } else {
-      throw Exception('Failed to load patient details');
     }
   }
 
@@ -135,12 +122,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
         ),
         centerTitle: true,
         shadowColor: Colors.white,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios),
-        //   onPressed: () {
-        //     Navigator.of(context).pop();
-        //   },
-        // ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -156,7 +137,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: FutureBuilder<UserDetails>(
+          child: FutureBuilder<User>(
             future: userDetails,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -186,9 +167,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             child: CircleAvatar(
                               radius: 49,
                               backgroundImage: snapshot.data?.imageUrl != null
-                                  ? NetworkImage(snapshot.data!.imageUrl!)
+                                  ? NetworkImage(snapshot.data!.imageUrl)
                                   : AssetImage('assets/images/newlogo.jpg')
-                                      as ImageProvider,
+                                      as ImageProvider<Object>,
                             ),
                           ),
                         ),
@@ -198,7 +179,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.text,
                       enabled: false,
-                      controller: userNameController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.firstName ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -213,7 +195,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.text,
                       enabled: false,
-                      controller: lastNameController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.lastName ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -228,7 +211,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.emailAddress,
                       enabled: false,
-                      controller: emailController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.email ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -243,7 +227,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.phone,
                       enabled: false,
-                      controller: phoneNumberController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.phoneNumber ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -258,7 +243,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.text,
                       enabled: false,
-                      controller: countryController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.country ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -273,7 +259,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     TextField(
                       keyboardType: TextInputType.text,
                       enabled: false,
-                      controller: cityController,
+                      controller: TextEditingController(
+                          text: snapshot.data?.city ?? ''),
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
@@ -292,7 +279,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           border: Border.all(color: Colors.black, width: 1),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: DropdownButton(
+                        child: DropdownButton<String?>(
                           hint: Text("Select Gender"),
                           dropdownColor: Colors.white,
                           icon: Icon(Icons.arrow_drop_down),
@@ -304,10 +291,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
-                          value: gender, // Set initial value
+                          value: snapshot.data?.gender,
                           onChanged: null, // Disable the dropdown
-                          items: ['FEMALE', 'MALE', null].map((valueItem) {
-                            return DropdownMenuItem(
+                          items:
+                              ['FEMALE', 'MALE', null].map((String? valueItem) {
+                            return DropdownMenuItem<String?>(
                               value: valueItem,
                               child: Text(valueItem ?? 'Other'),
                             );
@@ -325,7 +313,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           labelText: "Birth Date",
                           labelStyle: TextStyle(color: Colors.black),
                         ),
-                        controller: birthDateController,
+                        controller: TextEditingController(
+                            text: snapshot.data?.birthDate ?? ''),
                       ),
                     ),
                   ],
