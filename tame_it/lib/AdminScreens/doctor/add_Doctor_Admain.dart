@@ -384,7 +384,7 @@ class _AddDoctorAdminState extends State<AddDoctorAdmin> {
                             radius: 49,
                             backgroundImage: _selectedImage != null
                                 ? FileImage(_selectedImage!)
-                                : AssetImage('assets/images/123.jpg')
+                                : AssetImage('assets/images/userimage.jpg')
                                     as ImageProvider,
                           ),
                         ),

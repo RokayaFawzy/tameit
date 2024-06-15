@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/AdminScreens/adminhome.dart';
 import 'package:tame_it/AdminScreens/doctor/ListDoctors.dart';
+import 'package:tame_it/AdminScreens/doctor/edit_Doctor_Admain.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:http/http.dart' as http;
 
@@ -267,7 +268,12 @@ class _AdminDoctorCardState extends State<AdminDoctorCard> {
                               backgroundColor:
                                   WidgetStatePropertyAll(AppColors.deepsea)),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/EditDoctorAdmin');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditDoctorAdmin(
+                                      doctorId: widget.doctor.id)),
+                            );
                           },
                           child: Text(
                             'Edit',

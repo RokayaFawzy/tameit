@@ -116,7 +116,7 @@ class TameIt extends StatelessWidget {
         '/AdminHomePage': (context) => AdminHomePage(),
         '/ListUsers': (context) => ListUsers(),
         '/ListDoctors': (context) => ListDoctors(),
-        '/EditDoctorAdmin': (context) => EditDoctorAdmin(),
+       
         '/AddDoctorAdmin': (context) => AddDoctorAdmin(),
       },
       theme: ThemeData.from(
