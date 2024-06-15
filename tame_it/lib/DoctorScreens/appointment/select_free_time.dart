@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tame_it/AdminScreens/doctor/ListDoctors.dart';
+import 'package:tame_it/widgets/custom_text_form_field.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../values/values.dart';
 import '../../widgets/custom_button.dart';
+
+class UserDetails {
+  final String userName;
+  final String email;
+  final String? imageUrl;
+
+  UserDetails({
+    required this.userName,
+    required this.email,
+    this.imageUrl,
+  });
+
+  factory UserDetails.fromJson(Map<String, dynamic> json) {
+    return UserDetails(
+      userName: json['userName'] ?? '',
+      email: json['email'] ?? '',
+      imageUrl: json['imageUrl'],
+    );
+  }
+}
 
 class SelectFreeTime extends StatefulWidget {
   const SelectFreeTime({super.key});
@@ -12,6 +36,8 @@ class SelectFreeTime extends StatefulWidget {
 }
 
 class _SelectFreeTimeState extends State<SelectFreeTime> {
+  late Future<UserDetails> userDetails;
+
   final List<DateTime> _dates = [DateTime.now()];
   final List<List<String>> _availableTimes = [
     ["10:00 AM", "12:00 PM", "1:00 PM", "3:00 PM", "5:00 PM"]
@@ -41,6 +67,96 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
     setState(() {
       _availableTimes[index].remove(time);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    userDetails = fetchUserDetails();
+  }
+
+  Future<UserDetails> fetchUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token not found');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('https://tameit.azurewebsites.net/api/auth/userDetails'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('Response data: $responseData');
+        return UserDetails.fromJson(responseData);
+      } else {
+        print(
+            'Failed to load user details. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception(
+            'Failed to load user details. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching user details: $e');
+      throw Exception('Error fetching user details');
+    }
+  }
+
+  Widget _buildClinicField(int index) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Clinic',
+                  style: TextStyle(color: AppColors.deepsea),
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+        CustomTextFormField(
+          hintText: 'Clinic Name',
+          enabledBorder: Borders.customOutlineInputBorder(
+            color: AppColors.deepsea,
+          ),
+          focusedBorder: Borders.customUnderlineInputBorder(
+            color: AppColors.orange,
+          ),
+        ),
+        CustomTextFormField(
+          hintText: 'Address',
+          enabledBorder: Borders.customOutlineInputBorder(
+            color: AppColors.deepsea,
+          ),
+          focusedBorder: Borders.customUnderlineInputBorder(
+            color: AppColors.orange,
+          ),
+        ),
+        CustomTextFormField(
+          hintText: 'Phone Number',
+          enabledBorder: Borders.customOutlineInputBorder(
+            color: AppColors.deepsea,
+          ),
+          focusedBorder: Borders.customUnderlineInputBorder(
+            color: AppColors.orange,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildDateTimeSection(int index) {
@@ -93,6 +209,52 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
           ),
         ),
         const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: const Row(
+            children: [
+              Text(
+                "fees",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.deepsea,
+                  fontFamily: "Domine",
+                ),
+              ),
+            ],
+          ),
+        ),
+        CustomTextFormField(
+          hintText: 'fees',
+          enabledBorder: Borders.customOutlineInputBorder(
+            color: AppColors.deepsea,
+          ),
+          focusedBorder: Borders.customUnderlineInputBorder(
+            color: AppColors.orange,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: const Row(
+            children: [
+              Text(
+                "Clinic",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.deepsea,
+                  fontFamily: "Domine",
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Add clinic fields here
+        Column(
+          children: List.generate(1, (index) => _buildClinicField(index)),
+        ),
         Container(
           padding: const EdgeInsets.all(8),
           child: Row(
@@ -167,6 +329,29 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<UserDetails>(
+      future: userDetails,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          if (snapshot.data != null) {
+            final imageProvider = snapshot.data!.imageUrl != null
+                ? NetworkImage(snapshot.data!.imageUrl!)
+                : const AssetImage('assets/images/newlogo.jpg');
+            return buildUI(
+                snapshot.data!, imageProvider as ImageProvider<Object>);
+          } else {
+            return Text('User details not available');
+          }
+        }
+      },
+    );
+  }
+
+  Widget buildUI(UserDetails userDetails, ImageProvider imageProvider) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -192,32 +377,37 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage(
-                            'assets/images/userimage.jpg'), // Replace with your image asset
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              "Dr. Georgia Griffin",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.deepsea,
-                              ),
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundImage: imageProvider,
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              "Psychologist",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.deepsea,
-                              ),
+                            SizedBox(width: 10),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  userDetails.userName,
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  userDetails.email,
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
