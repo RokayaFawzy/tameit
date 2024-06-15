@@ -1,4 +1,5 @@
 class Doctor {
+  final int id;
   final String firstName;
   final String lastName;
   final String image;
@@ -9,7 +10,8 @@ class Doctor {
   final String interest;
 
   Doctor(
-      {required this.firstName,
+      { required this.id,
+      required this.firstName,
       required this.lastName,
       required this.image,
       required this.specialty,

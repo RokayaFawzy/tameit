@@ -9,7 +9,6 @@ import 'package:tame_it/Screens/Testings/PTSD.dart';
 import 'package:tame_it/Screens/Testings/testings.dart';
 import 'package:tame_it/Screens/beging_screens/splash_screen.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/BlogPage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more%20pages/changePassword.dart';
@@ -27,8 +26,6 @@ import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 import 'AdminScreens/doctor/ListDoctors.dart';
 import 'AdminScreens/doctor/add_Doctor_Admain.dart';
-import 'AdminScreens/doctor/edit_Doctor_Admain.dart';
-import 'DoctorScreens/DoctorHome.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
@@ -71,11 +68,7 @@ class TameIt extends StatelessWidget {
           :
           // SplashScreen(),
           Login(),
-      // NavBarRoot(),
-      // AddDoctorAdmin(),
-      // EditDoctorAdmin(),
-      // AdminHomePage(),
-      // HomeDoctor(),
+
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -98,7 +91,6 @@ class TameIt extends StatelessWidget {
         '/Home': (context) => Home(),
         '/More': (context) => MorePage(),
         '/NavBarRoot': (context) => NavBarRoot(),
-        '/DoctorDetails': (context) => DoctorDetails(),
         '/ChatDoctorPage': (context) => ChatDoctorPage(),
         '/Testings': (context) => Testings(),
         '/BlogPage': (context) => BlogPage(),
