@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
 import 'package:tame_it/values/values.dart';
 
 import '../Models/Doctor_model.dart';
@@ -24,7 +25,10 @@ class _onlineDoctorCardState extends State<onlineDoctorCard> {
     width = size.width;
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('/DoctorDetails');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DoctorDetails(doctorId:  widget.doctor.id,)),
+          );
         },
         child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
@@ -105,8 +109,12 @@ class _onlineDoctorCardState extends State<onlineDoctorCard> {
                                 height: height / 20,
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/DoctorDetails');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DoctorDetails(doctorId:  widget.doctor.id,)),
+                                    );
                                   },
                                   child: Text(
                                     'View Profile',

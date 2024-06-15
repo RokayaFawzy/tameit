@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/AdminScreens/adminhome.dart';
 import 'package:tame_it/AdminScreens/doctor/ListDoctors.dart';
 import 'package:tame_it/AdminScreens/doctor/edit_Doctor_Admain.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_details.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:http/http.dart' as http;
 
@@ -134,7 +135,13 @@ class _AdminDoctorCardState extends State<AdminDoctorCard> {
     width = size.width;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/DoctorDetails');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoctorDetails(
+                    doctorId: widget.doctor.id,
+                  )),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
@@ -183,7 +190,7 @@ class _AdminDoctorCardState extends State<AdminDoctorCard> {
                   Text(widget.doctor.jobTitle,
                       style: TextStyle(fontWeight: FontWeight.w400)),
                   Text(
-                    '${widget.doctor.price} EGP', // Use string interpolation to concatenate the integer and the string
+                    '${widget.doctor.price} EGP',
                     style: TextStyle(
                       color: AppColors.deepsea,
                       fontWeight: FontWeight.w500,
@@ -249,7 +256,13 @@ class _AdminDoctorCardState extends State<AdminDoctorCard> {
                         height: height / 20,
                         child: TextButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/DoctorDetails');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DoctorDetails(
+                                          doctorId: widget.doctor.id,
+                                        )),
+                              );
                             },
                             child: Text('View Profile',
                                 style: TextStyle(

@@ -320,6 +320,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                           experienceYears: '24 yr',
                           interest: 'Depression, Stress, Anxiety',
                           image: 'assets/images/123.jpg',
+                          id: 1,
                         )));
                   }),
               SizedBox(height: 200),
