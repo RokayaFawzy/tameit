@@ -231,7 +231,9 @@ class _EditInformationState extends State<EditInformation> {
     }
 
     final body = json.encode(requestBody);
-
+    setState(() {
+      _isLoading = true;
+    });
     try {
       final response = await http.put(url, headers: headers, body: body);
 
@@ -254,11 +256,17 @@ class _EditInformationState extends State<EditInformation> {
             );
           },
         );
+        _isLoading = false;
       } else {
+        _isLoading = false;
         print('Failed to update patient details. Response: ${response.body}');
         _showErrorDialog('Failed to update patient details. Please try again.');
       }
     } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+
       print('Error: $e');
       _showErrorDialog('An error occurred. Please try again.');
     }
