@@ -220,14 +220,14 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                             width: width * 0.45,
                             child: OutlinedButton(
                                 style: ButtonStyle(
-                                  side: MaterialStateProperty.all(
+                                  side: WidgetStateProperty.all(
                                     BorderSide(
                                       color: AppColors.deepsea,
                                       width: 1.0,
                                       style: BorderStyle.solid,
                                     ),
                                   ),
-                                  shape: MaterialStateProperty.all(
+                                  shape: WidgetStateProperty.all(
                                     RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
@@ -260,14 +260,14 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
                           width: width * 0.45,
                           child: OutlinedButton(
                             style: ButtonStyle(
-                              side: MaterialStateProperty.all(
+                              side: WidgetStateProperty.all(
                                 BorderSide(
                                   color: AppColors.deepsea,
                                   width: 1.0,
                                   style: BorderStyle.solid,
                                 ),
                               ),
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),

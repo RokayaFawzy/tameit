@@ -146,6 +146,46 @@ class __TherapistsStateState extends State<Therapists> {
     }
   }
 
+  Future<void> searchDoctors(String query) async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://tameit.azurewebsites.net/api/auth/byName'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "firstName": query,
+          "lastName": query,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          doctors = responseData.map((json) => Doctor.fromJson(json)).toList();
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          errorMessage =
+              'Failed to search doctors. Status code: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Error searching doctors: $e';
+      });
+    }
+  }
+
+
 
   Future<UserDetails> fetchUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -283,7 +323,7 @@ class __TherapistsStateState extends State<Therapists> {
                                       color: AppColors.greyShade7,
                                     ),
                                     onPressed: () {
-                                      // Perform the search here
+                                  searchDoctors(_searchController.text);
                                     }),
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.clear),
@@ -370,18 +410,7 @@ class __TherapistsStateState extends State<Therapists> {
               SizedBox(
                 height: 12,
               ),
-              //   DoctorCard(
-              //     doctor: Doctor(
-              //         firstName: 'Smith',
-              //         specialty: 'Psychologist',
-              //         rating: 5,
-              //         lastName: ' Wilson',
-              //         price: '800',
-              //         experienceYears: '24 yr',
-              //         interest: 'Depression, Stress, Anxiety',
-              //         image: 'assets/images/123.jpg'),
-              //   ),
-              // ]))));
+            
                   SizedBox(
                     height: 12,
                   ),
