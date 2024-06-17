@@ -32,33 +32,18 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    int id;
-    if (json.containsKey('id')) {
-      id = json['id']?.toInt() ?? 0;
-    } else {
-      id = 0; // or any default value you prefer
-    }
-    String firstName = json['firstName'] ?? '';
-    String lastName = json['lastName'] ?? '';
-    String imageUrl = json['imageUrl'] ?? '';
-    String email = json['email'] ?? '';
-    String phoneNumber = json['phoneNumber'] ?? '';
-    String gender = json['gender'] ?? '';
-    String city = json['city'] ?? '';
-    String country = json['country'] ?? '';
-    String birthDate = json['birthDate'] ?? '';
-
+    int id = json['id']?.toInt() ?? 0;
     return User(
       id: id,
-      firstName: firstName,
-      lastName: lastName,
-      imageUrl: imageUrl,
-      email: email,
-      phoneNumber: phoneNumber,
-      gender: gender,
-      city: city,
-      country: country,
-      birthDate: birthDate,
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      email: json['email'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      gender: json['gender'] ?? '',
+      city: json['city'] ?? '',
+      country: json['country'] ?? '',
+      birthDate: json['birthDate'] ?? '',
     );
   }
 }
@@ -76,7 +61,8 @@ class _ListUsersState extends State<ListUsers> {
   List<User> users = [];
   List<User> filteredUsers = [];
   late String token;
-  bool isLoading = true; // Add loading state
+  bool isLoading = true;
+  String? errorMessage;
 
   @override
   void initState() {
@@ -87,7 +73,7 @@ class _ListUsersState extends State<ListUsers> {
   Future<void> _getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token') ?? '';
-    _fetchUsers(); // Call API after getting token
+    _fetchUsers();
   }
 
   Future<void> _fetchUsers() async {
@@ -98,26 +84,59 @@ class _ListUsersState extends State<ListUsers> {
         apiUrl,
         headers: {'Authorization': 'Bearer $token'},
       );
-      print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
       if (response.statusCode == 200) {
         List<dynamic> fetchedUsers = json.decode(response.body);
         setState(() {
           users = fetchedUsers.map((user) => User.fromJson(user)).toList();
           filteredUsers = users;
-          isLoading = false; // Update loading state
+          isLoading = false;
         });
       } else {
-        // Handle other status codes as needed
-        print('Failed to fetch users: ${response.statusCode}');
-        print('Error response body: ${response.body}');
         _showErrorDialog(
             'Failed to fetch users. Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle network errors or exceptions
-      print('Error fetching users: $e');
       _showErrorDialog('Error fetching users: $e');
+    }
+  }
+
+  Future<void> searchUsers(String query) async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://tameit.azurewebsites.net/api/auth/byName'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "firstName": query,
+          "lastName": query,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          filteredUsers =
+              responseData.map((json) => User.fromJson(json)).toList();
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          errorMessage =
+              'Failed to search users. Status code: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Error searching users: $e';
+      });
     }
   }
 
@@ -176,55 +195,71 @@ class _ListUsersState extends State<ListUsers> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Find user',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    searchUsers(_searchController.text);
+                  },
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _searchController.clear();
+                    _filterUsers('');
+                  },
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
-              onChanged: _filterUsers,
+              onChanged: (query) {
+                _filterUsers(query);
+                if (query.isNotEmpty) {
+                  searchUsers(query);
+                }
+              },
             ),
             SizedBox(height: 16),
             Expanded(
               child: isLoading
-                  ? Center(
-                      child:
-                          CircularProgressIndicator()) // Show loading indicator
-                  : ListView.builder(
-                      itemCount: filteredUsers.length,
-                      itemBuilder: (context, index) {
-                        // Determine the ImageProvider based on imageUrl availability
-                        ImageProvider<Object>? avatarImage;
-                        if (filteredUsers[index].imageUrl.isNotEmpty) {
-                          avatarImage =
-                              NetworkImage(filteredUsers[index].imageUrl);
-                        } else {
-                          avatarImage =
-                              AssetImage('assets/images/userimage.jpg');
-                        }
+                  ? Center(child: CircularProgressIndicator())
+                  : errorMessage != null
+                      ? Center(child: Text(errorMessage!))
+                      : ListView.builder(
+                          itemCount: filteredUsers.length,
+                          itemBuilder: (context, index) {
+                            ImageProvider<Object>? avatarImage;
+                            if (filteredUsers[index].imageUrl.isNotEmpty) {
+                              avatarImage =
+                                  NetworkImage(filteredUsers[index].imageUrl);
+                            } else {
+                              avatarImage =
+                                  AssetImage('assets/images/userimage.jpg');
+                            }
 
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: CircleAvatar(
-                                radius: 25,
-                                backgroundImage: avatarImage,
-                              ),
-                              title: Text(
-                                '${filteredUsers[index].firstName} ${filteredUsers[index].lastName}',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.deepsea),
-                              ),
-                              subtitle: Text(
-                                filteredUsers[index].email,
-                              ),
-                            ),
-                            Divider(),
-                          ],
-                        );
-                      },
-                    ),
+                            return Column(
+                              children: [
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage: avatarImage,
+                                  ),
+                                  title: Text(
+                                    '${filteredUsers[index].firstName} ${filteredUsers[index].lastName}',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.deepsea),
+                                  ),
+                                  subtitle: Text(
+                                    filteredUsers[index].email,
+                                  ),
+                                ),
+                                Divider(),
+                              ],
+                            );
+                          },
+                        ),
             ),
           ],
         ),
