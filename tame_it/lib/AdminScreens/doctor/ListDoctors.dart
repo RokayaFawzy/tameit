@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:tame_it/AdminScreens/doctor/AdminDoctorCard.dart';
 import 'package:tame_it/values/values.dart';
 
@@ -168,41 +165,38 @@ class _ListDoctorsState extends State<ListDoctors> {
     var widthOfScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.whiteShade3,
-      appBar: AppBar(
         backgroundColor: AppColors.whiteShade3,
-        shape: const Border(
-          bottom: BorderSide(
-            color: AppColors.whiteShade4,
-            width: 1,
+        appBar: AppBar(
+          backgroundColor: AppColors.whiteShade3,
+          shape: const Border(
+            bottom: BorderSide(
+              color: AppColors.whiteShade4,
+              width: 1,
+            ),
           ),
-        ),
-        title: const Text(
-          'Our Therapists',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          title: const Text(
+            'Our Therapists',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _searchController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
+        body: SafeArea(
+            child: Stack(children: [
+          SingleChildScrollView(
+              child: Column(children: [
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(children: [
+                  Expanded(
+                      child: TextField(
+                          controller: _searchController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
                               hintText: 'Therapist Name or interest',
                               hintStyle: const TextStyle(
                                 color: AppColors.greyShade7,
@@ -223,107 +217,96 @@ class _ListDoctorsState extends State<ListDoctors> {
                               ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                              ))))
+                ])),
+            const SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Container(
+                width: widthOfScreen * 0.45,
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    side: WidgetStateProperty.all(
+                      const BorderSide(
+                        color: AppColors.deepsea,
+                        width: 1.0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Container(
-                      width: widthOfScreen * 0.45,
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                          side: WidgetStateProperty.all(
-                            const BorderSide(
-                              color: AppColors.deepsea,
-                              width: 1.0,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          shape: WidgetStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: AppColors.deepsea,
-                              size: 20,
-                            ),
-                            Text(
-                              ' Add Doctor',
-                              style: TextStyle(
-                                color: AppColors.deepsea,
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/AddDoctorAdmin');
-                        },
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: AppColors.deepsea,
+                        size: 20,
+                      ),
+                      Text(
+                        ' Add Doctor',
+                        style: TextStyle(
+                          color: AppColors.deepsea,
+                        ),
+                      ),
+                    ],
                   ),
-                  isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : errorMessage != null
-                          ? Center(child: Text(errorMessage!))
-                          : doctors.isEmpty
-                              ? Center(
-                                  child: Text('No doctors available.'),
-                                )
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: doctors.length,
-                                  itemBuilder: (context, index) {
-                                    final doctor = doctors[index];
-                                    if (doctor != null) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: AdminDoctorCard(
-                                          doctor: doctor,
-                                          onDelete: (id) {
-                                            // Handle onDelete callback here
-                                            print('Delete Doctor with ID: $id');
-                                            // Call the function to delete the doctor with the provided ID
-                                          },
-                                        ),
-                                      );
-                                    } else {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: Text(
-                                          'Error: Doctor data is null',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                  const SizedBox(height: 200),
-                ],
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/AddDoctorAdmin');
+                  },
+                ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
+            SizedBox(
+              height: 12,
+            ),
+            isLoading
+                ? Center(child: CircularProgressIndicator())
+                : errorMessage != null
+                    ? Center(child: Text(errorMessage!))
+                    : doctors.isEmpty
+                        ? Center(
+                            child: Text('No doctors available.'),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: doctors.length,
+                            itemBuilder: (context, index) {
+                              final doctor = doctors[index];
+                              if (doctor != null) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: AdminDoctorCard(
+                                    doctor: doctor,
+                                    onDelete: (id) {
+                                      // Handle onDelete callback here
+                                      print('Delete Doctor with ID: $id');
+                                      // Call the function to delete the doctor with the provided ID
+                                    },
+                                  ),
+                                );
+                              } else {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text(
+                                    'Error: Doctor data is null',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+            const SizedBox(height: 200),
+          ]))
+        ])));
   }
 }

@@ -189,108 +189,92 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
 
   void _navigateToSession(Appointment appointment) {
     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => YourSessionPage(
-          sessionTime:
-              '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
-          patientName:
-              '${appointment.patientFName} ${appointment.patientLName}',
-          fees: appointment.fees,
-        ),
-      ),
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) => YourSessionPage(
+                  sessionTime:
+                      '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
+                  patientName:
+                      '${appointment.patientFName} ${appointment.patientLName}',
+                  fees: appointment.fees,
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserDetails>(
-      future: userDetails,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          if (snapshot.data != null) {
-            final imageProvider = snapshot.data!.imageUrl != null
-                ? NetworkImage(snapshot.data!.imageUrl!)
-                : const AssetImage('assets/images/newlogo.jpg');
-            return buildUI(
-                snapshot.data!, imageProvider as ImageProvider<Object>);
+        future: userDetails,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
           } else {
-            return Text('User details not available');
+            if (snapshot.data != null) {
+              final imageProvider = snapshot.data!.imageUrl != null
+                  ? NetworkImage(snapshot.data!.imageUrl!)
+                  : const AssetImage('assets/images/newlogo.jpg');
+              return buildUI(
+                  snapshot.data!, imageProvider as ImageProvider<Object>);
+            } else {
+              return Text('User details not available');
+            }
           }
-        }
-      },
-    );
+        });
   }
 
   Widget _buildClinicField(int index) {
-    return Column(
-      children: [
-        TextFormField(
+    return Column(children: [
+      TextFormField(
           decoration: InputDecoration(
-            hintText: clinicName ?? 'Clinic Name',
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.deepsea),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-            ),
-          ),
-        ),
-        TextFormField(
+              hintText: clinicName ?? 'Clinic Name',
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.deepsea),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange),
+              ))),
+      TextFormField(
           decoration: InputDecoration(
-            hintText: clinicAddress ?? 'Address',
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.deepsea),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-            ),
-          ),
-        ),
-        TextFormField(
+              hintText: clinicAddress ?? 'Address',
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.deepsea),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange),
+              ))),
+      TextFormField(
           decoration: InputDecoration(
-            hintText: clinicPhoneNumber ?? 'Phone Number',
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.deepsea),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-            ),
-          ),
-        ),
-      ],
-    );
+              hintText: clinicPhoneNumber ?? 'Phone Number',
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.deepsea),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange),
+              )))
+    ]);
   }
 
   Widget buildUI(UserDetails userDetails, ImageProvider imageProvider) {
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
         backgroundColor: AppColors.white,
-        title: const Text(
-          'Show My Appointment',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-          ),
+        appBar: AppBar(
+          backgroundColor: AppColors.white,
+          title: const Text('Show My Appointment',
+              style: TextStyle(
+                color: AppColors.deepsea,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              )),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
-      ),
-      body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Padding(
+        body: SafeArea(
+            child: ListView(shrinkWrap: true, children: [
+          Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Padding(
+              child: Column(children: [
+                Padding(
                     padding: EdgeInsets.all(15.0),
                     child: Text(
                       'Hi Dr. ' + userDetails.userName,
@@ -298,142 +282,115 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
                           fontSize: 23,
                           color: AppColors.OrangePeel,
                           fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          'Choose Date  to know your appointment',
+                    )),
+                SizedBox(height: 15),
+                Row(children: [
+                  Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text('Choose Date  to know your appointment',
                           style: TextStyle(
                             color: AppColors.deepsea,
                             fontFamily: "Domine",
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 25),
-                  Padding(
+                          )))
+                ]),
+                SizedBox(height: 25),
+                Padding(
                     padding: EdgeInsets.only(left: 15.0, right: 30.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _dateController,
-                          decoration: InputDecoration(
-                            hintText: 'Date',
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.calendar_today),
-                              onPressed: _pickDate,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AppColors.deepsea),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.orange),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller: _dateController,
+                            decoration: InputDecoration(
+                              hintText: 'Date',
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.calendar_today),
+                                onPressed: _pickDate,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: AppColors.deepsea),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.orange),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 15),
-                        FutureBuilder<List<Appointment>>(
-                          future: appointments,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              if (snapshot.hasData &&
-                                  snapshot.data!.isNotEmpty) {
-                                return Column(
-                                  children: [
-                                    SizedBox(height: 15),
-                                    Row(
-                                      children: [
+                          SizedBox(height: 15),
+                          FutureBuilder<List<Appointment>>(
+                              future: appointments,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else {
+                                  if (snapshot.hasData &&
+                                      snapshot.data!.isNotEmpty) {
+                                    return Column(children: [
+                                      SizedBox(height: 15),
+                                      Row(children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            'Clinics',
-                                            style: TextStyle(
-                                              color: AppColors.deepsea,
-                                              fontFamily: "Domine",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    _buildClinicField(0),
-                                    SizedBox(height: 15),
-                                    Row(
-                                      children: [
+                                            padding: EdgeInsets.only(left: 8.0),
+                                            child: Text('Clinics',
+                                                style: TextStyle(
+                                                  color: AppColors.deepsea,
+                                                  fontFamily: "Domine",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                )))
+                                      ]),
+                                      _buildClinicField(0),
+                                      SizedBox(height: 15),
+                                      Row(children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            'Your Available Time',
-                                            style: TextStyle(
-                                              color: AppColors.deepsea,
-                                              fontFamily: "Domine",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 15),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        final appointment =
-                                            snapshot.data![index];
-                                        return Card(
-                                          child: ListTile(
-                                            title: Text(
-                                              '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
+                                            padding: EdgeInsets.only(left: 8.0),
+                                            child: Text('Your Available Time',
+                                                style: TextStyle(
+                                                  color: AppColors.deepsea,
+                                                  fontFamily: "Domine",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                )))
+                                      ]),
+                                      SizedBox(height: 15),
+                                      ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                            final appointment =
+                                                snapshot.data![index];
+                                            return Card(
+                                                child: ListTile(
+                                              title: Text(
+                                                  '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18,
+                                                  )),
+                                              subtitle: Text(
+                                                'Patient: ${appointment.patientFName} ${appointment.patientLName}',
+                                                style: TextStyle(fontSize: 16),
                                               ),
-                                            ),
-                                            subtitle: Text(
-                                              'Patient: ${appointment.patientFName} ${appointment.patientLName}',
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                            onTap: () =>
-                                                _navigateToSession(appointment),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return Text(
-                                    'No appointments available for this date');
-                              }
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                                              onTap: () => _navigateToSession(
+                                                  appointment),
+                                            ));
+                                          })
+                                    ]);
+                                  } else {
+                                    return Text(
+                                        'No appointments available for this date');
+                                  }
+                                }
+                              })
+                        ]))
+              ]))
+        ])));
   }
 }
 
