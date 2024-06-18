@@ -66,7 +66,8 @@ class _ShowDoctorAppointmentsState extends State<ShowDoctorAppointments> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(color: AppColors.OrangePeel),
+                              borderSide:
+                                  BorderSide(color: AppColors.OrangePeel),
                             ))),
                     const SizedBox(
                       height: 40,
