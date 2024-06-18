@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/values/values.dart';
+import 'package:tame_it/values/values.dart';
 
 class ShowDoctorAppointments extends StatefulWidget {
   const ShowDoctorAppointments({Key? key}) : super(key: key);
@@ -66,7 +66,8 @@ class _ShowDoctorAppointmentsState extends State<ShowDoctorAppointments> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide(color: AppColors.OrangePeel),
+                              borderSide:
+                                  BorderSide(color: AppColors.OrangePeel),
                             ))),
                     const SizedBox(
                       height: 40,
