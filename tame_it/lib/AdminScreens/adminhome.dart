@@ -71,7 +71,7 @@ class __AdminHomePageStateState extends State<AdminHomePage> {
               const SizedBox(height: 5),
               GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushNamed('/ListAllAppointments');
                   },
                   child: _buildServiceCard(
                     image: 'assets/images/adminapointments.jpg',

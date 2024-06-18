@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/AdminScreens/Users/ListUsers.dart';
 import 'package:tame_it/AdminScreens/adminhome.dart';
+import 'package:tame_it/AdminScreens/appointments/ListAppointments.dart';
+import 'package:tame_it/AdminScreens/appointments/ShowDoctorAppointment.dart';
 import 'package:tame_it/Screens/Login.dart';
 import 'package:tame_it/Screens/Testings/Adult_ADHD.dart';
 import 'package:tame_it/Screens/Testings/Depressionscale.dart';
@@ -108,8 +110,10 @@ class TameIt extends StatelessWidget {
         '/AdminHomePage': (context) => AdminHomePage(),
         '/ListUsers': (context) => ListUsers(),
         '/ListDoctors': (context) => ListDoctors(),
-       
         '/AddDoctorAdmin': (context) => AddDoctorAdmin(),
+        '/ListAllAppointments':(context) => ListAllAppointments(),
+        '/ShowDoctorAppointments':(context)=>ShowDoctorAppointments(),
+
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(
