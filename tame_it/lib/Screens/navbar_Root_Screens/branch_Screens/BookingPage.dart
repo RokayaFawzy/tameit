@@ -87,6 +87,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
   String? _selectedTime;
   bool _isLoading = true;
   Appointment? _appointment;
+  bool _isBooking = false;
 
   @override
   void initState() {
@@ -115,6 +116,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
   }
 
   Widget _buildTimeButton(String time) {
+    String formattedTime = _formatTime(time); // Format time to HH:mm
     String status = _availableTimes[time]!;
     bool isAvailable = status == 'AVAILABLE';
     Color buttonColor = isAvailable
@@ -128,10 +130,20 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
         backgroundColor: buttonColor,
       ),
       child: Text(
-        time,
+        formattedTime,
         style: TextStyle(color: Colors.white),
       ),
     );
+  }
+
+  String _formatTime(String time) {
+    List<String> parts = time.split(':');
+    if (parts.length == 2) {
+      int hours = int.parse(parts[0]);
+      int minutes = int.parse(parts[1]);
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+    }
+    return time; // Return original time if format is unexpected
   }
 
   void _selectTime(String selectedTime) {
@@ -163,6 +175,41 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     setState(() {
       _isLoading = false; // Turn off loading state after fetching appointments
     });
+  }
+
+  Future<void> bookAppointment(int appointmentId) async {
+    setState(() {
+      _isBooking = true; // Set booking in progress
+    });
+
+    String apiUrl =
+        'https://tameit.azurewebsites.net/api/appointment/book/$appointmentId';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    try {
+      final response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        Appointment bookedAppointment = Appointment.fromJson(data);
+        _showPaymentDetails(context, bookedAppointment);
+      } else {
+        _showErrorDialog('Failed to book the appointment. Please try again.');
+      }
+    } catch (e) {
+      print('Error booking appointment: $e');
+      _showErrorDialog('An error occurred while booking the appointment.');
+    } finally {
+      setState(() {
+        _isBooking = false; // Reset booking state
+      });
+    }
   }
 
   void _processAppointments(List<dynamic> appointmentsData) {
@@ -205,7 +252,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     );
   }
 
-  void _showPaymentDetails(BuildContext context) {
+  void _showPaymentDetails(BuildContext context, Appointment appointment) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -214,12 +261,25 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildPaymentItem('Consultation', '\$60.00'),
-              _buildPaymentItem('Additional Discount', '-'),
+              _buildPaymentItem('Fees', '${appointment.fees}'),
               SizedBox(height: 8.0),
               Divider(),
               SizedBox(height: 8.0),
-              _buildPaymentItem('Total', '\$61.00'),
+              Center(
+                child: Text(
+                  'Clinic Information:',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.deepsea,
+                      fontSize: 13),
+                ),
+              ),
+              SizedBox(height: 8.0),
+              _buildPaymentItem('Name', appointment.clinicName),
+              SizedBox(height: 8.0),
+              _buildPaymentItem('Address', appointment.clinicAddress),
+              SizedBox(height: 8.0),
+              _buildPaymentItem('Phone Number', appointment.clinicPhoneNumber),
             ],
           ),
           actions: [
@@ -234,7 +294,10 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Therapists()),
+                    );
                   },
                   child: Text('Ok'),
                 ),
@@ -244,6 +307,25 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
         );
       },
     );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -365,7 +447,9 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                     child: ElevatedButton(
                       onPressed: _selectedTime != null
                           ? () {
-                              _showPaymentDetails(context);
+                              int appointmentId =
+                                  int.parse(_selectedTime!.replaceAll(':', ''));
+                              bookAppointment(appointmentId);
                             }
                           : null,
                       child: Text(

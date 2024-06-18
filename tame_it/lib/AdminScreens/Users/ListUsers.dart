@@ -5,7 +5,6 @@ import 'dart:convert';
 
 import 'package:tame_it/values/values.dart';
 
-// User class definition
 class User {
   final int id;
   final String firstName;
