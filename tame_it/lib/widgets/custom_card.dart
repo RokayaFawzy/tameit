@@ -5,6 +5,8 @@ import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/doctor_detail
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 
+import '../Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
+
 class DoctorCard extends StatefulWidget {
   final Doctor doctor;
 
@@ -24,10 +26,14 @@ class _DoctorCardState extends State<DoctorCard> {
     width = size.width;
     return GestureDetector(
       onTap: () {
- Navigator.push(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DoctorDetails(doctorId:  widget.doctor.id,)),
-        );      },
+          MaterialPageRoute(
+              builder: (context) => DoctorDetails(
+                    doctorId: widget.doctor.id,
+                  )),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Card(
@@ -138,10 +144,14 @@ class _DoctorCardState extends State<DoctorCard> {
                         height: height / 20,
                         child: TextButton(
                           onPressed: () {
- Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DoctorDetails(doctorId:  widget.doctor.id,)),
-        );                          },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorDetails(
+                                        doctorId: widget.doctor.id,
+                                      )),
+                            );
+                          },
                           child: Text(
                             'View Profile',
                             style: TextStyle(
@@ -163,8 +173,16 @@ class _DoctorCardState extends State<DoctorCard> {
                                 backgroundColor:
                                     WidgetStatePropertyAll(AppColors.deepsea)),
                             onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed('/AppointmentBooking');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AppointmentBooking(
+                                          doctorId: widget.doctor.id,
+                                          doctorSpecialization:
+                                              widget.doctor.specializations,
+                                          doctorImage: widget.doctor.imageUrl,
+                                        )),
+                              );
                             },
                             child: Text(
                               'Book Now',

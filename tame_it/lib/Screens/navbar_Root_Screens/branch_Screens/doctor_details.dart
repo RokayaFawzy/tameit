@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
-import 'package:tame_it/values/values.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../../../widgets/custom_text_form_field.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
+import 'package:tame_it/values/values.dart';
 
 class Clinic {
   final String clinicName;
@@ -176,46 +175,15 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final details = snapshot.data!;
-            return _buildDoctorDetails(details);
+            return _buildDoctorDetails(context,
+                details); // Pass context and details to _buildDoctorDetails
           }
         },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AppointmentBooking()),
-                    );
-                  },
-                  child: Text(
-                    'Book Appointment',
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.deepsea,
-                    side: BorderSide(
-                      color: AppColors.deepsea,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-            ],
-          ),
-        ),
       ),
     );
   }
 
-  Widget _buildDoctorDetails(Details details) {
+  Widget _buildDoctorDetails(BuildContext context, Details details) {
     return Stack(
       children: [
         CustomScrollView(
@@ -372,6 +340,48 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               ),
             ),
           ],
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: BottomAppBar(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AppointmentBooking(
+                              doctorId: widget.doctorId,
+                              doctorSpecialization: details.specializations,
+                              doctorImage: details.imageUrl,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Book Appointment',
+                        style: TextStyle(color: AppColors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.deepsea,
+                        side: BorderSide(
+                          color: AppColors.deepsea,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );

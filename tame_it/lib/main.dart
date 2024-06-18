@@ -101,7 +101,7 @@ class TameIt extends StatelessWidget {
         '/PTSDScale': (context) => PTSD(),
         '/Adult_ADHD_Self_ReportScale': (context) =>
             Adult_ADHD_Self_Report_Scale(),
-        '/AppointmentBooking': (context) => AppointmentBooking(),
+        // '/AppointmentBooking': (context) => AppointmentBooking(),
         '/PaymentFormPage': (context) => PaymentFormPage(),
         '/MyAppointments': (context) => MyAppointments(),
         '/MyDoctor': (context) => MyDoctor(),
