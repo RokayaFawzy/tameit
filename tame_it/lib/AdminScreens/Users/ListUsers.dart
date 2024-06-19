@@ -31,9 +31,8 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    int id = json['id']?.toInt() ?? 0;
     return User(
-      id: id,
+      id: json['id'],
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
@@ -47,7 +46,6 @@ class User {
   }
 }
 
-// ListUsers widget
 class ListUsers extends StatefulWidget {
   const ListUsers({Key? key}) : super(key: key);
 
@@ -99,7 +97,7 @@ class _ListUsersState extends State<ListUsers> {
     }
   }
 
-  Future<void> searchUsers(String query) async {
+  Future<void> searchUsers(String firstName, String lastName) async {
     setState(() {
       isLoading = true;
       errorMessage = null;
@@ -107,13 +105,14 @@ class _ListUsersState extends State<ListUsers> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://tameit.azurewebsites.net/api/auth/byName'),
+        Uri.parse('https://tameit.azurewebsites.net/api/patient/byName'),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          "firstName": query,
-          "lastName": query,
+          "firstName": firstName,
+          "lastName": lastName,
         }),
       );
 
@@ -193,11 +192,15 @@ class _ListUsersState extends State<ListUsers> {
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                labelText: 'Find user',
+                labelText: 'Search by name',
                 prefixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    searchUsers(_searchController.text);
+                    String query = _searchController.text.trim();
+                    List<String> names = query.split(' ');
+                    String firstName = names.length > 0 ? names[0] : '';
+                    String lastName = names.length > 1 ? names[1] : '';
+                    searchUsers(firstName, lastName);
                   },
                 ),
                 suffixIcon: IconButton(
@@ -205,6 +208,7 @@ class _ListUsersState extends State<ListUsers> {
                   onPressed: () {
                     _searchController.clear();
                     _filterUsers('');
+                    _fetchUsers();
                   },
                 ),
                 border: OutlineInputBorder(
@@ -213,9 +217,6 @@ class _ListUsersState extends State<ListUsers> {
               ),
               onChanged: (query) {
                 _filterUsers(query);
-                if (query.isNotEmpty) {
-                  searchUsers(query);
-                }
               },
             ),
             SizedBox(height: 16),
@@ -246,9 +247,10 @@ class _ListUsersState extends State<ListUsers> {
                                   title: Text(
                                     '${filteredUsers[index].firstName} ${filteredUsers[index].lastName}',
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.deepsea),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.deepsea,
+                                    ),
                                   ),
                                   subtitle: Text(
                                     filteredUsers[index].email,
