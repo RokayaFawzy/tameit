@@ -7,6 +7,8 @@ import '../../../values/values.dart';
 import '../therapistspage.dart';
 
 class Appointment {
+  final int id;
+  final bool isOnline;
   final String doctorFName;
   final String doctorLName;
   final String? patientFName;
@@ -25,6 +27,8 @@ class Appointment {
   final double fees;
 
   Appointment({
+    required this.id,
+    required this.isOnline,
     required this.doctorFName,
     required this.doctorLName,
     this.patientFName,
@@ -44,7 +48,15 @@ class Appointment {
   });
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return Appointment(
+      id: id,
+      isOnline: json['isOnline'] ?? false,
       doctorFName: json['doctorFName'],
       doctorLName: json['doctorLName'],
       patientFName: json['patientFName'],
@@ -83,7 +95,7 @@ class AppointmentBooking extends StatefulWidget {
 
 class _AppointmentBookingState extends State<AppointmentBooking> {
   DateTime _selectedDate = DateTime.now();
-  Map<String, String> _availableTimes = {};
+  Map<String, Appointment> _availableTimes = {};
   String? _selectedTime;
   bool _isLoading = true;
   Appointment? _appointment;
@@ -117,8 +129,8 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
 
   Widget _buildTimeButton(String time) {
     String formattedTime = _formatTime(time); // Format time to HH:mm
-    String status = _availableTimes[time]!;
-    bool isAvailable = status == 'AVAILABLE';
+    Appointment appointment = _availableTimes[time]!;
+    bool isAvailable = appointment.status == 'AVAILABLE';
     Color buttonColor = isAvailable
         ? (_selectedTime == time ? AppColors.deepsea : Colors.green)
         : Colors.red;
@@ -195,7 +207,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         var data = json.decode(response.body);
         Appointment bookedAppointment = Appointment.fromJson(data);
         _showPaymentDetails(context, bookedAppointment);
@@ -213,18 +225,19 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
   }
 
   void _processAppointments(List<dynamic> appointmentsData) {
-    Map<String, String> availableTimes = {};
-    for (var appointment in appointmentsData) {
-      if (appointment['dayOfMonth'] == _selectedDate.day &&
-          appointment['monthOfYear'] == _selectedDate.month &&
-          appointment['year'] == _selectedDate.year) {
-        String time = '${appointment['hours']}:${appointment['minutes']}';
-        availableTimes[time] = appointment['status'];
+    Map<String, Appointment> availableTimes = {};
+    for (var appointmentJson in appointmentsData) {
+      Appointment appointment = Appointment.fromJson(appointmentJson);
+      if (appointment.dayOfMonth == _selectedDate.day &&
+          appointment.monthOfYear == _selectedDate.month &&
+          appointment.year == _selectedDate.year) {
+        String time = '${appointment.hours}:${appointment.minutes}';
+        availableTimes[time] = appointment;
       }
       if (_appointment == null &&
-          appointment['doctorFName'] != null &&
-          appointment['doctorLName'] != null) {
-        _appointment = Appointment.fromJson(appointment);
+          appointment.doctorFName != null &&
+          appointment.doctorLName != null) {
+        _appointment = appointment;
       }
     }
     setState(() {
@@ -252,6 +265,10 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     );
   }
 
+  String _getOnlineStatus(bool isOnline) {
+    return isOnline ? 'Online' : 'Offline';
+  }
+
   void _showPaymentDetails(BuildContext context, Appointment appointment) {
     showDialog(
       context: context,
@@ -274,6 +291,9 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       fontSize: 13),
                 ),
               ),
+              SizedBox(height: 8.0),
+              _buildPaymentItem(
+                  'IsOnline', _getOnlineStatus(appointment.isOnline)),
               SizedBox(height: 8.0),
               _buildPaymentItem('Name', appointment.clinicName),
               SizedBox(height: 8.0),
@@ -447,9 +467,9 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                     child: ElevatedButton(
                       onPressed: _selectedTime != null
                           ? () {
-                              int appointmentId =
-                                  int.parse(_selectedTime!.replaceAll(':', ''));
-                              bookAppointment(appointmentId);
+                              Appointment selectedAppointment =
+                                  _availableTimes[_selectedTime!]!;
+                              bookAppointment(selectedAppointment.id);
                             }
                           : null,
                       child: Text(
