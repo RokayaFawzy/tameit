@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tame_it/values/values.dart';
+import '../../values/values.dart';
 
 class ShowDoctorAppointments extends StatefulWidget {
   const ShowDoctorAppointments({Key? key}) : super(key: key);
