@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// Assuming these imports match your project structure
 import '../../values/values.dart';
 import '../../widgets/custom_button.dart';
 import '../DoctorHome.dart';
@@ -47,7 +46,8 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
   final List<Map<String, String>> _clinicDetails = [
     {"clinicName": "", "address": "", "phoneNumber": ""}
   ];
-  final List<double> _fees = [0.0]; // Using double for fees
+  final List<double> _fees = [0.0];
+  final List<String> _appointmentTypes = ['online'];
 
   void _addDateTimeSection() {
     setState(() {
@@ -55,7 +55,8 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
       _availableTimes
           .add(["10:00 AM", "12:00 PM", "1:00 PM", "3:00 PM", "5:00 PM"]);
       _clinicDetails.add({"clinicName": "", "address": "", "phoneNumber": ""});
-      _fees.add(0.0); // Initialize with 0.0
+      _fees.add(0.0);
+      _appointmentTypes.add('online');
     });
   }
 
@@ -86,6 +87,12 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
   void _updateFees(int index, double value) {
     setState(() {
       _fees[index] = value;
+    });
+  }
+
+  void _updateAppointmentType(int index, String type) {
+    setState(() {
+      _appointmentTypes[index] = type;
     });
   }
 
@@ -138,10 +145,12 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
     final body = {
       "fees": _fees[index].toString(),
       "appointmentDate": DateFormat('yyyy-MM-dd').format(_dates[index]),
-      "appointmentTime": _availableTimes[index].isNotEmpty
-          ? _availableTimes[index][0]
-          : "", // Taking the first available time
-      "clinic": _clinicDetails[index],
+      "appointmentTime":
+          _availableTimes[index].isNotEmpty ? _availableTimes[index][0] : "",
+      "appointmentType": _appointmentTypes[index],
+      "isOnline": _appointmentTypes[index] == 'online',
+      "clinic":
+          _appointmentTypes[index] == 'offline' ? _clinicDetails[index] : null,
     };
 
     try {
@@ -311,6 +320,7 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
           ),
         ),
         TextFormField(
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: 'Enter Fees',
             enabledBorder: OutlineInputBorder(
@@ -320,7 +330,11 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
               borderSide: BorderSide(color: Colors.orange),
             ),
           ),
-          onChanged: (value) => _updateFees(index, double.parse(value)),
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              _updateFees(index, double.parse(value));
+            }
+          },
         ),
         const SizedBox(height: 12),
         Container(
@@ -328,7 +342,7 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
           child: const Row(
             children: [
               Text(
-                "Clinic",
+                "Appointment Type",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -339,9 +353,61 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
             ],
           ),
         ),
-        Column(
-          children: List.generate(1, (clinicIndex) => _buildClinicField(index)),
+        Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                title: const Text('Online'),
+                leading: Radio<String>(
+                  value: 'online',
+                  groupValue: _appointmentTypes[index],
+                  onChanged: (value) {
+                    if (value != null) {
+                      _updateAppointmentType(index, value);
+                    }
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListTile(
+                title: const Text('Offline'),
+                leading: Radio<String>(
+                  value: 'offline',
+                  groupValue: _appointmentTypes[index],
+                  onChanged: (value) {
+                    if (value != null) {
+                      _updateAppointmentType(index, value);
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
+        if (_appointmentTypes[index] == 'offline') ...[
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: const Row(
+              children: [
+                Text(
+                  "Clinic",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.deepsea,
+                    fontFamily: "Domine",
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              _buildClinicField(index),
+            ],
+          ),
+        ],
         Container(
           padding: const EdgeInsets.all(8),
           child: Row(
@@ -350,9 +416,9 @@ class _SelectFreeTimeState extends State<SelectFreeTime> {
                 "Available Time",
                 style: TextStyle(
                   fontSize: 15,
-                  fontFamily: "Domine",
                   fontWeight: FontWeight.w700,
                   color: AppColors.deepsea,
+                  fontFamily: "Domine",
                 ),
               ),
               Spacer(),

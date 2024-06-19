@@ -11,7 +11,6 @@ class ListAllAppointments extends StatefulWidget {
 }
 
 class __ListAllAppointmentsStateState extends State<ListAllAppointments> {
-
   @override
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
@@ -57,6 +56,8 @@ class __ListAllAppointmentsStateState extends State<ListAllAppointments> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: AppColors.deepsea),
         ),
         body: SafeArea(
             child: SingleChildScrollView(
