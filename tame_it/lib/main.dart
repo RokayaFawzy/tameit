@@ -30,7 +30,6 @@ import 'AdminScreens/doctor/ListDoctors.dart';
 import 'AdminScreens/doctor/add_Doctor_Admain.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
-import 'Screens/navbar_Root_Screens/branch_Screens/BookingPage.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/my_appointment.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/my_doctor.dart';
 import 'Screens/navbar_Root_Screens/more pages/payment.dart';
@@ -70,7 +69,6 @@ class TameIt extends StatelessWidget {
           :
           // SplashScreen(),
           Login(),
-
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -103,7 +101,6 @@ class TameIt extends StatelessWidget {
         '/PTSDScale': (context) => PTSD(),
         '/Adult_ADHD_Self_ReportScale': (context) =>
             Adult_ADHD_Self_Report_Scale(),
-        // '/AppointmentBooking': (context) => AppointmentBooking(),
         '/PaymentFormPage': (context) => PaymentFormPage(),
         '/MyAppointments': (context) => MyAppointments(),
         '/MyDoctor': (context) => MyDoctor(),
@@ -111,9 +108,7 @@ class TameIt extends StatelessWidget {
         '/ListUsers': (context) => ListUsers(),
         '/ListDoctors': (context) => ListDoctors(),
         '/AddDoctorAdmin': (context) => AddDoctorAdmin(),
-        '/ListAllAppointments':(context) => ListAllAppointments(),
-        '/ShowDoctorAppointments':(context)=>ShowDoctorAppointments(),
-
+        '/ListAllAppointments': (context) => ListAllAppointments(),
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(

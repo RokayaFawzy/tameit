@@ -256,9 +256,6 @@ class _AdminPostsPageState extends State<AdminPostsPage> {
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Profile');
-                  },
                   child: CircleAvatar(
                     radius: 17,
                     backgroundColor: AppColors.deepsea,
@@ -306,7 +303,7 @@ class _AdminPostsPageState extends State<AdminPostsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '# ${post.id}', 
+                              '# ${post.id}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -348,56 +345,56 @@ class _AdminPostsPageState extends State<AdminPostsPage> {
                           height: 9,
                         ),
                         // if (post.comments.isNotEmpty)
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: post.comments.length,
-                            itemBuilder: (context, commentIndex) {
-                              final comment = post.comments[commentIndex];
-                              return Column(
-                                children: [
-                                  const Divider(
-                                    color: AppColors.deepsea,
-                                    thickness: 0.1,
-                                    height: 9,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              '# ${comment.id}', 
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: post.comments.length,
+                          itemBuilder: (context, commentIndex) {
+                            final comment = post.comments[commentIndex];
+                            return Column(
+                              children: [
+                                const Divider(
+                                  color: AppColors.deepsea,
+                                  thickness: 0.1,
+                                  height: 9,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '# ${comment.id}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            SizedBox(width: 8.0),
-                                            Text(comment.text),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(width: 8.0),
+                                          Text(comment.text),
+                                        ],
                                       ),
-                                      IconButton(
-                                        icon: Icon(Icons.close,
-                                            color: AppColors.OrangePeel),
-                                        onPressed: () =>
-                                            deleteComment(comment.id),
-                                      ),
-                                    ],
-                                  ),
-                                  const Divider(
-                                    color: AppColors.deepsea,
-                                    thickness: 0.1,
-                                    height: 9,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.close,
+                                          color: AppColors.OrangePeel),
+                                      onPressed: () =>
+                                          deleteComment(comment.id),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(
+                                  color: AppColors.deepsea,
+                                  thickness: 0.1,
+                                  height: 9,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tame_it/AdminScreens/Postnotification/ListPost.dart';
 import '../values/values.dart';
 import 'drawer.dart';
 
@@ -76,6 +77,18 @@ class __AdminHomePageStateState extends State<AdminHomePage> {
                   child: _buildServiceCard(
                     image: 'assets/images/adminapointments.jpg',
                     title: 'Manage Appointments',
+                  )),
+              const SizedBox(height: 5),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AdminPostsPage()),
+                    );
+                  },
+                  child: _buildServiceCard(
+                    image: 'assets/images/manage plog.png',
+                    title: 'Manage Posts',
                   )),
               const SizedBox(height: 200),
             ]))));

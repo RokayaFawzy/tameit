@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../Models/Doctor_model.dart';
+import 'package:tame_it/AdminScreens/appointments/ListAppointments.dart';
+import 'package:tame_it/AdminScreens/appointments/ShowDoctorAppointment.dart';
 import '../../values/values.dart';
 
 class AppointmentsCard extends StatefulWidget {
@@ -42,10 +42,15 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
-                        child: Image.asset(
-                          widget.doctor.image,
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.doctor.imageUrl != null
+                            ? Image.network(
+                                widget.doctor.imageUrl!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/nurse.png',
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
@@ -63,14 +68,14 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                           ),
                         ),
                         Text(
-                          widget.doctor.specialty,
+                          widget.doctor.jobTitle,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: width * 0.035,
                           ),
                         ),
                         Text(
-                          widget.doctor.price + ' EGP',
+                          '${widget.doctor.price} EGP',
                           style: TextStyle(
                             color: AppColors.deepsea,
                             fontWeight: FontWeight.w500,
@@ -86,7 +91,7 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              widget.doctor.experienceYears,
+                              '${widget.doctor.yearsOfExperience}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: width * 0.03,
@@ -94,33 +99,47 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Icon(
-                              FeatherIcons.plusCircle,
-                              size: width * 0.04,
-                              color: AppColors.deepsea,
+                        Container(
+                          height: 50, // Adjust the height as needed
+                          child: Flexible(
+                            child: Wrap(
+                              spacing: 5.0,
+                              runSpacing: 2.0,
+                              children: [
+                                Chip(
+                                  label: Text(
+                                    widget.doctor.specializations.length > 2
+                                        ? "${widget.doctor.specializations.take(2).join(", ")} and..."
+                                        : widget.doctor.specializations
+                                            .join(", "),
+                                    style: TextStyle(fontSize: width / 25),
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 5),
-                            Text(
-                              widget.doctor.interest,
-                              style: TextStyle(
-                                fontSize: width * 0.035,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 4),
                         RatingBar.builder(
-                          initialRating: 0,
+                          initialRating: widget.doctor.rating
+                              .toDouble(), // Set the initial rating
                           minRating: 1,
                           direction: Axis.horizontal,
+                          allowHalfRating: true,
                           itemCount: 5,
-                          itemSize: width * 0.05,
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            color: AppColors.OrangePeel,
-                          ),
+                          itemSize: 20,
+                          itemBuilder: (context, index) {
+                            return Icon(
+                              index < widget.doctor.rating
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: index < widget.doctor.rating
+                                  ? AppColors.OrangePeel
+                                  : Colors
+                                      .grey, // Color the stars based on the rating
+                              size: 20,
+                            );
+                          },
                           onRatingUpdate: (rating) {
                             print(rating);
                           },
@@ -138,8 +157,14 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                                   backgroundColor: AppColors.deepsea,
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed('/ShowDoctorAppointments');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ShowDoctorAppointments(
+                                                doctorId: widget.doctor.id,
+                                                )),
+                                  );
                                 },
                                 child: Text(
                                   'Show Appointment',
@@ -160,19 +185,7 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                 ],
               ),
             ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: InkWell(
-                onTap: () {
-                },
-                child: Icon(
-                  Icons.close,
-                  color: AppColors.deepsea,
-                  size: width * 0.05,
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
