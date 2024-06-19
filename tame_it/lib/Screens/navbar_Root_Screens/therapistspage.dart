@@ -27,7 +27,6 @@ class UserDetails {
   }
 }
 
-
 class Doctor {
   final int id;
   final String firstName;
@@ -76,10 +75,7 @@ class Doctor {
   }
 }
 
-
-
 class Therapists extends StatefulWidget {
-  
   const Therapists({super.key});
 
   @override
@@ -97,10 +93,10 @@ class __TherapistsStateState extends State<Therapists> {
   void initState() {
     super.initState();
     userDetails = fetchUserDetails();
-        fetchAllDoctors();
-
+    fetchAllDoctors();
   }
- Future<void> fetchAllDoctors() async {
+
+  Future<void> fetchAllDoctors() async {
     setState(() {
       isLoading = true;
       errorMessage = null;
@@ -185,8 +181,6 @@ class __TherapistsStateState extends State<Therapists> {
     }
   }
 
-
-
   Future<UserDetails> fetchUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -267,6 +261,7 @@ class __TherapistsStateState extends State<Therapists> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
+          centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
           actions: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -323,7 +318,7 @@ class __TherapistsStateState extends State<Therapists> {
                                       color: AppColors.greyShade7,
                                     ),
                                     onPressed: () {
-                                  searchDoctors(_searchController.text);
+                                      searchDoctors(_searchController.text);
                                     }),
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.clear),
@@ -410,45 +405,44 @@ class __TherapistsStateState extends State<Therapists> {
               SizedBox(
                 height: 12,
               ),
-            
-                  SizedBox(
-                    height: 12,
-                  ),
-                  isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : errorMessage != null
-                          ? Center(child: Text(errorMessage!))
-                          : doctors.isEmpty
-                              ? Center(
-                                  child: Text('No doctors available.'),
-                                )
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: doctors.length,
-                                  itemBuilder: (context, index) {
-                                    final doctor = doctors[index];
-                                    if (doctor != null) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: DoctorCard(
-                                          doctor: doctor,
-                                         
-                                        ),
-                                      );
-                                    } else {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: Text(
-                                          'Error: Doctor data is null',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),        const SizedBox(height: 200),
+              SizedBox(
+                height: 12,
+              ),
+              isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : errorMessage != null
+                      ? Center(child: Text(errorMessage!))
+                      : doctors.isEmpty
+                          ? Center(
+                              child: Text('No doctors available.'),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: doctors.length,
+                              itemBuilder: (context, index) {
+                                final doctor = doctors[index];
+                                if (doctor != null) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: DoctorCard(
+                                      doctor: doctor,
+                                    ),
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Text(
+                                      'Error: Doctor data is null',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+              const SizedBox(height: 200),
             ],
           ),
         ),

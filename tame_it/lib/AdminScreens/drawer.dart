@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/AdminScreens/Postnotification/ListPost.dart';
 import 'package:tame_it/AdminScreens/setting.dart';
 import '../values/values.dart';
 import 'package:http/http.dart' as http;
@@ -273,26 +274,50 @@ class _MyDrawerState extends State<MyDrawer> {
                 });
                 Navigator.pop(context);
               }),
+          ListTile(
+              leading: Icon(Icons.psychology_outlined,
+                  color: _selectedIndex == 4
+                      ? AppColors.OrangePeel
+                      : AppColors.deepsea),
+              title: Text(
+                'Post',
+                style: TextStyle(
+                  color: _selectedIndex == 4
+                      ? AppColors.OrangePeel
+                      : AppColors.deepsea,
+                  fontSize: 14,
+                ),
+              ),
+              selected: _selectedIndex == 4,
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 4;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminPostsPage()),
+                );
+              }),
           const SizedBox(height: 85),
           const Divider(),
           ListTile(
             leading: Icon(Icons.settings,
-                color: _selectedIndex == 4
+                color: _selectedIndex == 5
                     ? AppColors.OrangePeel
                     : AppColors.deepsea),
             title: Text(
               'Settings',
               style: TextStyle(
-                color: _selectedIndex == 4
+                color: _selectedIndex == 5
                     ? AppColors.OrangePeel
                     : AppColors.deepsea,
                 fontSize: 14,
               ),
             ),
-            selected: _selectedIndex == 4,
+            selected: _selectedIndex == 5,
             onTap: () {
               setState(() {
-                _selectedIndex = 4;
+                _selectedIndex = 5;
               });
               Navigator.push(
                 context,

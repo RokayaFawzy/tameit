@@ -289,7 +289,7 @@ class PastAppointment extends StatelessWidget {
           ],
         ),
         const Divider(
-          color: Colors.deepPurple,
+          color: AppColors.deepsea,
           thickness: 0.1,
           height: 9,
         ),

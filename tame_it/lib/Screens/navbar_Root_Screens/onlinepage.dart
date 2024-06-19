@@ -124,6 +124,7 @@ class __OnlineTherapistsStateState extends State<OnlineTherapists> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          centerTitle: true,
           iconTheme: const IconThemeData(color: AppColors.deepsea),
           actions: [
             Row(
