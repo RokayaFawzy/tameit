@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/GroupTherapy.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -195,14 +196,25 @@ class __HomeStateState extends State<Home> {
                 ),
               ),
               const SizedBox(height: 5),
-              _buildServiceCard(
-                image: 'assets/images/p2.jpg',
-                title: 'Group Therapy',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GroupTherapyPage()),
+                  );
+                },
+                child: _buildServiceCard(
+                  image: 'assets/images/p2.jpg',
+                  title: 'Group Therapy',
+                ),
               ),
               const SizedBox(height: 5),
-              _buildServiceCard(
-                image: 'assets/images/p3.jpg',
-                title: 'ChatBot',
+              GestureDetector(
+                onTap: () {},
+                child: _buildServiceCard(
+                  image: 'assets/images/p3.jpg',
+                  title: 'ChatBot',
+                ),
               ),
               const SizedBox(height: 5),
               GestureDetector(
