@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tame_it/DoctorScreens/patient/chat.dart';
-import 'package:tame_it/values/values.dart';
+import 'package:tame_it/DoctorScreens/patient/chat.dart'; // Import your chat screen if needed
+import 'package:tame_it/values/values.dart'; // Import your colors or other values
 
+// UserDetails class for storing user details
 class UserDetails {
   final String userName;
   final String? imageUrl;
@@ -20,10 +21,16 @@ class UserDetails {
   }
 }
 
+// Appointment class for storing appointment details
 class Appointment {
+  final int id;
+  final String doctorFName;
+  final String doctorLName;
   final int year;
   final int monthOfYear;
   final int dayOfMonth;
+  final String dayOfWeek;
+  final String monthNameYear;
   final int hours;
   final int minutes;
   final String patientFName;
@@ -32,8 +39,13 @@ class Appointment {
   final String clinicName;
   final String clinicAddress;
   final String clinicPhoneNumber;
+  final bool isOnline;
+  final String status;
 
   Appointment({
+    required this.doctorFName,
+    required this.doctorLName,
+    required this.id,
     required this.year,
     required this.monthOfYear,
     required this.dayOfMonth,
@@ -45,54 +57,64 @@ class Appointment {
     required this.clinicName,
     required this.clinicAddress,
     required this.clinicPhoneNumber,
+    required this.isOnline,
+    required this.dayOfWeek,
+    required this.monthNameYear,
+    required this.status,
   });
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return Appointment(
+      id: id,
       year: json['year'],
       monthOfYear: json['monthOfYear'],
       dayOfMonth: json['dayOfMonth'],
       hours: json['hours'],
       minutes: json['minutes'],
-      patientFName: json['patientFName'] ?? '', // Handle null value
-      patientLName: json['patientLName'] ?? '', // Handle null value
-      fees: (json['fees'] as num?)?.toDouble() ?? 0.0, // Handle null value
-      clinicName: json['clinicName'] ?? '', // Handle null value
-      clinicAddress: json['clinicAddress'] ?? '', // Handle null value
-      clinicPhoneNumber: json['clinicPhoneNumber'] ?? '', // Handle null value
+      patientFName: json['patientFName'] ?? '',
+      patientLName: json['patientLName'] ?? '',
+      fees: (json['fees'] as num?)?.toDouble() ?? 0.0,
+      clinicName: json['clinicName'] ?? '',
+      clinicAddress: json['clinicAddress'] ?? '',
+      clinicPhoneNumber: json['clinicPhoneNumber'] ?? '',
+      isOnline: json['isOnline'] ?? false,
+      doctorFName: json['doctorFName'] ?? '',
+      doctorLName: json['doctorLName'] ?? '',
+      dayOfWeek: json['dayOfWeek'] ?? '',
+      monthNameYear: json['monthNameYear'] ?? '',
+      status: json['status'] ?? '',
     );
   }
 }
 
+// ShowMyAppointment widget
 class ShowMyAppointment extends StatefulWidget {
   @override
   _ShowMyAppointmentState createState() => _ShowMyAppointmentState();
 }
 
 class _ShowMyAppointmentState extends State<ShowMyAppointment> {
-  late Future<UserDetails> userDetails;
-  Future<List<Appointment>>? appointments;
+  late Future<UserDetails> userDetails; // Future for user details
+  Future<List<Appointment>>? appointments; // Future for appointments
 
   final TextEditingController _dateController = TextEditingController();
-  final List<String> _sessionTimes = [
-    "10:00 AM",
-    "1:00 PM",
-    "3:00 PM",
-    "5:00 PM"
-  ];
 
-  String? selectedDate;
-  List<Appointment> filteredAppointments = [];
-  String? clinicName;
-  String? clinicAddress;
-  String? clinicPhoneNumber;
+  String? selectedDate; // Selected date for filtering appointments
 
   @override
   void initState() {
     super.initState();
-    userDetails = fetchUserDetails();
+    userDetails =
+        fetchUserDetails(); // Fetch user details on widget initialization
   }
 
+  // Fetch user details from SharedPreferences
   Future<UserDetails> fetchUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -120,6 +142,7 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
     }
   }
 
+  // Fetch appointments based on selected date
   Future<List<Appointment>> fetchAppointments({String? date}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -129,26 +152,29 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
     }
 
     try {
+      // Construct the URL with query parameters
+      Uri url = Uri.parse(
+          'https://tameit.azurewebsites.net/api/appointment/readDoctorAppointments');
+
+      Map<String, String> queryParams = {
+        if (date != null && date.isNotEmpty) 'date': date,
+      };
+
+      // Append query parameters to the URL
+      url = url.replace(queryParameters: queryParams);
+
       final response = await http.get(
-        Uri.parse(
-            'https://tameit.azurewebsites.net/api/appointment/readDoctorAppointments'),
+        url,
         headers: {
           'Authorization': 'Bearer $token',
         },
       );
 
       if (response.statusCode == 200) {
+        // Parse JSON response into List<Appointment>
         final List<dynamic> responseData = jsonDecode(response.body);
         List<Appointment> allAppointments =
             responseData.map((data) => Appointment.fromJson(data)).toList();
-
-        if (date != null) {
-          allAppointments = allAppointments
-              .where((appointment) =>
-                  '${appointment.year}-${appointment.monthOfYear.toString().padLeft(2, '0')}-${appointment.dayOfMonth.toString().padLeft(2, '0')}' ==
-                  date)
-              .toList();
-        }
 
         return allAppointments;
       } else {
@@ -160,6 +186,7 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
     }
   }
 
+  // Function to pick a date from date picker dialog
   void _pickDate() async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -172,455 +199,288 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
         selectedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
         _dateController.text = selectedDate!;
         appointments = fetchAppointments(date: selectedDate);
-        appointments?.then((value) {
-          setState(() {
-            filteredAppointments = value;
-            if (filteredAppointments.isNotEmpty) {
-              final clinic = filteredAppointments.first;
-              clinicName = clinic.clinicName;
-              clinicAddress = clinic.clinicAddress;
-              clinicPhoneNumber = clinic.clinicPhoneNumber;
-            }
-          });
-        });
       });
     }
   }
 
+  // Function to navigate to session details page
   void _navigateToSession(Appointment appointment) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => YourSessionPage(
-                  sessionTime:
-                      '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
-                  patientName:
-                      '${appointment.patientFName} ${appointment.patientLName}',
-                  fees: appointment.fees,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => YourSessionPage(
+          sessionTime:
+              '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
+          patientName:
+              '${appointment.patientFName} ${appointment.patientLName}',
+          fees: appointment.fees,
+          isOnline: appointment.isOnline,
+          clinicName: appointment.clinicName,
+          clinicAddress: appointment.clinicAddress,
+          clinicPhoneNumber: appointment.clinicPhoneNumber,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserDetails>(
-        future: userDetails,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+      future: userDetails,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          if (snapshot.data != null) {
+            final imageProvider = snapshot.data!.imageUrl != null
+                ? NetworkImage(snapshot.data!.imageUrl!)
+                : AssetImage('assets/images/newlogo.jpg');
+            return buildUI(
+                snapshot.data!, imageProvider as ImageProvider<Object>);
           } else {
-            if (snapshot.data != null) {
-              final imageProvider = snapshot.data!.imageUrl != null
-                  ? NetworkImage(snapshot.data!.imageUrl!)
-                  : const AssetImage('assets/images/newlogo.jpg');
-              return buildUI(
-                  snapshot.data!, imageProvider as ImageProvider<Object>);
-            } else {
-              return Text('User details not available');
-            }
+            return Center(child: Text('User details not available'));
           }
-        });
+        }
+      },
+    );
   }
 
-  Widget _buildClinicField(int index) {
-    return Column(children: [
-      TextFormField(
-          decoration: InputDecoration(
-              hintText: clinicName ?? 'Clinic Name',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.deepsea),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange),
-              ))),
-      TextFormField(
-          decoration: InputDecoration(
-              hintText: clinicAddress ?? 'Address',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.deepsea),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange),
-              ))),
-      TextFormField(
-          decoration: InputDecoration(
-              hintText: clinicPhoneNumber ?? 'Phone Number',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.deepsea),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange),
-              )))
-    ]);
-  }
-
+  // Function to build the UI based on user details and appointments
   Widget buildUI(UserDetails userDetails, ImageProvider imageProvider) {
     return Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: AppBar(
-          backgroundColor: AppColors.white,
-          title: const Text('Show My Appointment',
-              style: TextStyle(
-                color: AppColors.deepsea,
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              )),
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: AppColors.deepsea),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          'Show My Appointment',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-        body: SafeArea(
-            child: ListView(shrinkWrap: true, children: [
-          Padding(
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: AppColors.deepsea,
+        ),
+      ),
+      body: SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Text(
-                      'Hi Dr. ' + userDetails.userName,
-                      style: TextStyle(
-                          fontSize: 23,
-                          color: AppColors.OrangePeel,
-                          fontWeight: FontWeight.bold),
-                    )),
-                SizedBox(height: 15),
-                Row(children: [
+              child: Column(
+                children: [
                   Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Choose Date  to know your appointment',
-                          style: TextStyle(
-                            color: AppColors.deepsea,
-                            fontFamily: "Domine",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          )))
-                ]),
-                SizedBox(height: 25),
-                Padding(
-                    padding: EdgeInsets.only(left: 15.0, right: 30.0),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextField(
-                            controller: _dateController,
-                            decoration: InputDecoration(
-                              hintText: 'Date',
-                              suffixIcon: IconButton(
-                                icon: Icon(Icons.calendar_today),
-                                onPressed: _pickDate,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.deepsea),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.orange),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          FutureBuilder<List<Appointment>>(
-                              future: appointments,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                } else {
-                                  if (snapshot.hasData &&
-                                      snapshot.data!.isNotEmpty) {
-                                    return Column(children: [
-                                      SizedBox(height: 15),
-                                      Row(children: [
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 8.0),
-                                            child: Text('Clinics',
-                                                style: TextStyle(
-                                                  color: AppColors.deepsea,
-                                                  fontFamily: "Domine",
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ]),
-                                      _buildClinicField(0),
-                                      SizedBox(height: 15),
-                                      Row(children: [
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 8.0),
-                                            child: Text('Your Available Time',
-                                                style: TextStyle(
-                                                  color: AppColors.deepsea,
-                                                  fontFamily: "Domine",
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                )))
-                                      ]),
-                                      SizedBox(height: 15),
-                                      ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context, index) {
-                                            final appointment =
-                                                snapshot.data![index];
-                                            return Card(
-                                                child: ListTile(
-                                              title: Text(
-                                                  '${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18,
-                                                  )),
-                                              subtitle: Text(
-                                                'Patient: ${appointment.patientFName} ${appointment.patientLName}',
-                                                style: TextStyle(fontSize: 16),
-                                              ),
-                                              onTap: () => _navigateToSession(
-                                                  appointment),
-                                            ));
-                                          })
-                                    ]);
-                                  } else {
-                                    return Text(
-                                        'No appointments available for this date');
-                                  }
-                                }
-                              })
-                        ]))
-              ]))
-        ])));
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      'Hi Dr. ' + userDetails.userName + '!',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage: imageProvider,
+                  ),
+                ],
+              ),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(25.0),
+            //   child: TextFormField(
+            //     controller: _dateController,
+            //     readOnly: true,
+            //     onTap: _pickDate,
+            //     decoration: InputDecoration(
+            //       labelText: 'Select Date',
+            //       labelStyle: TextStyle(
+            //         color: AppColors.deepsea,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //       focusedBorder: UnderlineInputBorder(
+            //         borderSide: BorderSide(color: AppColors.deepsea),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    appointments = fetchAppointments(
+                        date:
+                            selectedDate); // Fetch appointments for the selected date
+                  });
+                },
+                child: Text('Show Appointments'),
+              ),
+            ),
+            FutureBuilder<List<Appointment>>(
+              future: appointments,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  return buildAppointmentList(snapshot.data!);
+                } else {
+                  return Center(child: Text('No appointments available.'));
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Function to build appointment list UI
+  Widget buildAppointmentList(List<Appointment> appointments) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: appointments.length,
+      itemBuilder: (context, index) {
+        final appointment = appointments[index];
+        return GestureDetector(
+          onTap: () {
+            _navigateToSession(appointment);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Patient: ${appointment.patientFName} ${appointment.patientLName}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Date: ${appointment.dayOfMonth}-${appointment.monthOfYear}-${appointment.year}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Time: ${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Clinic: ${appointment.clinicName}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Address: ${appointment.clinicAddress}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Phone: ${appointment.clinicPhoneNumber}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'is online ?: ${appointment.isOnline}',
+                      style: TextStyle(
+                        color: AppColors.deepsea,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Status: ${appointment.status}',
+                      style: TextStyle(
+                        color: appointment.status == 'Active'
+                            ? Colors.green
+                            : Colors.red,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
-// class YourSessionPage extends StatefulWidget {
-//   final String sessionTime;
-//   final String patientName;
-//   final double fees;
-
-//   const YourSessionPage(
-//       {Key? key,
-//       required this.sessionTime,
-//       required this.patientName,
-//       required this.fees})
-//       : super(key: key);
-
-//   @override
-//   State<YourSessionPage> createState() => _YourSessionPageState();
-// }
-
-// class _YourSessionPageState extends State<YourSessionPage> {
-//   String _sessionType = 'offline'; // Default selected session type
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.white,
-//       appBar: AppBar(
-//         backgroundColor: AppColors.white,
-//         title: const Text(
-//           'Your Session',
-//           style: TextStyle(
-//             color: AppColors.deepsea,
-//             fontSize: 18,
-//             fontWeight: FontWeight.w400,
-//           ),
-//         ),
-//         centerTitle: true,
-//         iconTheme: const IconThemeData(color: AppColors.deepsea),
-//       ),
-//       body: SafeArea(
-//         child: ListView(
-//           shrinkWrap: true,
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(10.0),
-//               child: Column(
-//                 children: [
-//                   Row(
-//                     children: [
-//                       CircleAvatar(
-//                         radius: 25,
-//                         backgroundImage: AssetImage(
-//                             'assets/images/userimage.jpg'), // Replace with your image asset
-//                       ),
-//                       Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               widget.patientName,
-//                               style: TextStyle(
-//                                 fontSize: 14,
-//                                 fontWeight: FontWeight.w600,
-//                                 color: AppColors.deepsea,
-//                               ),
-//                             ),
-//                             SizedBox(height: 5),
-//                             SizedBox(width: 80),
-//                             GestureDetector(
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) => Chat(
-//                                             patientName: '',
-//                                           )),
-//                                 );
-//                               },
-//                               child: Icon(
-//                                 Icons.message,
-//                                 color: AppColors.deepsea,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 10),
-//                   const Divider(
-//                     color: AppColors.deepsea,
-//                     thickness: 0.1,
-//                     height: 8,
-//                   ),
-//                   const SizedBox(height: 20),
-//                   Row(
-//                     children: [
-//                       Padding(
-//                         padding: const EdgeInsets.only(left: 8.0),
-//                         child: Text(
-//                           'Your Session Is At ${widget.sessionTime}',
-//                           style: const TextStyle(
-//                             color: AppColors.OrangePeel,
-//                             fontFamily: "Domine",
-//                             fontSize: 14,
-//                             fontWeight: FontWeight.w700,
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 20),
-//                   Row(
-//                     children: [
-//                       Padding(
-//                         padding: EdgeInsets.all(8.0),
-//                         child: Text(
-//                           'Type Of Session',
-//                           style: TextStyle(
-//                               fontSize: 16,
-//                               color: AppColors.deepsea,
-//                               fontFamily: "Domine",
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   Row(
-//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     children: [
-//                       Row(
-//                         children: [
-//                           Radio<String>(
-//                             value: 'online',
-//                             groupValue: _sessionType,
-//                             onChanged: (value) {
-//                               setState(() {
-//                                 _sessionType = value!;
-//                               });
-//                             },
-//                           ),
-//                           const Text(
-//                             'Online',
-//                             style: TextStyle(
-//                                 fontSize: 18, color: AppColors.OrangePeel),
-//                           ),
-//                         ],
-//                       ),
-//                       Row(
-//                         children: [
-//                           Radio<String>(
-//                             value: 'offline',
-//                             groupValue: _sessionType,
-//                             onChanged: (value) {
-//                               setState(() {
-//                                 _sessionType = value!;
-//                               });
-//                             },
-//                           ),
-//                           const Text(
-//                             'Offline',
-//                             style: TextStyle(
-//                                 fontSize: 18, color: AppColors.OrangePeel),
-//                           ),
-//                         ],
-//                       ),
-//                       const SizedBox(height: 10),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 20),
-//                   Padding(
-//                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Text(
-//                           'Price',
-//                           style: TextStyle(
-//                               fontSize: 16,
-//                               color: AppColors.deepsea,
-//                               fontFamily: "Domine",
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                         Text(
-//                           '\$${widget.fees}',
-//                           style: TextStyle(
-//                               fontSize: 16,
-//                               color: AppColors.deepsea,
-//                               fontFamily: "Domine",
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-class YourSessionPage extends StatefulWidget {
+class YourSessionPage extends StatelessWidget {
   final String sessionTime;
   final String patientName;
   final double fees;
+  final bool isOnline;
+  final String? clinicName;
+  final String? clinicAddress;
+  final String? clinicPhoneNumber;
 
-  const YourSessionPage(
-      {Key? key,
-      required this.sessionTime,
-      required this.patientName,
-      required this.fees})
-      : super(key: key);
-
-  @override
-  State<YourSessionPage> createState() => _YourSessionPageState();
-}
-
-class _YourSessionPageState extends State<YourSessionPage> {
-  String _sessionType = 'offline'; // Default selected session type
+  const YourSessionPage({
+    Key? key,
+    required this.sessionTime,
+    required this.patientName,
+    required this.fees,
+    required this.isOnline,
+    this.clinicName,
+    this.clinicAddress,
+    this.clinicPhoneNumber,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String sessionType = isOnline ? 'online' : 'offline';
+
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
-        title: const Text(
+        backgroundColor: Colors.white,
+        title: Text(
           'Your Session',
           style: TextStyle(
             color: AppColors.deepsea,
@@ -629,7 +489,9 @@ class _YourSessionPageState extends State<YourSessionPage> {
           ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.deepsea),
+        iconTheme: IconThemeData(
+          color: AppColors.deepsea,
+        ),
       ),
       body: SafeArea(
         child: ListView(
@@ -654,7 +516,7 @@ class _YourSessionPageState extends State<YourSessionPage> {
                             Row(
                               children: [
                                 Text(
-                                  widget.patientName,
+                                  patientName,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -697,7 +559,7 @@ class _YourSessionPageState extends State<YourSessionPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          'Your Session Is At ${widget.sessionTime}',
+                          'Your Session Is At $sessionTime',
                           style: const TextStyle(
                             color: AppColors.OrangePeel,
                             fontFamily: "Domine",
@@ -731,12 +593,8 @@ class _YourSessionPageState extends State<YourSessionPage> {
                         children: [
                           Radio<String>(
                             value: 'online',
-                            groupValue: _sessionType,
-                            onChanged: (value) {
-                              setState(() {
-                                _sessionType = value!;
-                              });
-                            },
+                            groupValue: sessionType,
+                            onChanged: (value) {},
                           ),
                           const Text(
                             'Online',
@@ -749,12 +607,8 @@ class _YourSessionPageState extends State<YourSessionPage> {
                         children: [
                           Radio<String>(
                             value: 'offline',
-                            groupValue: _sessionType,
-                            onChanged: (value) {
-                              setState(() {
-                                _sessionType = value!;
-                              });
-                            },
+                            groupValue: sessionType,
+                            onChanged: (value) {},
                           ),
                           const Text(
                             'Offline',
@@ -763,10 +617,99 @@ class _YourSessionPageState extends State<YourSessionPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  if (isOnline == false)
+                    Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Clinic Information',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.deepsea,
+                                        fontFamily: "Domine",
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Clinic Name:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.deepsea,
+                                    ),
+                                  ),
+                                  Text(
+                                    '$clinicName',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.OrangePeel,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Clinic Address:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.deepsea,
+                                    ),
+                                  ),
+                                  Text(
+                                    '$clinicAddress',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.OrangePeel,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Clinic Phone Number:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.deepsea,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' $clinicPhoneNumber',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.OrangePeel,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
@@ -781,7 +724,7 @@ class _YourSessionPageState extends State<YourSessionPage> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '\$${widget.fees}',
+                          '$fees',
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColors.deepsea,
