@@ -1,38 +1,129 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/values/values.dart';
-import 'package:intl/intl.dart'; // For formatting date and time
-import 'chat.dart'; // Import the Chat screen
+import 'chat.dart';
+import 'package:http/http.dart' as http;
+
+class Patient {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String imageUrl;
+  final String email;
+  final String phoneNumber;
+  final String gender;
+  final String city;
+  final String country;
+  final String birthDate;
+
+  Patient({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.imageUrl,
+    required this.email,
+    required this.phoneNumber,
+    required this.gender,
+    required this.city,
+    required this.country,
+    required this.birthDate,
+  });
+
+  factory Patient.fromJson(Map<String, dynamic> json) {
+    int id = json['id']?.toInt() ?? 0;
+    return Patient(
+      id: id,
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      email: json['email'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      gender: json['gender'] ?? '',
+      city: json['city'] ?? '',
+      country: json['country'] ?? '',
+      birthDate: json['birthDate'] ?? '',
+    );
+  }
+}
 
 class RoomChat extends StatefulWidget {
-  const RoomChat({Key? key}) : super(key: key);
+  const RoomChat({super.key});
 
   @override
   State<RoomChat> createState() => _RoomChatState();
 }
 
 class _RoomChatState extends State<RoomChat> {
-  List<Map<String, dynamic>> chatRooms = List.generate(
-    10,
-    (index) {
-      final now = DateTime.now();
-      final lastMessageTime =
-          now.subtract(Duration(minutes: index * 5)); // Example timestamp
-      return {
-        "name": "Patient Name $index",
-        "message": "Last message from patient $index",
-        "unreadCount": index % 2 == 0 ? index : 0, // Example unread count
-        "isRead": index % 2 != 0, // Example read status
-        "lastMessageTime": lastMessageTime,
-      };
-    },
-  );
+  @override
+  List<Patient> patients = [];
+  List<Patient> filteredPatients = [];
+  bool isLoading = false;
 
-  String formatTimestamp(DateTime timestamp) {
-    final now = DateTime.now();
-    if (now.difference(timestamp).inMinutes < 1) {
-      return 'just now';
+  @override
+  void initState() {
+    super.initState();
+    _fetchPatients();
+  }
+
+  Future<void> _fetchPatients() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      final url =
+          Uri.parse('https://tameit.azurewebsites.net/api/doctor/myPatients');
+      final response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+        List<Patient> fetchedPatients =
+            data.map((json) => Patient.fromJson(json)).toList();
+
+        setState(() {
+          patients = fetchedPatients;
+          filteredPatients = patients;
+          isLoading = false;
+        });
+      } else {
+        // Handle error
+        print('Failed to load patients: ${response.statusCode}');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } else {
+      // Handle case where token is null (not logged in?)
+      print('Token not found');
+      setState(() {
+        isLoading = false;
+      });
     }
-    return DateFormat('hh:mm a').format(timestamp);
+  }
+
+  void _filterPatients(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredPatients = patients;
+      });
+    } else {
+      setState(() {
+        filteredPatients = patients
+            .where((patient) =>
+                '${patient.firstName} ${patient.lastName}'
+                    .toLowerCase()
+                    .contains(query.toLowerCase()) ||
+                patient.email.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
   }
 
   @override
@@ -51,124 +142,93 @@ class _RoomChatState extends State<RoomChat> {
         centerTitle: true,
         iconTheme: const IconThemeData(color: AppColors.deepsea),
       ),
-      body: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Text(
-                  'Message',
-                  style: TextStyle(
-                    color: AppColors.OrangePeel,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Expanded(
-            child: ListView.builder(
-              itemCount: chatRooms.length,
-              itemBuilder: (context, index) {
-                final chatRoom = chatRooms[index];
-                return GestureDetector(
-                  onTap: () {
-                    // Navigate to the Chat screen when a chat room is tapped
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Chat(
-                          patientName: chatRoom['name'],
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 16.0),
-                        child: Row(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredPatients.length,
+                      itemBuilder: (context, index) {
+                        Patient patient = filteredPatients[index];
+                        return Column(
                           children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundImage: AssetImage(
-                                  'assets/images/userimage.jpg'), // Replace with your image asset
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Stack(
                                 children: [
-                                  Text(
-                                    chatRoom['name'],
-                                    style: TextStyle(
-                                      color: AppColors.deepsea,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                      icon: Icon(Icons.chat,
+                                          color: AppColors.deepsea),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Chat(
+                                                patientName: patient.firstName,
+                                                patientId: patient.id),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    chatRoom['message'],
-                                    style: TextStyle(
-                                      color: AppColors.deepsea,
-                                      fontSize: 14,
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 25,
+                                          backgroundImage:
+                                              NetworkImage(patient.imageUrl),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${patient.firstName} ${patient.lastName}',
+                                              style: TextStyle(
+                                                color: AppColors.deepsea,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              patient.email,
+                                              style: TextStyle(
+                                                color: AppColors.deepsea,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(width: 10),
-                            Column(
-                              children: [
-                                Text(
-                                  formatTimestamp(chatRoom['lastMessageTime']),
-                                  style: TextStyle(
-                                    color: AppColors.deepsea,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                if (chatRoom['unreadCount'] > 0)
-                                  Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Text(
-                                      chatRoom['unreadCount'].toString(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )
-                                else
-                                  Icon(
-                                    Icons.check,
-                                    color: AppColors.deepsea,
-                                  ),
-                              ],
-                            ),
+                            Divider(),
                           ],
-                        ),
-                      ),
-                      Divider(), // Add a Divider widget here
-                    ],
-                  ),
-                );
-              },
+                        );
+                      },
+                    ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

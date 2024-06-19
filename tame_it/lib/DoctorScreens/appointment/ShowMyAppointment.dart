@@ -21,6 +21,48 @@ class UserDetails {
   }
 }
 
+class Patient {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String imageUrl;
+  final String email;
+  final String phoneNumber;
+  final String gender;
+  final String city;
+  final String country;
+  final String birthDate;
+
+  Patient({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.imageUrl,
+    required this.email,
+    required this.phoneNumber,
+    required this.gender,
+    required this.city,
+    required this.country,
+    required this.birthDate,
+  });
+
+  factory Patient.fromJson(Map<String, dynamic> json) {
+    int id = json['id']?.toInt() ?? 0;
+    return Patient(
+      id: id,
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      email: json['email'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      gender: json['gender'] ?? '',
+      city: json['city'] ?? '',
+      country: json['country'] ?? '',
+      birthDate: json['birthDate'] ?? '',
+    );
+  }
+}
+
 // Appointment class for storing appointment details
 class Appointment {
   final int id;
@@ -292,25 +334,6 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(25.0),
-            //   child: TextFormField(
-            //     controller: _dateController,
-            //     readOnly: true,
-            //     onTap: _pickDate,
-            //     decoration: InputDecoration(
-            //       labelText: 'Select Date',
-            //       labelStyle: TextStyle(
-            //         color: AppColors.deepsea,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //       focusedBorder: UnderlineInputBorder(
-            //         borderSide: BorderSide(color: AppColors.deepsea),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -531,6 +554,7 @@ class YourSessionPage extends StatelessWidget {
                                       MaterialPageRoute(
                                           builder: (context) => Chat(
                                                 patientName: '',
+                                                patientId: 0,
                                               )),
                                     );
                                   },
