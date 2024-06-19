@@ -21,76 +21,95 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
     var width = size.width;
 
     return GestureDetector(
-        onTap: () {},
-        child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Card(
-                color: Colors.white,
-                child: Row(children: [
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Stack(
+          children: [
+            Card(
+              color: Colors.white,
+              child: Row(
+                children: [
                   Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SizedBox(
-                          width: width * 0.25,
-                          height: height * 0.25,
-                          child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(35),
-                                bottomRight: Radius.circular(35),
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15),
-                              ),
-                              child: Image.asset(
-                                widget.doctor.image,
-                                fit: BoxFit.cover,
-                              )))),
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SizedBox(
+                      width: width * 0.25,
+                      height: height * 0.25,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(35),
+                          bottomRight: Radius.circular(35),
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                        ),
+                        child: Image.asset(
+                          widget.doctor.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                   Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                            widget.doctor.firstName +
-                                " " +
-                                widget.doctor.lastName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: width * 0.04,
-                            )),
-                        Text(widget.doctor.specialty,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: width * 0.035,
-                            )),
-                        Text(widget.doctor.price + ' EGP',
-                            style: TextStyle(
-                              color: AppColors.deepsea,
-                              fontWeight: FontWeight.w500,
-                              fontSize: width * 0.035,
-                            )),
-                        Row(children: [
-                          Icon(
-                            Icons.work_history_outlined,
-                            size: width * 0.04,
-                            color: AppColors.deepsea,
+                          widget.doctor.firstName +
+                              " " +
+                              widget.doctor.lastName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: width * 0.04,
                           ),
-                          SizedBox(width: 5),
-                          Text(widget.doctor.experienceYears,
+                        ),
+                        Text(
+                          widget.doctor.specialty,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: width * 0.035,
+                          ),
+                        ),
+                        Text(
+                          widget.doctor.price + ' EGP',
+                          style: TextStyle(
+                            color: AppColors.deepsea,
+                            fontWeight: FontWeight.w500,
+                            fontSize: width * 0.035,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.work_history_outlined,
+                              size: width * 0.04,
+                              color: AppColors.deepsea,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              widget.doctor.experienceYears,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: width * 0.03,
-                              ))
-                        ]),
-                        Row(children: [
-                          Icon(
-                            FeatherIcons.plusCircle,
-                            size: width * 0.04,
-                            color: AppColors.deepsea,
-                          ),
-                          SizedBox(width: 5),
-                          Text(widget.doctor.interest,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              FeatherIcons.plusCircle,
+                              size: width * 0.04,
+                              color: AppColors.deepsea,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              widget.doctor.interest,
                               style: TextStyle(
                                 fontSize: width * 0.035,
-                              ))
-                        ]),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 4),
                         RatingBar.builder(
                           initialRating: 0,
@@ -110,27 +129,53 @@ class _AppointmentsCardState extends State<AppointmentsCard> {
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                  width: width * 0.3,
-                                  height: height * 0.05,
-                                  child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        backgroundColor: AppColors.deepsea,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pushNamed(
-                                            '/ShowDoctorAppointments');
-                                      },
-                                      child: Text('Show Appointment',
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: width * 0.03,
-                                            fontWeight: FontWeight.w600,
-                                          ))))),
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: width * 0.3,
+                              height: height * 0.05,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: AppColors.deepsea,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/ShowDoctorAppointments');
+                                },
+                                child: Text(
+                                  'Show Appointment',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: width * 0.03,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(height: 10),
-                      ]))
-                ]))));
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: InkWell(
+                onTap: () {
+                },
+                child: Icon(
+                  Icons.close,
+                  color: AppColors.deepsea,
+                  size: width * 0.05,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

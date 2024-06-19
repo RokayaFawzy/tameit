@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'appointments/ListAppointments.dart';
+
 class UserDetails {
   final String userName;
   final String email;
@@ -272,7 +274,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 setState(() {
                   _selectedIndex = 3;
                 });
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ListAllAppointments()),
+                );
               }),
           ListTile(
               leading: Icon(Icons.psychology_outlined,
