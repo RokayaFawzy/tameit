@@ -91,7 +91,7 @@ class TameIt extends StatelessWidget {
         '/Home': (context) => Home(),
         '/More': (context) => MorePage(),
         '/NavBarRoot': (context) => NavBarRoot(),
-        '/ChatDoctorPage': (context) => ChatDoctorPage(),
+        // '/ChatDoctorPage': (context) => ChatDoctorPage(),
         '/Testings': (context) => Testings(),
         '/BlogPage': (context) => BlogPage(),
         '/Dep_Anx_Str': (context) => Dep_Anx_Str(),
@@ -102,7 +102,7 @@ class TameIt extends StatelessWidget {
         '/Adult_ADHD_Self_ReportScale': (context) =>
             Adult_ADHD_Self_Report_Scale(),
         '/PaymentFormPage': (context) => PaymentFormPage(),
-        '/MyAppointments': (context) => MyAppointments(),
+        '/MyAppointments': (context) => MyAppointments( ),
         '/MyDoctor': (context) => MyDoctor(),
         '/AdminHomePage': (context) => AdminHomePage(),
         '/ListUsers': (context) => ListUsers(),

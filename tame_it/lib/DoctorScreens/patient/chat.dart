@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../values/values.dart';
+import '../../values/values.dart'; // Adjust this import based on your project structure
 
 class UserDetails {
   final int id;
@@ -20,8 +20,14 @@ class UserDetails {
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return UserDetails(
-      id: json['id'] ?? 0,
+      id: id,
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',
       imageUrl: json['imageUrl'],
@@ -112,9 +118,8 @@ class _ChatState extends State<Chat> {
           _messages.clear();
           for (var item in data) {
             _messages.add({
-              'sender': item['senderId'] == userDetails.id
-                  ? '${userDetails.userName}'
-                  : '${widget.patientName}',
+              'sender':
+                  item['senderId'] == userDetails.id ? 'doctor' : 'patient',
               'message': item['content'],
               'time': item['timestamp'] != null
                   ? DateFormat('HH:mm')
@@ -133,8 +138,8 @@ class _ChatState extends State<Chat> {
     }
   }
 
-  Future<void> _sendMessage() async {
-    if (_messageController.text.isEmpty) return;
+  Future<void> _sendMessage(String messageContent) async {
+    if (messageContent.isEmpty) return;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -152,7 +157,7 @@ class _ChatState extends State<Chat> {
         body: jsonEncode({
           'senderId': userDetails.id,
           'receiverId': widget.patientId,
-          'content': _messageController.text,
+          'content': messageContent,
         }),
       );
 
@@ -161,9 +166,10 @@ class _ChatState extends State<Chat> {
 
         setState(() {
           _messages.insert(0, {
-            'sender': '${userDetails.userName}',
+            'sender': userDetails.userName,
             'message': responseData['content'],
-            'time': DateFormat('HH:mm').format(DateTime.now()),
+            'time': DateFormat('HH:mm')
+                .format(DateTime.parse(responseData['timestamp'])),
           });
           _messageController.clear();
         });
@@ -204,12 +210,10 @@ class _ChatState extends State<Chat> {
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final message = _messages[index];
-                final isDoctor = message['sender'] == 'doctor';
+                final isDoctor = message['sender'] == 'patient';
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 4.0,
-                  ),
+                      horizontal: 16.0, vertical: 4.0),
                   child: Align(
                     alignment:
                         isDoctor ? Alignment.centerRight : Alignment.centerLeft,
@@ -266,7 +270,9 @@ class _ChatState extends State<Chat> {
                 SizedBox(width: 8),
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
+                  onPressed: () {
+                    _sendMessage(_messageController.text);
+                  },
                 ),
               ],
             ),

@@ -228,19 +228,19 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatDoctorPage()),
-                                );
-                              },
-                              child: Icon(
-                                Icons.message,
-                                color: AppColors.deepsea,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => ChatDoctorPage(doctorId: widget.doctorId)),
+                            //     );
+                            //   },
+                            //   child: Icon(
+                            //     Icons.message,
+                            //     color: AppColors.deepsea,
+                            //   ),
+                            // ),
                             SizedBox(width: 15),
                           ],
                         ),
