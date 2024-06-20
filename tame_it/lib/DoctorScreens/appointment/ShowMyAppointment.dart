@@ -8,13 +8,25 @@ import 'package:tame_it/values/values.dart'; // Import your colors or other valu
 
 // UserDetails class for storing user details
 class UserDetails {
+  final int id;
   final String userName;
   final String? imageUrl;
 
-  UserDetails({required this.userName, this.imageUrl});
+  UserDetails({
+    required this.userName,
+    this.imageUrl,
+    required this.id,
+  });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return UserDetails(
+      id: id,
       userName: json['userName'] ?? '',
       imageUrl: json['imageUrl'],
     );
@@ -547,22 +559,23 @@ class YourSessionPage extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(width: 80),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Chat(
-                                                patientName: '',
-                                                patientId: 0,
-                                              )),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.message,
-                                    color: AppColors.deepsea,
-                                  ),
-                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     // Navigator.push(
+                                //     //   context,
+                                //     //   MaterialPageRoute(
+                                //     //       builder: (context) => Chat(
+                                //     //             patientName: '',
+                                //     //             patientId: 0,
+                                //     //           ),
+                                //     //           ),
+                                //     // );
+                                //   },
+                                //   child: Icon(
+                                //     Icons.message,
+                                //     color: AppColors.deepsea,
+                                //   ),
+                                // ),
                               ],
                             ),
                             SizedBox(height: 5),

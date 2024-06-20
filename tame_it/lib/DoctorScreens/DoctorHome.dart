@@ -9,18 +9,27 @@ import 'appointment/Appointment.dart';
 import 'patient/Patients.dart';
 
 class UserDetails {
+  final int id;
   final String userName;
   final String email;
   final String? imageUrl;
 
   UserDetails({
+    required this.id,
     required this.userName,
     required this.email,
     this.imageUrl,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return UserDetails(
+      id: id,
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',
       imageUrl: json['imageUrl'],
@@ -158,18 +167,6 @@ class _HomeDoctorState extends State<HomeDoctor> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Padding(
-                    padding: EdgeInsets.only(left: 19.0),
-                    child: Text(
-                      'To interact With Patients',
-                      style: TextStyle(
-                        color: AppColors.OrangePeel,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -177,28 +174,12 @@ class _HomeDoctorState extends State<HomeDoctor> {
                         MaterialPageRoute(builder: (context) => Patients()),
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: Image.asset(
-                        'assets/images/doc1.png',
-                        height: 120,
-                        width: 120,
-                      ),
+                    child: _buildServiceCard(
+                      image: 'assets/images/doc1.png',
+                      title: 'To interact With Patients',
                     ),
                   ),
                   SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(left: 19.0),
-                    child: Text(
-                      'To Show My Appointments',
-                      style: TextStyle(
-                        color: AppColors.OrangePeel,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -206,13 +187,9 @@ class _HomeDoctorState extends State<HomeDoctor> {
                         MaterialPageRoute(builder: (context) => Appointment()),
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: Image.asset(
-                        'assets/images/doc2.png',
-                        height: 120,
-                        width: 120,
-                      ),
+                    child: _buildServiceCard(
+                      image: 'assets/images/doc2.png',
+                      title: 'interact With Appointment',
                     ),
                   ),
                 ],
@@ -232,4 +209,60 @@ class _HomeDoctorState extends State<HomeDoctor> {
       ),
     );
   }
+
+  Widget _buildServiceCard({
+    required String image,
+    required String title,
+    bool apparent = false,
+  }) {
+    final screenSize = MediaQuery.of(context).size;
+    final cardHeight = screenSize.height * 0.15;
+    final cardWidth = screenSize.width * 0.9;
+
+    return Center(
+        child: Container(
+            width: cardWidth,
+            height: cardHeight,
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            child: Row(children: [
+              Container(
+                  width: cardWidth * 0.3,
+                  height: cardHeight,
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        )
+                      ]),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                        height:
+                            cardHeight, // Set image height to match card height
+                      ))),
+              SizedBox(width: cardWidth * 0.05),
+              Center(
+                  child: Text(title,
+                      style: TextStyle(
+                        fontSize: screenSize.width * 0.045,
+                        color: AppColors.OrangePeel,
+                        fontWeight: FontWeight.bold,
+                      )))
+            ])));
+  }
+
+
 }

@@ -5,18 +5,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/values/values.dart';
 
 class UserDetails {
+  final int id;
+
   final String userName;
   final String email;
   final String? imageUrl;
 
   UserDetails({
+    required this.id,
     required this.userName,
     required this.email,
     this.imageUrl,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
+    int id;
+    if (json.containsKey('id')) {
+      id = json['id']?.toInt() ?? 0;
+    } else {
+      id = 0; // or any default value you prefer
+    }
     return UserDetails(
+      id: id,
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',
       imageUrl: json['imageUrl'],

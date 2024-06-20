@@ -1,11 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/DoctorScreens/appointment/ShowMyAppointment.dart';
-
+import 'package:tame_it/DoctorScreens/appointment/select_free_time.dart';
 import '../../values/values.dart';
-import 'select_free_time.dart';
 
 class Appointment extends StatelessWidget {
   const Appointment({super.key});
+
+  Widget _buildServiceCard({
+    required BuildContext context,
+    required String image,
+    required String title,
+    bool apparent = false,
+  }) {
+    final screenSize = MediaQuery.of(context).size;
+    final cardHeight = screenSize.height * 0.15;
+    final cardWidth = screenSize.width * 0.9;
+
+    return Center(
+      child: Container(
+        width: cardWidth,
+        height: cardHeight,
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: cardWidth * 0.3,
+              height: cardHeight,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  )
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                  height: cardHeight, // Set image height to match card height
+                ),
+              ),
+            ),
+            SizedBox(width: cardWidth * 0.05),
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: screenSize.width * 0.045,
+                  color: AppColors.OrangePeel,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,27 +94,16 @@ class Appointment extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  'here you can connect with your pationt',
+                  'Here you can connect with your patient',
                   style: TextStyle(
-                      fontSize: 23,
-                      fontFamily: "Domine",
-                      color: AppColors.deepsea,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 15),
-              Padding(
-                padding: EdgeInsets.only(left: 30.0),
-                child: Text(
-                  'select my free time',
-                  style: TextStyle(
-                    fontSize: 19,
-                    color: AppColors.OrangePeel,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 23,
+                    fontFamily: "Domine",
+                    color: AppColors.deepsea,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -59,28 +111,13 @@ class Appointment extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SelectFreeTime()),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Image.asset(
-                    'assets/images/doc5.png',
-                    height: 120,
-                    width: 120,
-                  ),
+                child: _buildServiceCard(
+                  context: context,
+                  image: 'assets/images/doc5.png',
+                  title: 'Select My Free Time',
                 ),
               ),
               SizedBox(height: 30),
-              Padding(
-                padding: EdgeInsets.only(left: 30.0),
-                child: Text(
-                  'show my appointment',
-                  style: TextStyle(
-                    color: AppColors.OrangePeel,
-                    fontSize: 19,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -89,28 +126,13 @@ class Appointment extends StatelessWidget {
                         builder: (context) => ShowMyAppointment()),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: Image.asset(
-                    'assets/images/doc2.png',
-                    height: 120,
-                    width: 120,
-                  ),
+                child: _buildServiceCard(
+                  context: context,
+                  image: 'assets/images/doc2.png',
+                  title: 'Show My Appointment',
                 ),
               ),
               SizedBox(height: 30),
-              Padding(
-                padding: EdgeInsets.only(left: 30.0),
-                child: Text(
-                  'join to online sessions',
-                  style: TextStyle(
-                    color: AppColors.OrangePeel,
-                    fontSize: 19,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
                   // Navigator.push(
@@ -118,13 +140,10 @@ class Appointment extends StatelessWidget {
                   //   MaterialPageRoute(builder: (context) => RoomChat()),
                   // );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: Image.asset(
-                    'assets/images/doc6.png',
-                    height: 120,
-                    width: 120,
-                  ),
+                child: _buildServiceCard(
+                  context: context,
+                  image: 'assets/images/doc6.png',
+                  title: 'Join Online Sessions',
                 ),
               ),
             ],
