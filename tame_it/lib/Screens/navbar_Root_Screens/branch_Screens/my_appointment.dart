@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/branch_Screens/chat_doctor.dart';
 
-// Replace these with actual values from your design or constants file
 import '../../../values/values.dart';
 
 class Doctor {
@@ -124,6 +123,67 @@ class _MyAppointmentsState extends State<MyAppointments> {
     }
   }
 
+  // Future<void> fetchAppointments() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? token = prefs.getString('token');
+  //   if (token == null) {
+  //     // Handle token not found case
+  //     return;
+  //   }
+
+  //   String apiUrl =
+  //       'https://tameit.azurewebsites.net/api/appointment/readPatientAppointments';
+
+  //   try {
+  //     var response = await http.get(Uri.parse(apiUrl), headers: {
+  //       'Authorization': 'Bearer $token',
+  //     });
+
+  //     if (response.statusCode == 200) {
+  //       // Successful API call
+  //       List<dynamic> parsedAppointments = jsonDecode(response.body);
+  //       List<Appointment> fetchedAppointments = parsedAppointments
+  //           .map((json) => Appointment.fromJson(json))
+  //           .toList();
+
+  //       // Categorize appointments into upcoming and past based on date
+  //       DateTime now = DateTime.now();
+  //       upcomingAppointments = fetchedAppointments.where((appointment) {
+  //         DateTime appointmentDate = DateTime(
+  //           appointment.year,
+  //           appointment.monthOfYear,
+  //           appointment.dayOfMonth,
+  //         );
+  //         return appointmentDate.isAfter(now);
+  //       }).toList();
+
+  //       pastAppointments = fetchedAppointments.where((appointment) {
+  //         DateTime appointmentDate = DateTime(
+  //           appointment.year,
+  //           appointment.monthOfYear,
+  //           appointment.dayOfMonth,
+  //         );
+  //         return appointmentDate.isBefore(now);
+  //       }).toList();
+
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       // Handle error case
+  //       print('Failed to load appointments: ${response.statusCode}');
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     // Handle network error
+  //     print('Error fetching appointments: $e');
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
   Future<void> fetchAppointments() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -154,6 +214,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
             appointment.year,
             appointment.monthOfYear,
             appointment.dayOfMonth,
+            appointment.hours,
+            appointment.minutes,
           );
           return appointmentDate.isAfter(now);
         }).toList();
@@ -163,6 +225,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
             appointment.year,
             appointment.monthOfYear,
             appointment.dayOfMonth,
+            appointment.hours,
+            appointment.minutes,
           );
           return appointmentDate.isBefore(now);
         }).toList();
@@ -230,19 +294,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       ),
                       SizedBox(height: 10),
                       ...upcomingAppointments.map((appointment) {
-                        //TODO: Doing red error then disappear
-                        // Doctor doctor = doctors.firstWhere((doc) =>
-                        //     doc.firstName == appointment.doctorFName &&
-                        //     doc.lastName == appointment.doctorLName);
                         return AppointmentCard(
                           appointment: appointment,
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           ChatDoctorPage(doctorId: doctor.id)),
-                            // );
+                            // Navigate to chat page or perform action on tap
                           },
                         );
                       }).toList(),
@@ -268,20 +323,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       ),
                       SizedBox(height: 10),
                       ...pastAppointments.map((appointment) {
-                        //TODO: Doing red error then disappear
-                        // Doctor doctor = doctors.firstWhere((doc) =>
-                        //     doc.firstName == appointment.doctorFName &&
-                        //     doc.lastName == appointment.doctorLName);
-
                         return AppointmentCard(
                           appointment: appointment,
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           ChatDoctorPage(doctorId: doctor.id)),
-                            // );
+                            // Navigate to chat page or perform action on tap
                           },
                         );
                       }).toList(),
@@ -564,19 +609,18 @@ class Appointment {
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
-      doctorFName: json['doctorFName'],
-      doctorLName: json['doctorLName'],
-      clinicName: json['clinicName'],
-      dayOfMonth: json['dayOfMonth'],
-      dayOfWeek: json['dayOfWeek'],
-      monthOfYear: json['monthOfYear'],
-      monthNameYear: json['monthNameYear'],
-      year: json['year'],
-      hours: json['hours'],
-      minutes: json['minutes'],
-      status: json['status'],
-      fees: json['fees'].toDouble(),
+      doctorFName: json['doctorFName'] ?? '',
+      doctorLName: json['doctorLName'] ?? '',
+      clinicName: json['clinicName'] ?? '',
+      dayOfMonth: json['dayOfMonth'] ?? 0,
+      dayOfWeek: json['dayOfWeek'] ?? '',
+      monthOfYear: json['monthOfYear'] ?? 0,
+      monthNameYear: json['monthNameYear'] ?? '',
+      year: json['year'] ?? 0,
+      hours: json['hours'] ?? 0,
+      minutes: json['minutes'] ?? 0,
+      status: json['status'] ?? '',
+      fees: json['fees']?.toDouble() ?? 0.0,
     );
   }
 }
-// Adjust spacing
