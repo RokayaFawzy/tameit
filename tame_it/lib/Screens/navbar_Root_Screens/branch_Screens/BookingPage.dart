@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 
 import '../../../values/values.dart';
-import '../therapistspage.dart';
 
 class Appointment {
   final int id;
@@ -48,31 +48,44 @@ class Appointment {
   });
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
-    int id;
-    if (json.containsKey('id')) {
-      id = json['id']?.toInt() ?? 0;
-    } else {
-      id = 0; // or any default value you prefer
-    }
+    int id = json['id']?.toInt() ?? 0; // Handle nullable id field
+    bool isOnline = json['isOnline'] ?? false;
+    String doctorFName = json['doctorFName'] ?? '';
+    String doctorLName = json['doctorLName'] ?? '';
+    String? patientFName = json['patientFName'];
+    String? patientLName = json['patientLName'];
+    String clinicName = json['clinicName'] ?? '';
+    String clinicAddress = json['clinicAddress'] ?? '';
+    String clinicPhoneNumber = json['clinicPhoneNumber'] ?? '';
+    int dayOfMonth = json['dayOfMonth'] ?? 0;
+    String dayOfWeek = json['dayOfWeek'] ?? '';
+    int monthOfYear = json['monthOfYear'] ?? 0;
+    String monthNameYear = json['monthNameYear'] ?? '';
+    int year = json['year'] ?? 0;
+    int hours = json['hours'] ?? 0;
+    int minutes = json['minutes'] ?? 0;
+    String status = json['status'] ?? '';
+    double fees = json['fees']?.toDouble() ?? 0.0; // Handle nullable fees field
+
     return Appointment(
       id: id,
-      isOnline: json['isOnline'] ?? false,
-      doctorFName: json['doctorFName'],
-      doctorLName: json['doctorLName'],
-      patientFName: json['patientFName'],
-      patientLName: json['patientLName'],
-      clinicName: json['clinicName'],
-      clinicAddress: json['clinicAddress'],
-      clinicPhoneNumber: json['clinicPhoneNumber'],
-      dayOfMonth: json['dayOfMonth'],
-      dayOfWeek: json['dayOfWeek'],
-      monthOfYear: json['monthOfYear'],
-      monthNameYear: json['monthNameYear'],
-      year: json['year'],
-      hours: json['hours'],
-      minutes: json['minutes'],
-      status: json['status'],
-      fees: json['fees'].toDouble(),
+      isOnline: isOnline,
+      doctorFName: doctorFName,
+      doctorLName: doctorLName,
+      patientFName: patientFName,
+      patientLName: patientLName,
+      clinicName: clinicName,
+      clinicAddress: clinicAddress,
+      clinicPhoneNumber: clinicPhoneNumber,
+      dayOfMonth: dayOfMonth,
+      dayOfWeek: dayOfWeek,
+      monthOfYear: monthOfYear,
+      monthNameYear: monthNameYear,
+      year: year,
+      hours: hours,
+      minutes: minutes,
+      status: status,
+      fees: fees,
     );
   }
 }
@@ -316,7 +329,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Therapists()),
+                      MaterialPageRoute(builder: (context) => Home()),
                     );
                   },
                   child: Text('Ok'),
