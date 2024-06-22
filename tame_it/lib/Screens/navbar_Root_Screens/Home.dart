@@ -114,52 +114,52 @@ class __HomeStateState extends State<Home> {
     var width = size.width;
 
     return Scaffold(
+      backgroundColor: AppColors.whiteShade3,
+      appBar: AppBar(
         backgroundColor: AppColors.whiteShade3,
-        appBar: AppBar(
-          backgroundColor: AppColors.whiteShade3,
-          shape: const Border(
-            bottom: BorderSide(
-              color: AppColors.whiteShade4,
-              width: 1,
-            ),
+        shape: const Border(
+          bottom: BorderSide(
+            color: AppColors.whiteShade4,
+            width: 1,
           ),
-          title: const Text(
-            'Home Page',
-            style: TextStyle(
-              color: AppColors.deepsea,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        title: const Text(
+          'Home Page',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/Profile');
-                    },
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/Profile');
+                  },
+                  child: CircleAvatar(
+                    radius: 17,
+                    backgroundColor: Colors.black38,
                     child: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Colors.black38,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundImage: imageProvider,
-                      ),
+                      radius: 16,
+                      backgroundImage: imageProvider,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
@@ -215,7 +215,7 @@ class __HomeStateState extends State<Home> {
                 },
                 child: _buildServiceCard(
                   image: 'assets/images/p2.jpg',
-                  title: 'Group Therapy',
+                  title: 'Community',
                 ),
               ),
               const SizedBox(height: 5),
@@ -247,8 +247,12 @@ class __HomeStateState extends State<Home> {
                   apparent: true,
                 ),
               ),
-              const SizedBox(height: 200),
-            ]))));
+              const SizedBox(height: 55),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildServiceCard({
