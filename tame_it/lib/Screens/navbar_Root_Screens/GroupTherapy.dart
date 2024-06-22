@@ -219,39 +219,61 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
 
   void _showAddPostDialog() {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add Post'),
-          content: TextField(
-            controller: _postController,
-            maxLines: 3,
-            decoration: InputDecoration(
-              hintText: 'Write your post here...',
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                try {
-                  await addPost(_postController.text);
-                  _postController.clear();
-                } catch (e) {
-                  print('Error adding post: $e');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Failed to add post.'),
-                    ),
-                  );
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Add Post',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        TextField(
+                          controller: _postController,
+                          maxLines: 6,
+                          decoration: InputDecoration(
+                            hintText: 'Write your post here...',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                                try {
+                                  // Add your addPost function logic here
+                                  print('Post: ${_postController.text}');
+                                  _postController.clear();
+                                } catch (e) {
+                                  print('Error adding post: $e');
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text('Failed to add post.'),
+                                  ));
+                                }
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      AppColors.deepsea)),
+                              child: Text('Submit',
+                                  style: TextStyle(color: AppColors.white)),
+                            ))
+                      ])));
+        });
   }
 
   void _showAddCommentDialog(int postIndex) {
@@ -286,10 +308,10 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
                 }
               },
               child: Text('Submit'),
-            ),
-          ],
+            )
+          ]
         );
-      },
+      }
     );
   }
 
@@ -306,7 +328,7 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
           ),
         ),
         title: const Text(
-          'Group Therapists',
+          'Our Community',
           style: TextStyle(
             color: AppColors.deepsea,
             fontSize: 20,
