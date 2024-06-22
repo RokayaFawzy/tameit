@@ -4,8 +4,6 @@ class AppColors {
   static const Color primaryColor = Color.fromARGB(255, 255, 255, 255);
   static const Color secondaryColor = Color.fromARGB(255, 246, 247, 255);
 
-  static const Color primaryText = Color(0xFF000000);
-
   //Black
   static const Color black = Color(0xFF000000);
   static const Color blackShade1 = Color(0xFF3B3870);
@@ -18,7 +16,15 @@ class AppColors {
   static const Color blackShade8 = Color(0xFF040404);
   static const Color blackShade9 = Color(0xFF767676);
   static const Color blackShade10 = Color(0xFF606060);
-
+  static const Color black1 = Color.fromRGBO(5, 10, 14, 1);
+  static const Color black2 = Color.fromRGBO(43, 48, 52, 1);
+  static const Color black400 = Color.fromRGBO(154, 159, 165, 1);
+  static const Color black500 = Color.fromRGBO(111, 118, 126, 1);
+  static const Color black600 = Color.fromRGBO(64, 75, 83, 1);
+  static const Color black750 = Color.fromRGBO(32, 36, 39, 1);
+  static const Color black700 = Color.fromRGBO(43, 48, 52, 1);
+  static const Color black800 = Color.fromRGBO(26, 28, 34, 1);
+  static const Color black900 = Color.fromRGBO(5, 10, 14, 1);
   static const Color darkModeColor = Color(0xFF323337);
 
   //White
@@ -53,10 +59,13 @@ class AppColors {
   static const Color greyShade6 = Color(0xFFADB1C0);
   static const Color greyShade7 = Color(0xFFB2B2B2);
   static const Color greyShade8 = Color(0xFFA3A3A3);
+  static const Color grey1 = Color.fromRGBO(29, 41, 57, 1);
+  static const Color textGray = Color.fromRGBO(154, 159, 156, 1);
 
   //green
   static const Color green = Color(0xFF18D3BF);
   static const Color greenShade1 = Color(0xFF23E9A6);
+  static const Color green1 = Color.fromRGBO(59, 165, 93, 1);
 
   //lime green
   static const Color lightGreenShade1 = Color(0xFF69C7C6);
@@ -73,6 +82,8 @@ class AppColors {
   static const Color pinkShade1 = Color(0xFFDC669F);
   static const Color pinkShade2 = Color(0xFFFF9796);
   static const Color pinkShade3 = Color(0xFFFF6673);
+
+  static const Color purple = Color.fromRGBO(85, 104, 254, 1);
 
   //Blue
   static const Color twitterBlue = Color(0xFF1867C7);
@@ -93,7 +104,7 @@ class AppColors {
 
   static const Color deepBrown = Color(0xFF666D73);
 
-// App Pallette
+// App Pallette   
   static const Color deepsea = Color(0xFF0E7D70);
   static const Color deepsea1 = Color.fromARGB(255, 19, 103, 93);
 
@@ -104,4 +115,5 @@ class AppColors {
   static const Color Rust = Color(0xFFBB3E03);
   static const Color FireBrick = Color(0xFFAE2012);
   static const Color BrightRed = Color(0xFF9B2226);
+  
 }

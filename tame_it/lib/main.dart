@@ -28,6 +28,7 @@ import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 import 'AdminScreens/doctor/ListDoctors.dart';
 import 'AdminScreens/doctor/add_Doctor_Admain.dart';
+import 'DoctorScreens/appointment/join_onlinesession.dart';
 import 'Screens/Testings/Anxietyscale.dart';
 import 'Screens/Testings/dep,anx,str.dart';
 import 'Screens/navbar_Root_Screens/branch_Screens/my_appointment.dart';
@@ -69,6 +70,7 @@ class TameIt extends StatelessWidget {
           :
           // SplashScreen(),
           Login(),
+
       routes: {
         '/Login': (context) => Login(),
         '/SignUp': (context) => SignUp(),
@@ -109,6 +111,9 @@ class TameIt extends StatelessWidget {
         '/ListDoctors': (context) => ListDoctors(),
         '/AddDoctorAdmin': (context) => AddDoctorAdmin(),
         '/ListAllAppointments': (context) => ListAllAppointments(),
+        '/JoinOnlineSession':(context)=>JoinOnlineSession(),
+
+
       },
       theme: ThemeData.from(
         colorScheme: ThemeData.light().colorScheme.copyWith(
