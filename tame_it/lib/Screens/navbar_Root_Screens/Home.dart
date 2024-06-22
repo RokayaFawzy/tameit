@@ -229,11 +229,11 @@ class __HomeStateState extends State<Home> {
               const SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/OnlineTherapists');
+                  Navigator.of(context).pushNamed('/OnlineSession');
                 },
                 child: _buildServiceCard(
                   image: 'assets/images/p4.jpg',
-                  title: 'Online Sessions',
+                  title: 'Join Online Session',
                 ),
               ),
               const SizedBox(height: 5),
