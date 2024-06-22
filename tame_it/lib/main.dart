@@ -86,7 +86,7 @@ class TameIt extends StatelessWidget {
             ),
         '/Profile': (context) => Profile(),
         '/Therapists': (context) => Therapists(),
-        '/OnlineTherapists': (context) => OnlineTherapists(),
+        '/OnlineSession': (context) => OnlineSession(),
         '/FiltersScreen': (context) => FiltersScreen(),
         '/EditInformation': (context) => EditInformation(),
         '/PersonalInformation': (context) => PersonalInformation(),

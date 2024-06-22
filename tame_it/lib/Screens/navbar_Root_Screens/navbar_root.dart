@@ -16,7 +16,7 @@ class _NavBarRootState extends State<NavBarRoot> {
   int _selectedIndex = 0;
   final _screens = [
     Home(),
-    OnlineTherapists(),
+    OnlineSession(),
     Therapists(),
     Container(),
     MorePage(),
@@ -91,7 +91,7 @@ class _NavBarRootState extends State<NavBarRoot> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.people_alt), label: "HOME"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.video_call), label: "ONLINE"),
+                icon: Icon(Icons.groups), label: "Community"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person), label: "Therapists"),
             BottomNavigationBarItem(

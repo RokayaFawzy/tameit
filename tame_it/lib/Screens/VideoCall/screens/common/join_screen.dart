@@ -218,35 +218,35 @@ class _JoinScreenState extends State<JoinScreen> {
                                 child: Column(children: [
                                   if (isJoinMeetingSelected == null &&
                                       isCreateMeetingSelected == null)
-                                    MaterialButton(
-                                        minWidth: ResponsiveValue<double>(
-                                            context,
-                                            conditionalValues: [
-                                              Condition.equals(
-                                                  name: MOBILE,
-                                                  value: maxWidth / 1.3),
-                                              Condition.equals(
-                                                  name: TABLET,
-                                                  value: maxWidth / 1.3),
-                                              Condition.equals(
-                                                  name: DESKTOP, value: 600),
-                                            ]).value!,
-                                        height: 50,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                        color: AppColors.deepsea,
-                                        child: const Text("Create Meeting",
-                                            style: TextStyle(fontSize: 16)),
-                                        onPressed: () => {
-                                              setState(() => {
-                                                    isCreateMeetingSelected =
-                                                        true,
-                                                    isJoinMeetingSelected = true
-                                                  })
-                                            }),
+                                    // MaterialButton(
+                                    //     minWidth: ResponsiveValue<double>(
+                                    //         context,
+                                    //         conditionalValues: [
+                                    //           Condition.equals(
+                                    //               name: MOBILE,
+                                    //               value: maxWidth / 1.3),
+                                    //           Condition.equals(
+                                    //               name: TABLET,
+                                    //               value: maxWidth / 1.3),
+                                    //           Condition.equals(
+                                    //               name: DESKTOP, value: 600),
+                                    //         ]).value!,
+                                    //     height: 50,
+                                    //     shape: RoundedRectangleBorder(
+                                    //         borderRadius:
+                                    //             BorderRadius.circular(12)),
+                                    //     padding: const EdgeInsets.symmetric(
+                                    //         vertical: 16),
+                                    //     color: AppColors.purple,
+                                    //     child: const Text("Create Meeting",
+                                    //         style: TextStyle(fontSize: 16)),
+                                    //     onPressed: () => {
+                                    //           setState(() => {
+                                    //                 isCreateMeetingSelected =
+                                    //                     true,
+                                    //                 isJoinMeetingSelected = true
+                                    //               })
+                                    //         }),
                                   const VerticalSpacer(16),
                                   if (isJoinMeetingSelected == null &&
                                       isCreateMeetingSelected == null)
@@ -269,7 +269,7 @@ class _JoinScreenState extends State<JoinScreen> {
                                                 BorderRadius.circular(12)),
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16),
-                                        color: AppColors.black750,
+                                        color: AppColors.deepsea,
                                         child: const Text("Join Meeting",
                                             style: TextStyle(fontSize: 16)),
                                         onPressed: () => {
