@@ -6,7 +6,6 @@ import 'package:tame_it/values/values.dart';
 
 class UserDetails {
   final int id;
-
   final String userName;
   final String email;
   final String? imageUrl;
@@ -78,7 +77,6 @@ class Post {
     );
   }
 }
-// Existing imports...
 
 class GroupTherapyPage extends StatefulWidget {
   @override
@@ -103,6 +101,7 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
     String? token = prefs.getString('token');
 
     if (token == null) {
+      print('Error: Token not found');
       throw Exception('Token not found');
     }
 
@@ -118,9 +117,11 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
         final responseData = jsonDecode(response.body);
         return UserDetails.fromJson(responseData);
       } else {
+        print('Error: Failed to load user details.');
         throw Exception('Failed to load user details.');
       }
     } catch (e) {
+      print('Error fetching user details: $e');
       throw Exception('Error fetching user details: $e');
     }
   }
@@ -130,6 +131,7 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
     String? token = prefs.getString('token');
 
     if (token == null) {
+      print('Error: Token not found');
       throw Exception('Token not found');
     }
 
@@ -151,47 +153,51 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
           }
         });
       } else {
+        print('Error: Failed to load posts.');
         throw Exception('Failed to load posts.');
       }
     } catch (e) {
+      print('Error fetching posts: $e');
       throw Exception('Error fetching posts: $e');
     }
   }
+Future<void> addPost(String postText) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
 
-  Future<void> addPost(String postText) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    if (token == null) {
-      throw Exception('Token not found');
-    }
-
-    try {
-      final response = await http.post(
-        Uri.parse('https://tameit.azurewebsites.net/api/posts/sendPost'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({'text': postText}),
-      );
-
-      if (response.statusCode == 200) {
-        // Refresh posts after adding
-        await fetchPosts();
-      } else {
-        throw Exception('Failed to add post.');
-      }
-    } catch (e) {
-      throw Exception('Error adding post: $e');
-    }
+  if (token == null) {
+    print('Error: Token not found');
+    throw Exception('Token not found');
   }
 
+  try {
+    final response = await http.post(
+      Uri.parse('https://tameit.azurewebsites.net/api/posts/sendPost'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json', // Change content type to JSON
+      },
+      body: jsonEncode({'text': postText}), // Send as JSON with 'text' property
+    );
+
+    if (response.statusCode == 200) {
+      // Refresh posts after adding
+      await fetchPosts();
+    } else {
+      print('Error: Failed to add post.');
+      throw Exception('Failed to add post.');
+    }
+  } catch (e) {
+    print('Error adding post: $e');
+    throw Exception('Error adding post: $e');
+  }
+}
   Future<void> addComment(int postId, String commentText) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     if (token == null) {
+      print('Error: Token not found');
       throw Exception('Token not found');
     }
 
@@ -210,70 +216,80 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
         // Refresh posts after adding comment
         await fetchPosts();
       } else {
+        print('Error: Failed to add comment.');
         throw Exception('Failed to add comment.');
       }
     } catch (e) {
+      print('Error adding comment: $e');
       throw Exception('Error adding comment: $e');
     }
   }
 
   void _showAddPostDialog() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Add Post',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: _postController,
-                          maxLines: 6,
-                          decoration: InputDecoration(
-                            hintText: 'Write your post here...',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                Navigator.of(context).pop();
-                                try {
-                                  // Add your addPost function logic here
-                                  print('Post: ${_postController.text}');
-                                  _postController.clear();
-                                } catch (e) {
-                                  print('Error adding post: $e');
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text('Failed to add post.'),
-                                  ));
-                                }
-                              },
-                              style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                      AppColors.deepsea)),
-                              child: Text('Submit',
-                                  style: TextStyle(color: AppColors.white)),
-                            ))
-                      ])));
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.5,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Add Post',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: _postController,
+                  maxLines: 6,
+                  decoration: InputDecoration(
+                    hintText: 'Write your post here...',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      try {
+                        await addPost(_postController.text);
+                        _postController.clear();
+                      } catch (e) {
+                        print('Error adding post: $e');
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Failed to add post.'),
+                          ));
+                        }
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(AppColors.deepsea),
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _showAddCommentDialog(int postIndex) {
@@ -300,18 +316,20 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
                       _posts[postIndex].id, commentController.text);
                 } catch (e) {
                   print('Error adding comment: $e');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Failed to add comment.'),
-                    ),
-                  );
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Failed to add comment.'),
+                      ),
+                    );
+                  }
                 }
               },
               child: Text('Submit'),
-            )
-          ]
+            ),
+          ],
         );
-      }
+      },
     );
   }
 
@@ -433,7 +451,7 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
                         SizedBox(height: 5.0),
                         Text(
                           post.text,
-                          maxLines: 10,
+                          maxLines: 50,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 10.0),
@@ -485,7 +503,7 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
                                       Expanded(
                                         child: Text(
                                           comment.text,
-                                          maxLines: 10,
+                                          maxLines: 50,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
