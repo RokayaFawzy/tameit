@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:tame_it/Screens/forgot_Password/SuccessPage.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 import 'package:http/http.dart' as http;
@@ -61,6 +62,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
+         Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Successpage()),
+        );
         // Password changed successfully
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Password changed successfully'),

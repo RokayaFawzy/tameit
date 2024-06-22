@@ -280,26 +280,26 @@ class _MorePageState extends State<MorePage> {
                       Icons.arrow_forward_ios_outlined,
                       size: 15,
                     ))),
-            SizedBox(height: 10),
-            Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.white,
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey, width: 0.1)),
-                ),
-                child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/');
-                    },
-                    leading: const Icon(
-                      Icons.account_balance_wallet,
-                      color: Colors.grey,
-                    ),
-                    title: const Text('My Wallet'),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 15,
-                    ))),
+            // SizedBox(height: 10),
+            // Container(
+            //     decoration: const BoxDecoration(
+            //       // color: Colors.white,
+            //       border: Border(
+            //           bottom: BorderSide(color: Colors.grey, width: 0.1)),
+            //     ),
+            //     child: ListTile(
+            //         onTap: () {
+            //           Navigator.of(context).pushNamed('/');
+            //         },
+            //         leading: const Icon(
+            //           Icons.account_balance_wallet,
+            //           color: Colors.grey,
+            //         ),
+            //         title: const Text('My Wallet'),
+            //         trailing: const Icon(
+            //           Icons.arrow_forward_ios_outlined,
+            //           size: 15,
+            //         ))),
             SizedBox(height: 10),
             Container(
                 decoration: const BoxDecoration(

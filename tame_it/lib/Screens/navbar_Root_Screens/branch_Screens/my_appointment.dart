@@ -558,20 +558,6 @@ class DrCardUpcoming extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.close,
-                  size: 18,
-                  color: AppColors.deepsea,
-                ),
-              ),
-              const SizedBox(height: 20), // Adjust spacing
-            ],
-          ),
         ],
       ),
     );
