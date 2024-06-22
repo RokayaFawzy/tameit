@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/GroupTherapy.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
-import 'package:tame_it/Screens/navbar_Root_Screens/onlinepage.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
 
@@ -16,7 +16,7 @@ class _NavBarRootState extends State<NavBarRoot> {
   int _selectedIndex = 0;
   final _screens = [
     Home(),
-    OnlineSession(),
+    GroupTherapyPage(),
     Therapists(),
     Container(),
     MorePage(),
