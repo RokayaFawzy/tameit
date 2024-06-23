@@ -253,7 +253,7 @@ class __HomeStateState extends State<Home> {
                   apparent: true,
                 ),
               ),
-              const SizedBox(height: 55),
+              const SizedBox(height: 30),
             ],
           ),
         ),
