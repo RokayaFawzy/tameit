@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/GroupTherapy.dart';
 import 'package:tame_it/values/values.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/chatpot/chatpot.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -220,7 +221,12 @@ class __HomeStateState extends State<Home> {
               ),
               const SizedBox(height: 5),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChatPotPage()),
+                  );
+                },
                 child: _buildServiceCard(
                   image: 'assets/images/p3.jpg',
                   title: 'ChatBot',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/GroupTherapy.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/Home.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/chatpot/chatpot.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/more.dart';
 import 'package:tame_it/Screens/navbar_Root_Screens/therapistspage.dart';
 import 'package:tame_it/values/values.dart';
@@ -18,7 +19,7 @@ class _NavBarRootState extends State<NavBarRoot> {
     Home(),
     GroupTherapyPage(),
     Therapists(),
-    Container(),
+    ChatPotPage(),
     MorePage(),
   ];
 
