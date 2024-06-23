@@ -302,19 +302,19 @@ class Result extends StatelessWidget {
     String resultText;
     if (resultScore <= 4) {
       resultText =
-          'Your results indicate that you have none, or very few signs of depression. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
+          'Your results indicate that you have none, or very few signs of depression, Anxiety and stress. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
     } else if (resultScore <= 9) {
       resultText =
-          'Your results indicate that you may be experiencing mild depression. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
+          'Your results indicate that you may be experiencing mild depression, Anxiety and stress. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
     } else if (resultScore <= 14) {
       resultText =
-          'Your results indicate that you are experiencing moderate depression. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
+          'Your results indicate that you are experiencing moderate depression, Anxiety and stress. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
     } else if (resultScore <= 19) {
       resultText =
-          'Your results indicate that you may be experiencing severe depression. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
+          'Your results indicate that you may be experiencing severe depression, Anxiety and stress. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
     } else {
       resultText =
-          'Your results indicate that you may be at risk for major depression. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
+          'Your results indicate that you may be at risk for major depression, Anxiety and stress. \n\n\nThese results are not meant to be a diagnosis. You can meet with a doctor or therapist to get a diagnosis and/or access therapy or medications. Sharing these results with someone you trust can be a great place to start.';
     }
     return resultText;
   }

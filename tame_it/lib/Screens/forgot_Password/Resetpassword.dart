@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:tame_it/Screens/Login.dart';
+import 'package:tame_it/Screens/forgot_Password/SuccessPage.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_button.dart';
 
@@ -64,7 +65,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         print('Password reset successful.');
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Login()),
+          MaterialPageRoute(builder: (context) => Successpage()),
         );
       } else if (response.statusCode == 417) {
         // Password reset failed due to a conflict

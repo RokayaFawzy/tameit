@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tame_it/DoctorScreens/patient/chat.dart'; // Import your chat screen if needed
-import 'package:tame_it/values/values.dart'; // Import your colors or other values
+import 'package:tame_it/values/values.dart';
+
+import 'join_onlinesession.dart'; // Import your colors or other values
 
 // UserDetails class for storing user details
 class UserDetails {
@@ -325,27 +327,21 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
           shrinkWrap: true,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      'Hi Dr. ' + userDetails.userName + '!',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 23,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text('Hi Dr. ' + userDetails.userName + '!',
+                          style: TextStyle(
+                            color: AppColors.deepsea,
+                            fontSize: 23,
+                            fontWeight: FontWeight.w500,
+                          ))),
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: imageProvider,
-                  ),
-                ],
-              ),
-            ),
+                  )
+                ])),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -382,108 +378,100 @@ class _ShowMyAppointmentState extends State<ShowMyAppointment> {
   // Function to build appointment list UI
   Widget buildAppointmentList(List<Appointment> appointments) {
     return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: appointments.length,
-      itemBuilder: (context, index) {
-        final appointment = appointments[index];
-        return GestureDetector(
-          onTap: () {
-            _navigateToSession(appointment);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: appointments.length,
+        itemBuilder: (context, index) {
+          final appointment = appointments[index];
+          return GestureDetector(
+              onTap: () {
+                _navigateToSession(appointment);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Patient: ${appointment.patientFName} ${appointment.patientLName}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                      elevation: 5.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Date: ${appointment.dayOfMonth}-${appointment.monthOfYear}-${appointment.year}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Time: ${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Clinic: ${appointment.clinicName}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Address: ${appointment.clinicAddress}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Phone: ${appointment.clinicPhoneNumber}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'is online ?: ${appointment.isOnline}',
-                      style: TextStyle(
-                        color: AppColors.deepsea,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Status: ${appointment.status}',
-                      style: TextStyle(
-                        color: appointment.status == 'Active'
-                            ? Colors.green
-                            : Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+                      child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Patient: ${appointment.patientFName} ${appointment.patientLName}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Date: ${appointment.dayOfMonth}-${appointment.monthOfYear}-${appointment.year}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Time: ${appointment.hours}:${appointment.minutes.toString().padLeft(2, '0')}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Clinic: ${appointment.clinicName}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Address: ${appointment.clinicAddress}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Phone: ${appointment.clinicPhoneNumber}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'is online ?: ${appointment.isOnline}',
+                                  style: TextStyle(
+                                    color: AppColors.deepsea,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text('Status: ${appointment.status}',
+                                    style: TextStyle(
+                                      color: appointment.status == 'Active'
+                                          ? Colors.green
+                                          : Colors.red,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ))
+                              ])))));
+        });
   }
 }
 
@@ -512,271 +500,253 @@ class YourSessionPage extends StatelessWidget {
     String sessionType = isOnline ? 'online' : 'offline';
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
-          'Your Session',
-          style: TextStyle(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            'Your Session',
+            style: TextStyle(
+              color: AppColors.deepsea,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: IconThemeData(
             color: AppColors.deepsea,
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
           ),
         ),
-        centerTitle: true,
-        iconTheme: IconThemeData(
-          color: AppColors.deepsea,
-        ),
-      ),
-      body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Padding(
+        body: SafeArea(
+            child: ListView(shrinkWrap: true, children: [
+          Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage(
-                            'assets/images/userimage.jpg'), // Replace with your image asset
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  patientName,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.deepsea,
-                                  ),
-                                ),
-                                SizedBox(width: 80),
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     // Navigator.push(
-                                //     //   context,
-                                //     //   MaterialPageRoute(
-                                //     //       builder: (context) => Chat(
-                                //     //             patientName: '',
-                                //     //             patientId: 0,
-                                //     //           ),
-                                //     //           ),
-                                //     // );
-                                //   },
-                                //   child: Icon(
-                                //     Icons.message,
-                                //     color: AppColors.deepsea,
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Divider(
-                    color: AppColors.deepsea,
-                    thickness: 0.1,
-                    height: 8,
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          'Your Session Is At $sessionTime',
-                          style: const TextStyle(
-                            color: AppColors.OrangePeel,
-                            fontFamily: "Domine",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Type Of Session',
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.deepsea,
-                              fontFamily: "Domine",
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+              child: Column(children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage(
+                          'assets/images/userimage.jpg'), // Replace with your image asset
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Radio<String>(
-                            value: 'online',
-                            groupValue: sessionType,
-                            onChanged: (value) {},
-                          ),
-                          const Text(
-                            'Online',
-                            style: TextStyle(
-                                fontSize: 18, color: AppColors.OrangePeel),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            value: 'offline',
-                            groupValue: sessionType,
-                            onChanged: (value) {},
-                          ),
-                          const Text(
-                            'Offline',
-                            style: TextStyle(
-                                fontSize: 18, color: AppColors.OrangePeel),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  if (isOnline == false)
-                    Column(
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Clinic Information',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.deepsea,
-                                        fontFamily: "Domine",
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                              Text(
+                                patientName,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.deepsea,
+                                ),
                               ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Clinic Name:',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.deepsea,
-                                    ),
-                                  ),
-                                  Text(
-                                    '$clinicName',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.OrangePeel,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Clinic Address:',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.deepsea,
-                                    ),
-                                  ),
-                                  Text(
-                                    '$clinicAddress',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.OrangePeel,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Clinic Phone Number:',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.deepsea,
-                                    ),
-                                  ),
-                                  Text(
-                                    ' $clinicPhoneNumber',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.OrangePeel,
-                                    ),
-                                  ),
-                                ],
+                              SizedBox(width: 80),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            JoinOnlineSession()),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.message,
+                                  color: AppColors.deepsea,
+                                ),
                               ),
                             ],
                           ),
+                          SizedBox(height: 5),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: AppColors.deepsea,
+                  thickness: 0.1,
+                  height: 8,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        'Your Session Is At $sessionTime',
+                        style: const TextStyle(
+                          color: AppColors.OrangePeel,
+                          fontFamily: "Domine",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
-                        SizedBox(height: 20),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Type Of Session',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.deepsea,
+                            fontFamily: "Domine",
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'online',
+                          groupValue: sessionType,
+                          onChanged: (value) {},
+                        ),
+                        const Text(
+                          'Online',
+                          style: TextStyle(
+                              fontSize: 18, color: AppColors.OrangePeel),
+                        ),
                       ],
                     ),
-                  Padding(
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'offline',
+                          groupValue: sessionType,
+                          onChanged: (value) {},
+                        ),
+                        const Text(
+                          'Offline',
+                          style: TextStyle(
+                              fontSize: 18, color: AppColors.OrangePeel),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                if (isOnline == false)
+                  Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Clinic Information',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.deepsea,
+                                          fontFamily: "Domine",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Clinic Name:',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.deepsea,
+                                      ),
+                                    ),
+                                    Text(
+                                      '$clinicName',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.OrangePeel,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Clinic Address:',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.deepsea,
+                                      ),
+                                    ),
+                                    Text(
+                                      '$clinicAddress',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.OrangePeel,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Clinic Phone Number:',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.deepsea,
+                                        ),
+                                      ),
+                                      Text(' $clinicPhoneNumber',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: AppColors.OrangePeel,
+                                          ))
+                                    ])
+                              ])),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Price',
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.deepsea,
-                              fontFamily: "Domine",
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '$fees',
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.deepsea,
-                              fontFamily: "Domine",
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Price',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.deepsea,
+                                fontFamily: "Domine",
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '$fees',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.deepsea,
+                                fontFamily: "Domine",
+                                fontWeight: FontWeight.bold),
+                          )
+                        ]))
+              ]))
+        ])));
   }
 }
