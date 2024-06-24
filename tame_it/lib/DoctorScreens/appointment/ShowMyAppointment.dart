@@ -546,12 +546,15 @@ class YourSessionPage extends StatelessWidget {
                               SizedBox(width: 80),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            JoinOnlineSession()),
-                                  );
+                                   Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Chat(
+                                                patientName: '',
+                                                patientId: 0,
+                                              ),
+                                              ),
+                                    );
                                 },
                                 child: Icon(
                                   Icons.message,
