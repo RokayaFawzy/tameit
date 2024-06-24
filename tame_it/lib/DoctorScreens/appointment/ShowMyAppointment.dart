@@ -543,24 +543,25 @@ class YourSessionPage extends StatelessWidget {
                                   color: AppColors.deepsea,
                                 ),
                               ),
-                              SizedBox(width: 80),
-                              GestureDetector(
-                                onTap: () {
-                                   Navigator.push(
+                              SizedBox(width: 100),
+                              if (isOnline == true)
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Chat(
-                                                patientName: '',
-                                                patientId: 0,
-                                              ),
-                                              ),
+                                        builder: (context) => Chat(
+                                          patientName: patientName,
+                                          patientId: 0,
+                                        ),
+                                      ),
                                     );
-                                },
-                                child: Icon(
-                                  Icons.message,
-                                  color: AppColors.deepsea,
+                                  },
+                                  child: Icon(
+                                    Icons.ondemand_video_outlined,
+                                    color: AppColors.deepsea,
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                           SizedBox(height: 5),
