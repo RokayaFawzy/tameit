@@ -118,7 +118,7 @@ class ApiService {
 
   static Future<Map<String, dynamic>> sendMessage(
       String userId, String text) async {
-    final url = Uri.parse('$baseUrl/bots/chatbot_try1/converse/userId/secured');
+    final url = Uri.parse('$baseUrl/bots/mh4/converse/userId/secured');
     final response = await http.post(
       url,
       headers: {
@@ -130,7 +130,6 @@ class ApiService {
         'text': text,
       }),
     );
-
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

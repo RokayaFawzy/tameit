@@ -38,7 +38,6 @@ class _ChatPotPageState extends State<ChatPotPage> {
 
     try {
       final response = await ApiService.sendMessage(_userId, text);
-
       print(response['responses']);
 
       List<Map<String, dynamic>> list = [];
@@ -63,9 +62,9 @@ class _ChatPotPageState extends State<ChatPotPage> {
       print('_messages');
       print(_messages);
     } catch (error) {
+      // Handle error
       print('error');
       print(error);
-      // Handle error
     }
   }
 
@@ -78,7 +77,23 @@ class _ChatPotPageState extends State<ChatPotPage> {
               : Alignment.centerLeft,
           child: Container(
             padding: EdgeInsets.all(8.0),
-            color: message['type'] == 'sent' ? Colors.blue : Colors.grey,
+            decoration: BoxDecoration(
+              color:
+                  message['type'] == 'sent' ? AppColors.deepsea : Colors.grey,
+              borderRadius: message['type'] == 'sent'
+                  ? BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                      bottomLeft: Radius.circular(32),
+                      bottomRight: Radius.circular(0),
+                    )
+                  : BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                      bottomLeft: Radius.circular(0),
+                      bottomRight: Radius.circular(32),
+                    ),
+            ),
             child: Text(message['text'], style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -86,22 +101,52 @@ class _ChatPotPageState extends State<ChatPotPage> {
     } else if (message['type'] == 'single-choice') {
       return ListTile(
         title: Text(message['text']),
-        subtitle: DropdownButton<String>(
-          hint: Text(message['dropdownPlaceholder']),
-          items: (message['choices'] as List)
-              .map<DropdownMenuItem<String>>((choice) {
-            return DropdownMenuItem<String>(
-              value: choice['title'],
-              child: Text(choice['title']),
-            );
-          }).toList(),
-          onChanged: (value) {
-            // Handle the selection
-            setState(() {
-              _messages.add({'type': 'sent', 'text': value});
-              _sendMessage(mes: value);
-            });
-          },
+        subtitle: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.grey),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              hint: Text(message['dropdownPlaceholder']),
+              icon: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32),
+                  color: Colors.grey.shade300,
+                ),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  color: AppColors.deepsea,
+                ),
+              ),
+              items: (message['choices'] as List)
+                  .map<DropdownMenuItem<String>>((choice) {
+                return DropdownMenuItem<String>(
+                  value: choice['title'],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: Colors.grey.shade200,
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Text(choice['title']),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                // Handle the selection
+                setState(() {
+                  _messages.add({'type': 'sent', 'text': value});
+                  _sendMessage(mes: value);
+                });
+              },
+              isExpanded: true,
+              dropdownColor: Colors.white,
+              borderRadius: BorderRadius.circular(32),
+            ),
+          ),
         ),
       );
     } else {
@@ -114,28 +159,28 @@ class _ChatPotPageState extends State<ChatPotPage> {
     print(
         '_---------------------------------messages---------------------------------');
     print(_messages);
-
     return Scaffold(
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
+        title: const Text(
+          'Chat Pot',
+          style: TextStyle(
+            color: AppColors.deepsea,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         shape: const Border(
           bottom: BorderSide(
             color: AppColors.whiteShade4,
             width: 1,
           ),
         ),
-        title: const Text(
-          'Chat Pot',
-          style: TextStyle(
-            color: AppColors.deepsea,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        shadowColor: Colors.white,
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: AppColors.deepsea,
-        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: AppColors.deepsea),
       ),
       body: Column(
         children: [
@@ -161,7 +206,7 @@ class _ChatPotPageState extends State<ChatPotPage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
+                  onPressed: () => _sendMessage(),
                 ),
               ],
             ),

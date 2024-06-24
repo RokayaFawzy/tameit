@@ -326,7 +326,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                         return AppointmentCard(
                           appointment: appointment,
                           onTap: () {
-                            // Navigate to chat page or perform action on tap
+                            Navigator.of(context).pushNamed('/OnlineSession');
                           },
                         );
                       }).toList(),
@@ -352,6 +352,7 @@ class AppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final bool isClinicNameEmpty = appointment.clinicName.isEmpty;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -398,24 +399,26 @@ class AppointmentCard extends StatelessWidget {
                           margin: const EdgeInsets.all(2),
                           child: TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: AppColors.OrangePeel,
+                              backgroundColor: isClinicNameEmpty
+                                  ? Colors.grey
+                                  : AppColors.OrangePeel,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
                             ),
-                            onPressed: onTap,
+                            onPressed: isClinicNameEmpty ? null : onTap,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Icon(
-                                  Icons.question_answer_outlined,
+                                  Icons.ondemand_video_rounded,
                                   size: 14,
                                   color: Colors.white,
                                 ),
                                 SizedBox(width: 12),
                                 Text(
-                                  'Chat',
+                                  'online',
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ],
@@ -565,6 +568,7 @@ class DrCardUpcoming extends StatelessWidget {
 }
 
 class Appointment {
+  final bool isOnline;
   final String doctorFName;
   final String doctorLName;
   final String clinicName;
@@ -579,6 +583,7 @@ class Appointment {
   final double fees;
 
   Appointment({
+    required this.isOnline,
     required this.doctorFName,
     required this.doctorLName,
     required this.clinicName,
@@ -595,6 +600,7 @@ class Appointment {
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
+      isOnline: json['isOnline'] ?? false,
       doctorFName: json['doctorFName'] ?? '',
       doctorLName: json['doctorLName'] ?? '',
       clinicName: json['clinicName'] ?? '',
