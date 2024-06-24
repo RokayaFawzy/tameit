@@ -283,7 +283,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   '${appointment.dayOfWeek}, ${appointment.monthNameYear} ${appointment.dayOfMonth}, ${appointment.year} - ${appointment.hours}:${appointment.minutes > 9 ? appointment.minutes : '0${appointment.minutes}'}',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

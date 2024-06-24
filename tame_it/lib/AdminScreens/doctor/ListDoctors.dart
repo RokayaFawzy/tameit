@@ -305,7 +305,7 @@ class _ListDoctorsState extends State<ListDoctors> {
                               }
                             },
                           ),
-            const SizedBox(height: 200),
+            const SizedBox(height: 55),
           ]))
         ])));
   }
