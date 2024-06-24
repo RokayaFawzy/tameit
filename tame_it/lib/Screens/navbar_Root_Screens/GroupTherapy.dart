@@ -161,37 +161,38 @@ class _GroupTherapyPageState extends State<GroupTherapyPage> {
       throw Exception('Error fetching posts: $e');
     }
   }
-Future<void> addPost(String postText) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
 
-  if (token == null) {
-    print('Error: Token not found');
-    throw Exception('Token not found');
-  }
+  Future<void> addPost(String postText) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
 
-  try {
-    final response = await http.post(
-      Uri.parse('https://tameit.azurewebsites.net/api/posts/sendPost'),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json', // Change content type to JSON
-      },
-      body: jsonEncode({'text': postText}), // Send as JSON with 'text' property
-    );
-
-    if (response.statusCode == 200) {
-      // Refresh posts after adding
-      await fetchPosts();
-    } else {
-      print('Error: Failed to add post.');
-      throw Exception('Failed to add post.');
+    if (token == null) {
+      print('Error: Token not found');
+      throw Exception('Token not found');
     }
-  } catch (e) {
-    print('Error adding post: $e');
-    throw Exception('Error adding post: $e');
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://tameit.azurewebsites.net/api/posts/sendPost'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'text/plain',
+        },
+        body: postText,
+      );
+
+      if (response.statusCode == 200) {
+        await fetchPosts();
+      } else {
+        print('Error: Failed to add post.');
+        throw Exception('Failed to add post.');
+      }
+    } catch (e) {
+      print('Error adding post: $e');
+      throw Exception('Error adding post: $e');
+    }
   }
-}
+
   Future<void> addComment(int postId, String commentText) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -207,9 +208,9 @@ Future<void> addPost(String postText) async {
             'https://tameit.azurewebsites.net/api/comments/sendComment/$postId'),
         headers: {
           'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         },
-        body: jsonEncode({'text': commentText}),
+        body: commentText,
       );
 
       if (response.statusCode == 200) {
@@ -225,7 +226,7 @@ Future<void> addPost(String postText) async {
     }
   }
 
-  void _showAddPostDialog() {
+  void _showAddPostDialog(String postText) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -409,12 +410,16 @@ Future<void> addPost(String postText) async {
                 child: IconButton(
                   icon: Icon(Icons.add),
                   color: Colors.white,
-                  onPressed: _showAddPostDialog,
+                  onPressed: () {
+                    _showAddPostDialog('');
+                  },
                 ),
               ),
               SizedBox(width: 8.0),
               TextButton(
-                onPressed: _showAddPostDialog,
+                onPressed: () {
+                  _showAddPostDialog('');
+                },
                 child: Text(
                   'Add Post',
                   style: TextStyle(
