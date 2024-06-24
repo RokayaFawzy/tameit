@@ -293,18 +293,6 @@ class _AddDoctorAdminState extends State<AddDoctorAdmin> {
     );
   }
 
-  // Future<void> _pickImage() async {
-  //   PermissionStatus status = await Permission.photos.request();
-
-  //   final pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _selectedImage = File(pickedFile.path);
-  //     }
-  //   });
-  // }
   Future<void> _showImageSourceActionSheet(BuildContext context) async {
     showModalBottomSheet(
       context: context,
@@ -326,20 +314,6 @@ class _AddDoctorAdminState extends State<AddDoctorAdmin> {
                   }
                 },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.camera_alt),
-              //   title: Text('Camera'),
-              //   onTap: () async {
-              //     Navigator.of(context).pop();
-              //     final pickedFile =
-              //         await ImagePicker().pickImage(source: ImageSource.camera);
-              //     if (pickedFile != null) {
-              //       setState(() {
-              //         _selectedImage = File(pickedFile.path);
-              //       });
-              //     }
-              //   },
-              // ),
             ],
           ),
         );

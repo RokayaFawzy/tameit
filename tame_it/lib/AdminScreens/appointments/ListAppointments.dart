@@ -256,7 +256,7 @@ class __ListAllAppointmentsStateState extends State<ListAllAppointments> {
                               }
                             },
                           ),
-            const SizedBox(height: 200),
+            const SizedBox(height: 55),
           ]))
         ])));
   }
