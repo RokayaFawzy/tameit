@@ -138,12 +138,55 @@ class _ListUsersState extends State<ListUsers> {
     }
   }
 
+  Future<void> deleteUser(int userId) async {
+    final Uri apiUrl = Uri.parse(
+        'https://tameit.azurewebsites.net/api/admin/deletePatient/$userId');
+    try {
+      final response = await http.delete(
+        apiUrl,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      if (response.statusCode == 204) {
+        setState(() {
+          users.removeWhere((user) => user.id == userId);
+          filteredUsers.removeWhere((user) => user.id == userId);
+        });
+        _showSuccessDialog('User successfully deleted.');
+      } else {
+        _showErrorDialog(
+            'Failed to delete user. Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      _showErrorDialog('Error deleting user: $e');
+    }
+  }
+
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
@@ -198,7 +241,7 @@ class _ListUsersState extends State<ListUsers> {
                   onPressed: () {
                     String query = _searchController.text.trim();
                     List<String> names = query.split(' ');
-                    String firstName = names.length > 0 ? names[0] : '';
+                    String firstName = names.isNotEmpty ? names[0] : '';
                     String lastName = names.length > 1 ? names[1] : '';
                     searchUsers(firstName, lastName);
                   },
@@ -254,6 +297,12 @@ class _ListUsersState extends State<ListUsers> {
                                   ),
                                   subtitle: Text(
                                     filteredUsers[index].email,
+                                  ),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.clear, color: Colors.red),
+                                    onPressed: () {
+                                      deleteUser(filteredUsers[index].id);
+                                    },
                                   ),
                                 ),
                                 Divider(),
