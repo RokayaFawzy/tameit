@@ -16,6 +16,10 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final formKey = GlobalKey<FormState>();
   late String _userName = '';
+  late String _firstName = '';
+  late String _lastName = '';
+  late String _birthDate = '';
+
   late String _password = '';
   late String _confirmPassword = '';
   late String _email = '';
@@ -105,6 +109,9 @@ class _SignUpState extends State<SignUp> {
         if (_userName.isEmpty ||
             _password.isEmpty ||
             _confirmPassword.isEmpty ||
+            _firstName.isEmpty ||
+            _lastName.isEmpty ||
+            _birthDate.isEmpty ||
             _email.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Please fill in all the fields."),
@@ -161,7 +168,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: widthOfScreen * 0.05),
                   Text("Sign Up",
                       style: TextStyle(
-                        color: AppColors.deepsea,
+                        color: Color.fromARGB(255, 6, 65, 58),
                         fontSize: widthOfScreen * 0.08,
                         fontWeight: FontWeight.w500,
                       )),
@@ -241,6 +248,105 @@ class _SignUpState extends State<SignUp> {
                           _usernameExists = false;
                         });
                       }),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  //TODO:
+                  CustomTextFormField(
+                    textInputType: TextInputType.name,
+                    hasTitle: false,
+                    onSaved: (value) => _firstName = value ?? '',
+                    hasPrefixIcon: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your First Name';
+                      }
+                    },
+                    prefixIcon: Icon(
+                      FeatherIcons.user,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    hintText: 'First Name',
+                  ),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  //TODO:
+                  CustomTextFormField(
+                    textInputType: TextInputType.name,
+                    hasTitle: false,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your Last Name';
+                      }
+                    },
+                    onSaved: (value) => _lastName = value ?? '',
+                    hasPrefixIcon: true,
+                    prefixIcon: Icon(
+                      FeatherIcons.user,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    hintText: 'Last name',
+                  ),
+                  SizedBox(height: widthOfScreen * 0.02),
+                  //TODO:
+                  CustomTextFormField(
+                    textInputType: TextInputType.datetime,
+                    hasTitle: false,
+                    onSaved: (value) => _birthDate = value ?? '',
+                    hasPrefixIcon: true,
+                    prefixIcon: Icon(
+                      FeatherIcons.calendar,
+                      color: AppColors.greyShade7,
+                      size: widthOfScreen * 0.06,
+                    ),
+                    hintTextStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.greyShade7,
+                    ),
+                    enabledBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.blackShade2,
+                    ),
+                    focusedBorder: Borders.customUnderlineInputBorder(
+                      color: AppColors.orange,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: widthOfScreen * 0.04,
+                      color: AppColors.blackShade10,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your Birth Date';
+                      }
+                    },
+                    hintText: 'Birth Date as dd-MM-yyyy',
+                  ),
                   SizedBox(height: widthOfScreen * 0.02),
                   CustomTextFormField(
                     textInputType: TextInputType.text,
@@ -358,11 +464,7 @@ class _SignUpState extends State<SignUp> {
                               text: ' Sign In',
                               style: TextStyle(color: AppColors.deepsea),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () =>
-                                    // Navigator.of(context).pushNamed('/Login'),
-                                    Navigator.pop(context),
-
-                              // Navigator.pushReplacementNamed(context, '/Login'),
+                                ..onTap = () => Navigator.pop(context),
                             )
                           ]))),
                   SizedBox(height: widthOfScreen * 0.001),
@@ -385,6 +487,9 @@ class _SignUpState extends State<SignUp> {
         url,
         body: json.encode({
           'userName': _userName,
+          'firstName': _firstName,
+          'lastName': _lastName,
+          'birthDate': _birthDate,
           'password': _password,
           'confirmPassword': _confirmPassword,
           'email': _email,

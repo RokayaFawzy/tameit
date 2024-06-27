@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:tame_it/Screens/navbar_Root_Screens/navbar_root.dart';
 import 'package:tame_it/values/values.dart';
 import 'package:tame_it/widgets/custom_text_form_field.dart';
 import '../../../widgets/custom_button.dart';
@@ -248,7 +249,10 @@ class _EditInformationState extends State<EditInformation> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavBarRoot()),
+                    );
                   },
                   child: Text('OK'),
                 ),
