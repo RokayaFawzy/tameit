@@ -297,7 +297,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                         return AppointmentCard(
                           appointment: appointment,
                           onTap: () {
-                            // Navigate to chat page or perform action on tap
+                            Navigator.of(context).pushNamed('/OnlineSession');
                           },
                         );
                       }).toList(),
@@ -400,14 +400,14 @@ class AppointmentCard extends StatelessWidget {
                           child: TextButton(
                             style: TextButton.styleFrom(
                               backgroundColor: isClinicNameEmpty
-                                  ? Colors.grey
-                                  : AppColors.OrangePeel,
+                                  ? AppColors.OrangePeel
+                                  : Colors.grey,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
                             ),
-                            onPressed: isClinicNameEmpty ? null : onTap,
+                            onPressed: isClinicNameEmpty ? onTap : null,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
