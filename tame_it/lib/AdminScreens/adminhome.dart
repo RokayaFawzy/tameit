@@ -90,7 +90,7 @@ class __AdminHomePageStateState extends State<AdminHomePage> {
                     image: 'assets/images/manage plog.png',
                     title: 'Manage Posts',
                   )),
-              const SizedBox(height: 200),
+              const SizedBox(height: 55),
             ]))));
   }
 
@@ -147,5 +147,4 @@ class __AdminHomePageStateState extends State<AdminHomePage> {
                       )))
             ])));
   }
-  
 }

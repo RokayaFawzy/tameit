@@ -163,7 +163,7 @@ class _ChatPotPageState extends State<ChatPotPage> {
       backgroundColor: AppColors.whiteShade3,
       appBar: AppBar(
         title: const Text(
-          'Chat Pot',
+          'Chat Bot',
           style: TextStyle(
             color: AppColors.deepsea,
             fontSize: 18,
